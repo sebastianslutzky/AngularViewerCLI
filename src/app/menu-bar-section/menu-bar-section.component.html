@@ -1,0 +1,7 @@
+<div >
+    <div *ngIf="!menuLoaded" class="fa fa-spinner fa-spin"></div>
+    <div  *ngFor="let action of this.actions">
+        <app-menu-action [hidden]="hidden" [ResourceDescriptor]='action'></app-menu-action>
+    </div>
+    <li *ngIf="!NoDivision" class="divider"></li>
+</div>

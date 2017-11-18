@@ -1,0 +1,18 @@
+<div class="navbar-collapse app-actions collapse navbar-left" >
+    <ul class="nav navbar-nav primary">
+       <li class="dropdown">
+          <a tabindex="-1" 
+              href="javascript:;" 
+              class="dropdown-toggle" 
+              data-toggle="dropdown" >
+              <span>TODO: Primary menu name</span> 
+        <span class="caret"></span></a>
+        <ul class="dropdown-menu scrollable-menu multi-level top-menu-contacts" role="menu">
+            <div  *ngFor="let section of this.sections;let i=index" >
+              <app-menu-bar-section [NoDivision]='isLast(i)' [ResourceDescriptor]='section' 
+                (onMenuSectionLoaded)="handleMenuSectionLoaded($event,i)"></app-menu-bar-section>
+            </div>
+        </ul>
+      </li>
+    </ul>
+  </div>
