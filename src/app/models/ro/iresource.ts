@@ -5,9 +5,11 @@ export interface IResource {
     value: IResourceListItem[];
     links: IResourceLink[];
     extensions: IResourceExtensions;
+    members: IResource[];
 }
 
 
-export interface IResourceExtensions{
-    friendlyName: string
+export interface IResourceExtensions {
+    friendlyName: string;
+    menuBar: string;
 }

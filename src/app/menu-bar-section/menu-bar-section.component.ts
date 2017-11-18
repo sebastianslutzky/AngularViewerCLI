@@ -5,8 +5,9 @@ import { IMenuBarSectionLoaded } from './imenu-bar-section-loaded';
 import { log } from 'util';
 import { HttpClient } from 'selenium-webdriver/http';
 import { HttpClientWithAuthService } from '../services/http-client-with-auth.service';
+import { IResource } from '../models/ro/iresource';
 
-//loads a menu resource that will result in a section of the aggregation of menus
+// loads a menu resource that will result in a section of the aggregation of menus
 // provided this section is not empty
 
 @Component({
@@ -17,7 +18,7 @@ import { HttpClientWithAuthService } from '../services/http-client-with-auth.ser
 export class MenuBarSectionComponent implements OnInit {
 
   @Input()
-  ResourceDescriptor: IResourceLink;
+  ResourceDescriptor: IResource;
   @Input()
   NoDivision: boolean;
   @Output()
@@ -28,15 +29,8 @@ export class MenuBarSectionComponent implements OnInit {
   constructor(private metamodel: MetamodelService, private client: HttpClientWithAuthService) { }
 
   ngOnInit() {
-    this.metamodel.get(this.ResourceDescriptor).subscribe(data =>
-    {
-        const members = data.members as IResourceLink[];
-        const asArray = Object.keys(members).map(function(k) {return members[k]; });
-        this.actions = asArray as IResourceLink[];
-        const resourceLoaded: IMenuBarSectionLoaded = {
-            numberOfActions: asArray.length
-        };
-        this.onMenuSectionLoaded.emit(resourceLoaded);
-    });
+    const descr = <any>this.ResourceDescriptor;
+    const members = Object.keys(descr.members).map(function(k) {return descr.members[k]; });
+    this.actions = <IResourceLink[]> members;
   }
 }
