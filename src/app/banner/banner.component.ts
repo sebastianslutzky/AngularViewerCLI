@@ -6,6 +6,7 @@ import { IResourceListItem } from '../models/ro/iresource-list-item';
 import { forEach } from '@angular/router/src/utils/collection';
 import { IResourceLink } from '../models/ro/iresource-link';
 import { IResource } from '../models/ro/iresource';
+import {MatMenuModule} from '@angular/material/menu';
 declare var $: any;
 
 // RO Resource: Services
@@ -23,9 +24,9 @@ export class BannerComponent implements OnInit {
   @ViewChild('tertiaryMenu') private tertiaryMenu: MenuBarComponent;
 
   menus = {};
+  userName: string;
 
-  constructor(private metamodel: MetamodelService) {
-  }
+  constructor(private metamodel: MetamodelService) { }
 
   ngOnInit() {
     this.menus['PRIMARY'] = this.primaryMenu;
@@ -33,6 +34,7 @@ export class BannerComponent implements OnInit {
     this.menus['TERTIARY'] = this.tertiaryMenu;
 
     this.SetAppName();
+    this.SetUserName();
     this.PopulateMenuBars();
   }
 
@@ -41,11 +43,22 @@ export class BannerComponent implements OnInit {
     $('title').text('Home Page');
   }
 
+
+  private SetUserName() {
+    // TODO: move to ProfileService
+
+    this.metamodel.getMe().subscribe(data => {
+      console.log('nombre lodaded');
+      console.log(data);
+      this.userName =  data.result.title;
+      this.tertiaryMenu.title = this.getTertiartyHeader();
+    });
+  }
+
   PopulateMenuBars(): void {
     this.metamodel.getServices().subscribe(data =>
       this.AddSections(data.value)
     );
-    // later, choose right menu based on index
   }
 
   private AddSections(services: IResourceListItem[]) {
@@ -61,6 +74,9 @@ export class BannerComponent implements OnInit {
 
       if (this.isNotEmpty(serviceEntity)) {
         menuBar.addSection(serviceEntity);
+        if (!menuBar.title) {
+          menuBar.title = serviceEntity.title;
+        }
       }
     });
  }
@@ -71,4 +87,10 @@ export class BannerComponent implements OnInit {
 
     return actions.length > 0;
  }
+
+// todo: use userprofile service if present
+// https://trello.com/c/i0bTNecz/25-try-to-use-userprofileservice-if-it-exist
+  getTertiartyHeader(): string {
+    return 'Hi ' + this.userName + '!';
+  }
 }

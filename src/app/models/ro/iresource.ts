@@ -6,6 +6,12 @@ export interface IResource {
     links: IResourceLink[];
     extensions: IResourceExtensions;
     members: IResource[];
+    title: string;
+}
+
+export interface IActionResult {
+   links: IResourceLink[];
+   result: IResource;
 }
 
 

@@ -1,7 +1,1 @@
-<li> 
-    <div *ngIf="!menuLoaded" class="fa fa-spinner fa-spin"></div>
-    <a  (click)="invokeMethod()" class="menuLink noVeil"  href="#">
-        <span class="{{styleIcons(this.friendlyName)}}"> </span>
-        <span class="menuLinkLabel">{{this.friendlyName}}</span>
-    </a>
- </li>
+<button mat-menu-item> {{this.friendlyName}} </button>

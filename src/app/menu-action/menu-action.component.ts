@@ -18,24 +18,23 @@ export class MenuActionComponent implements OnInit {
   constructor(private metamodel: MetamodelService) { }
 
   ngOnInit() {
-    //get action resource
-    this.metamodel.getDetails(this.ResourceDescriptor).subscribe(data =>
-    {
+    // get action resource
+    this.metamodel.getDetails(this.ResourceDescriptor).subscribe(data => {
       this.FullResource = data;
-      //get description
-      this.metamodel.getDescribedBy(this.FullResource).subscribe(action =>{
+      // get description
+      this.metamodel.getDescribedBy(this.FullResource).subscribe(action => {
         this.friendlyName = (<IResource>action).extensions.friendlyName;
-      })
+      });
     });
 }
 
-    //todo: move to injected Icons svc
-    styleIcons(text: string){
+    // todo: move to injected Icons svc
+    styleIcons(text: string) {
       return 'fa fa-fw ' + this.findFaClass(text) + ' fontAwesomeIcon';
    }
 
-   findFaClass(text: string): string{
-       if (!text){
+   findFaClass(text: string): string {
+       if (!text) {
            return '';
        }
 
@@ -67,7 +66,7 @@ export class MenuActionComponent implements OnInit {
         };
 
         const keys = Object.keys(cssClassFaPatterns);
-        for (let i = 0; i < keys.length; i++){
+        for (let i = 0; i < keys.length; i++) {
             const key: string = keys[i];
           if (text.toLowerCase().match(key)) {
               return cssClassFaPatterns[key];

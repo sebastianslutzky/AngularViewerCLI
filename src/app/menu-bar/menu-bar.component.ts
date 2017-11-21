@@ -15,8 +15,8 @@ import { IResource } from '../models/ro/iresource';
 })
 export class MenuBarComponent implements OnInit {
   sections: Array<IResource> = [];
-  actionName: string;
-  friendlyName: string;
+  @Input()
+  title: string;
 
   constructor() { }
 
@@ -29,12 +29,6 @@ export class MenuBarComponent implements OnInit {
 
   addSection(section: IResource): any {
     this.sections.push(section);
-  }
-
-  @Input()
-  set ActionName(actionName: string){
-      this.actionName = actionName;
-      this.friendlyName = actionName;
   }
 
   handleMenuSectionLoaded(event: IMenuBarSectionLoaded, sectionIndex: number) {
