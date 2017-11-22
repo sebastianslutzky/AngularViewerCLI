@@ -15,8 +15,10 @@ import { Http, HttpModule } from '@angular/http';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { MatMenuModule,
          MatToolbarModule,
-        MatListModule} from '@angular/material';
+        MatListModule } from '@angular/material';
 import {MatIconModule} from '@angular/material/icon';
+import {MatButtonModule} from '@angular/material/button';
+import { ActionInvocationService } from './services/action-invocation.service';
 
 
 @NgModule({
@@ -38,7 +40,7 @@ import {MatIconModule} from '@angular/material/icon';
     MatIconModule,
     MatListModule
   ],
-  providers: [HttpClientWithAuthService, MetamodelService],
+  providers: [HttpClientWithAuthService, MetamodelService, ActionInvocationService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

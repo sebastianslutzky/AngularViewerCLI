@@ -1,7 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { IResourceLink } from '../models/ro/iresource-link';
 import { MetamodelService } from '../services/metamodel.service';
-import { IResource } from '../models/ro/iresource';
+import { IResource, IAction } from '../models/ro/iresource';
+import { ActionInvocationService } from '../services/action-invocation.service';
 
 @Component({
   selector: 'app-menu-action',
@@ -12,20 +13,24 @@ export class MenuActionComponent implements OnInit {
 
   @Input()
   ResourceDescriptor: IResource;
-  FullResource: any;
+  FullResource: IAction;
   friendlyName: string;
 
-  constructor(private metamodel: MetamodelService) { }
+  constructor(private metamodel: MetamodelService, private invoker: ActionInvocationService) { }
 
   ngOnInit() {
     // get action resource
     this.metamodel.getDetails(this.ResourceDescriptor).subscribe(data => {
-      this.FullResource = data;
+      this.FullResource = data as IAction;
       // get description
       this.metamodel.getDescribedBy(this.FullResource).subscribe(action => {
         this.friendlyName = (<IResource>action).extensions.friendlyName;
       });
     });
+}
+
+public InvokeAction() {
+  this.invoker.invokeAction(this.FullResource);
 }
 
     // todo: move to injected Icons svc

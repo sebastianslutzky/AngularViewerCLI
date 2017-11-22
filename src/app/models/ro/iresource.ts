@@ -12,8 +12,12 @@ export interface IResource {
 export interface IActionResult {
    links: IResourceLink[];
    result: IResource;
+   resulttype: string;
 }
 
+export interface IAction extends IResource {
+    parameters: Array<any>;
+}
 
 export interface IResourceExtensions {
     friendlyName: string;

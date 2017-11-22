@@ -77,6 +77,11 @@ export class MetamodelService {
       return  this.buildUrl('services/isissecurity.MeService/actions/me/invoke');
    }
 
+   public getInvoke(resource: IResource): Observable<any> {
+     const href = this.getFromRel(resource, 'urn:org.restfulobjects:rels/invoke');
+     return this.get(href);
+   }
+
    public getMe(): Observable<IActionResult> {
     return this.getUrl(this.getMeInvocation());
    }
