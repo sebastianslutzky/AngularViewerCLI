@@ -14,13 +14,12 @@ export class ActionInvocationService {
     // TODO: it will need to receive the full resource (including describedBy link, to get params)
     public invokeAction(actionResource: IResource): void {
       // Action invocation (will need to be a safe call, with proper error handling)
-      this.metamodel.getInvoke(actionResource)
-        .subscribe(data => {
+      this.metamodel.getInvoke(actionResource).subscribe(data => {
           const result = data as IActionResult;
           const arg = new ActionInvokedArg();
           arg.Result = result;
 
           this.actionInvoked.emit(arg);
-        });
+       });
     }
 }

@@ -46,12 +46,12 @@ export class MetamodelService {
     return this.get(rel);
   }
 
-  public get(link: IResourceLink): Observable<any> {
-    return this.getUrl(link.href);
+  public get(link: IResourceLink, isisHeader: boolean = false): Observable<any> {
+    return this.getUrl(link.href, isisHeader);
   }
 
-  public getUrl(url: string): Observable<any> {
-    return this.client.get(url).map(res => res.json());
+  public getUrl(url: string, isisHeader: boolean = false): Observable<any> {
+    return this.client.get(url, isisHeader).map(res => res.json());
   }
 
   public getNoMap(link: IResourceLink): Observable<any> {
@@ -79,7 +79,7 @@ export class MetamodelService {
 
    public getInvoke(resource: IResource): Observable<any> {
      const href = this.getFromRel(resource, 'urn:org.restfulobjects:rels/invoke');
-     return this.get(href);
+     return this.get(href, true);
    }
 
    public getMe(): Observable<IActionResult> {

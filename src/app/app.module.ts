@@ -15,10 +15,15 @@ import { Http, HttpModule } from '@angular/http';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { MatMenuModule,
          MatToolbarModule,
-        MatListModule } from '@angular/material';
+        MatListModule,
+        MatTable,
+        MatTableModule} from '@angular/material';
 import {MatIconModule} from '@angular/material/icon';
 import {MatButtonModule} from '@angular/material/button';
 import { ActionInvocationService } from './services/action-invocation.service';
+import { ListComponent } from './list/list.component';
+import { ComponentFactory } from '@angular/core/src/linker/component_factory';
+import { ComponentFactoryService } from './services/component-factory.service';
 
 
 @NgModule({
@@ -28,7 +33,8 @@ import { ActionInvocationService } from './services/action-invocation.service';
     BannerComponent,
     MenuBarComponent,
     MenuBarSectionComponent,
-    MenuActionComponent
+    MenuActionComponent,
+    ListComponent
   ],
   imports: [
     HttpModule,
@@ -38,9 +44,16 @@ import { ActionInvocationService } from './services/action-invocation.service';
     MatMenuModule,
     MatToolbarModule,
     MatIconModule,
-    MatListModule
+    MatListModule,
+    MatTableModule
   ],
-  providers: [HttpClientWithAuthService, MetamodelService, ActionInvocationService],
-  bootstrap: [AppComponent]
+  providers: [HttpClientWithAuthService,
+    MetamodelService,
+    ActionInvocationService,
+    ComponentFactoryService],
+  bootstrap: [AppComponent],
+  entryComponents: [
+    ListComponent
+  ]
 })
 export class AppModule { }
