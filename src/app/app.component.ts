@@ -11,7 +11,7 @@ import { ListComponent } from './list/list.component';
 })
 export class AppComponent {
   title = 'app';
-  @ViewChild('desktop', {read: ViewContainerRef}) private _desktop: ElementRef;
+  @ViewChild('desktop', {read: ViewContainerRef}) private _desktop: ViewContainerRef;
 
   constructor(private invoker: ActionInvocationService,
             private componentFactory: ComponentFactoryService) {

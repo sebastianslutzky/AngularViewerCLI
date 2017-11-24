@@ -15,9 +15,9 @@ export class ActionInvocationService {
     public invokeAction(actionResource: IResource, actionDescriptor: IResource): void {
       // Action invocation (will need to be a safe call, with proper error handling)
       this.metamodel.getInvoke(actionResource).subscribe(data => {
-          const result = data as IActionResult;
+          const result = data as Array<any>;
           const arg = new ActionInvokedArg();
-          arg.Result = result;
+          arg.ExtendedResult = result;
           arg.ActionDescriptor = actionDescriptor;
 
           this.actionInvoked.emit(arg);

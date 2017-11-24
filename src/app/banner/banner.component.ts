@@ -7,6 +7,7 @@ import { forEach } from '@angular/router/src/utils/collection';
 import { IResourceLink } from '../models/ro/iresource-link';
 import { IResource } from '../models/ro/iresource';
 import {MatMenuModule} from '@angular/material/menu';
+import { environment } from '../../environments/environment';
 declare var $: any;
 
 // RO Resource: Services
@@ -25,10 +26,12 @@ export class BannerComponent implements OnInit {
 
   menus = {};
   userName: string;
+  applicationName: string;
 
   constructor(private metamodel: MetamodelService) { }
 
   ngOnInit() {
+    this.applicationName = environment.applicationName;
     this.menus['PRIMARY'] = this.primaryMenu;
     this.menus['SECONDARY'] = this.secondaryMenu;
     this.menus['TERTIARY'] = this.tertiaryMenu;

@@ -18,7 +18,9 @@ import { MatMenuModule,
         MatListModule,
         MatTable,
         MatTableModule,
-        MatExpansionModule} from '@angular/material';
+        MatExpansionModule,
+        MatTooltipModule,
+        MatCardModule} from '@angular/material';
 import {MatIconModule} from '@angular/material/icon';
 import {MatButtonModule} from '@angular/material/button';
 import { ActionInvocationService } from './services/action-invocation.service';
@@ -47,7 +49,9 @@ import { ComponentFactoryService } from './services/component-factory.service';
     MatIconModule,
     MatListModule,
     MatTableModule,
-    MatExpansionModule
+    MatExpansionModule,
+    MatTooltipModule,
+    MatCardModule
   ],
   providers: [HttpClientWithAuthService,
     MetamodelService,

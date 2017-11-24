@@ -15,7 +15,9 @@
     <!-- Position Column -->
     <ng-container *ngFor="let column of displayedColumns" matColumnDef="{{column}}"> <!-- for each column -->
       <mat-header-cell *matHeaderCellDef mat-sort-header> {{column}} </mat-header-cell>
-      <mat-cell *matCellDef="let element"> {{element[column]}} </mat-cell>
+      <mat-cell *matCellDef="let element"> 
+        {{element[column]}} 
+      </mat-cell>
     </ng-container>
 
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>

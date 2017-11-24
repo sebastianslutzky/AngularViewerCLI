@@ -11,6 +11,7 @@ import { ActionInvocationService } from '../services/action-invocation.service';
 })
 export class MenuActionComponent implements OnInit {
   actionDescribedBy: IResource;
+  tooltip: string;
 
   @Input()
   ResourceDescriptor: IResource;
@@ -28,6 +29,9 @@ export class MenuActionComponent implements OnInit {
       // get description
       this.metamodel.getDescribedBy(this.FullResource).subscribe(action => {
         this.actionDescribedBy = <IResource>action;
+
+        const up =  this.metamodel.getFromRel(action, 'self') ;
+        this.tooltip = up.href;
       });
     });
 }

@@ -1,1 +1,2 @@
-<button mat-menu-item (click)="InvokeAction()" >{{this.friendlyName}}</button>
+<button mat-menu-item (click)="InvokeAction()" matTooltip="{{tooltip}}" [matTooltipPosition]="'left'" >
+{{this.friendlyName}}</button>
