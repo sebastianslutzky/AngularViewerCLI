@@ -10,11 +10,14 @@ import { ActionInvocationService } from '../services/action-invocation.service';
   styleUrls: ['./menu-action.component.css']
 })
 export class MenuActionComponent implements OnInit {
+  actionDescribedBy: IResource;
 
   @Input()
   ResourceDescriptor: IResource;
   FullResource: IAction;
-  friendlyName: string;
+  get friendlyName(): string {
+    return this.actionDescribedBy && this.actionDescribedBy.extensions.friendlyName || '';
+  }
 
   constructor(private metamodel: MetamodelService, private invoker: ActionInvocationService) { }
 
@@ -24,13 +27,13 @@ export class MenuActionComponent implements OnInit {
       this.FullResource = data as IAction;
       // get description
       this.metamodel.getDescribedBy(this.FullResource).subscribe(action => {
-        this.friendlyName = (<IResource>action).extensions.friendlyName;
+        this.actionDescribedBy = <IResource>action;
       });
     });
 }
 
 public InvokeAction() {
-  this.invoker.invokeAction(this.FullResource);
+  this.invoker.invokeAction(this.FullResource,this.actionDescribedBy);
 }
 
     // todo: move to injected Icons svc

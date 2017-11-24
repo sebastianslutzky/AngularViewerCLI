@@ -1,4 +1,15 @@
 <div class="example-container mat-elevation-z8">
+<mat-accordion>
+  <mat-expansion-panel [expanded]='true'>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        {{actionName}}
+      </mat-panel-title>
+      <mat-panel-description>
+        Brief description
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+
   <mat-table #table [dataSource]="dataSource"  matSort>
 
     <!-- Position Column -->
@@ -10,4 +21,6 @@
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
     <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
   </mat-table>
+  </mat-expansion-panel>
+</mat-accordion>
 </div>
