@@ -5,7 +5,7 @@ export interface IResource {
     value: IResourceListItem[];
     links: IResourceLink[];
     extensions: IResourceExtensions;
-    members: IResource[];
+    members: IResourceLink[];
     title: string;
 }
 

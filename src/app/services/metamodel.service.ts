@@ -64,12 +64,15 @@ export class MetamodelService {
   }
 
   public getFromRel(resource: IResource, rel: string): IResourceLink {
-    const link: IResourceLink =  resource.links.filter(function(item: any){return item.rel.startsWith(rel); })[0];
-    if (!link) {
-      console.log(resource);
+    const links = this.findFromRel(resource.links, rel);
+    if (links.length === 0) {
         throw new Error(('rel not found: ' + rel));
     }
-    return link;
+    return links[0];
+  }
+
+  public findFromRel(links: IResourceLink[], rel: string): IResourceLink[] {
+    return links.filter(function(item: any){return item.rel.startsWith(rel); });
   }
 
   // todo: find user service from home page (with rels)http://localhost:8080/restful/user
@@ -84,5 +87,15 @@ export class MetamodelService {
 
    public getMe(): Observable<IActionResult> {
     return this.getUrl(this.getMeInvocation());
+   }
+
+   // Object Type
+   public getProperty(links: IResourceLink[], propertyName: string): Observable<any> {
+     const properties = this.findFromRel(links, 'urn:org.restfulobjects:rels/property');
+     const matches = properties.filter(function(item: IResourceLink){return item.href.endsWith('properties/' + propertyName); });
+     if (matches.length === 0) {
+      throw new Error('property not found: ' + propertyName);
+     }
+     return this.get(matches[0]);
    }
 }

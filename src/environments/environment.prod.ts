@@ -1,4 +1,5 @@
 export const environment = {
   production: true,
-  name: 'producción'
+  name: 'producción',
+  outputHttpCalls: false
 };

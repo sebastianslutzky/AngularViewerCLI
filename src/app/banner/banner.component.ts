@@ -51,8 +51,6 @@ export class BannerComponent implements OnInit {
     // TODO: move to ProfileService
 
     this.metamodel.getMe().subscribe(data => {
-      console.log('nombre lodaded');
-      console.log(data);
       this.userName =  data.result.title;
       this.tertiaryMenu.title = this.getTertiartyHeader();
     });

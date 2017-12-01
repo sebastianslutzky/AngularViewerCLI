@@ -1,4 +1,5 @@
 <div class="example-container mat-elevation-z8">
+<div *ngIf="areAllColumnsLoaded">
 <mat-accordion>
   <mat-expansion-panel [expanded]='true'>
     <mat-expansion-panel-header>
@@ -10,13 +11,13 @@
       </mat-panel-description>
     </mat-expansion-panel-header>
 
-  <mat-table #table [dataSource]="dataSource"  matSort>
+  <mat-table #table  [dataSource]="dataSource"  matSort>
 
     <!-- Position Column -->
     <ng-container *ngFor="let column of displayedColumns" matColumnDef="{{column}}"> <!-- for each column -->
       <mat-header-cell *matHeaderCellDef mat-sort-header> {{column}} </mat-header-cell>
       <mat-cell *matCellDef="let element"> 
-        {{element[column]}} 
+        {{renderCell(column,element[column])}}
       </mat-cell>
     </ng-container>
 
@@ -25,4 +26,5 @@
   </mat-table>
   </mat-expansion-panel>
 </mat-accordion>
+</div>
 </div>
