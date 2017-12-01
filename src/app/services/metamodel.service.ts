@@ -15,8 +15,9 @@ export class MetamodelService {
         const host = 'localhost';
         const port = '8080';
         const apiRoot = 'restful';
+        const protocol = 'http';
 
-        this.rootUrl = 'http://' + host + ':' + port + '/' + apiRoot;
+        this.rootUrl = protocol  + '://' + host + ':' + port + '/' + apiRoot;
    }
 
   private buildUrl(endpoint: string): string {
@@ -52,11 +53,6 @@ export class MetamodelService {
 
   public getUrl(url: string, isisHeader: boolean = false): Observable<any> {
     return this.client.get(url, isisHeader).map(res => res.json());
-  }
-
-  public getNoMap(link: IResourceLink): Observable<any> {
-    // console.log('--about to load ' + link.href)
-    return this.client.get(link.href);
   }
 
   getDetailsRel(resource: IResource): IResourceLink {
@@ -97,5 +93,12 @@ export class MetamodelService {
       throw new Error('property not found: ' + propertyName);
      }
      return this.get(matches[0]);
+   }
+
+   getPropertyType(name: string, propertyDescriptor: IResource): string {
+    const typeDescr = this.findFromRel(propertyDescriptor.links, 'urn:org.restfulobjects:rels/return-type');
+    // HACK:
+    // TODO: follow link and get type from there
+    return  typeDescr[0].href.replace('http://localhost:8080/restful/domain-types/', '');
    }
 }
