@@ -17,7 +17,7 @@ export class ComponentFactoryService {
 
         // create component without adding it directly to the DOM
         const comp = factory.create(injector);
-
+        vCref.insert(comp.hostView);
         return comp;
       }
 

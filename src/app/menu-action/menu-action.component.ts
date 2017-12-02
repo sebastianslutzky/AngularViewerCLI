@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { IResourceLink } from '../models/ro/iresource-link';
 import { MetamodelService } from '../services/metamodel.service';
-import { IResource, IAction } from '../models/ro/iresource';
+import { Resource, IAction } from '../models/ro/iresource';
 import { ActionInvocationService } from '../services/action-invocation.service';
 
 @Component({
@@ -10,11 +10,11 @@ import { ActionInvocationService } from '../services/action-invocation.service';
   styleUrls: ['./menu-action.component.css']
 })
 export class MenuActionComponent implements OnInit {
-  actionDescribedBy: IResource;
+  actionDescribedBy: Resource;
   tooltip: string;
 
   @Input()
-  ResourceDescriptor: IResource;
+  ResourceDescriptor: Resource;
   FullResource: IAction;
   get friendlyName(): string {
     return this.actionDescribedBy && this.actionDescribedBy.extensions.friendlyName || '';
@@ -28,7 +28,7 @@ export class MenuActionComponent implements OnInit {
       this.FullResource = data as IAction;
       // get description
       this.metamodel.getDescribedBy(this.FullResource).subscribe(action => {
-        this.actionDescribedBy = <IResource>action;
+        this.actionDescribedBy = <Resource>action;
 
         const up =  this.metamodel.getFromRel(action, 'self') ;
         this.tooltip = up.href;
@@ -37,7 +37,7 @@ export class MenuActionComponent implements OnInit {
 }
 
 public InvokeAction() {
-  this.invoker.invokeAction(this.FullResource,this.actionDescribedBy);
+  this.invoker.invokeAction(this.FullResource, this.actionDescribedBy);
 }
 
     // todo: move to injected Icons svc

@@ -3,15 +3,16 @@ import { HttpClientWithAuthService } from './http-client-with-auth.service';
 import { rootRoute } from '@angular/router/src/router_module';
 import 'rxjs/add/operator/map' ;
 import { Observable } from 'rxjs/Observable';
-import { IResource, IActionResult } from '../models/ro/iresource';
+import { Resource, ActionResult, ReprTypesList } from '../models/ro/iresource';
 import { IResourceLink } from '../models/ro/iresource-link';
-
+import { ResourceFactoryService } from './resource-factory.service';
+ 
 @Injectable()
 export class MetamodelService {
 
   private rootUrl: string;
 
-  constructor(private client: HttpClientWithAuthService) {
+  constructor(private client: HttpClientWithAuthService, private resourceFactory: ResourceFactoryService) {
         const host = 'localhost';
         const port = '8080';
         const apiRoot = 'restful';
@@ -20,29 +21,22 @@ export class MetamodelService {
         this.rootUrl = protocol  + '://' + host + ':' + port + '/' + apiRoot;
    }
 
-  private buildUrl(endpoint: string): string {
+  public buildUrl(endpoint: string): string {
     return this.rootUrl + '/' + endpoint ;
   }
 
-  public getServicesUrl(): string {
-      return this.buildUrl('services');
-  }
 
-  public getServices(): Observable<IResource> {
-    return this.client.get(this.getServicesUrl()).map(res => res.json());
-  }
-
-  public getDetails(link: IResource): Observable<IResource> {
+  public getDetails(link: Resource): Observable<Resource> {
     return this.get(this.getDetailsRel(link));
   }
 
-  public getDescribedBy(link: IResource): Observable<IResource> {
+  public getDescribedBy(link: Resource): Observable<Resource> {
     const  describedby =  this.getFromRel(link, 'describedby');
     return this.get(describedby);
   }
 
   // tslint:disable-next-line:one-line
-  public getAction(link: IResource): Observable<IResource>{
+  public getAction(link: Resource): Observable<Resource>{
     const rel =  this.getFromRel(link, 'urn:org.restfulobjects:rels/action');
     return this.get(rel);
   }
@@ -52,14 +46,14 @@ export class MetamodelService {
   }
 
   public getUrl(url: string, isisHeader: boolean = false): Observable<any> {
-    return this.client.get(url, isisHeader).map(res => res.json());
+    return this.load<any>(url, isisHeader);
   }
 
-  getDetailsRel(resource: IResource): IResourceLink {
+  getDetailsRel(resource: Resource): IResourceLink {
     return this.getFromRel(resource, 'urn:org.restfulobjects:rels/details');
   }
 
-  public getFromRel(resource: IResource, rel: string): IResourceLink {
+  public getFromRel(resource: Resource, rel: string): IResourceLink {
     const links = this.findFromRel(resource.links, rel);
     if (links.length === 0) {
         throw new Error(('rel not found: ' + rel));
@@ -71,19 +65,12 @@ export class MetamodelService {
     return links.filter(function(item: any){return item.rel.startsWith(rel); });
   }
 
-  // todo: find user service from home page (with rels)http://localhost:8080/restful/user
-    public getMeInvocation(): string {
-      return  this.buildUrl('services/isissecurity.MeService/actions/me/invoke');
-   }
 
-   public getInvoke(resource: IResource): Observable<any> {
+   public getInvoke(resource: Resource): Observable<any> {
      const href = this.getFromRel(resource, 'urn:org.restfulobjects:rels/invoke');
      return this.get(href, true);
    }
 
-   public getMe(): Observable<IActionResult> {
-    return this.getUrl(this.getMeInvocation());
-   }
 
    // Object Type
    public getProperty(links: IResourceLink[], propertyName: string): Observable<any> {
@@ -95,10 +82,22 @@ export class MetamodelService {
      return this.get(matches[0]);
    }
 
-   getPropertyType(name: string, propertyDescriptor: IResource): string {
+   getPropertyType(name: string, propertyDescriptor: Resource): string {
     const typeDescr = this.findFromRel(propertyDescriptor.links, 'urn:org.restfulobjects:rels/return-type');
     // HACK:
     // TODO: follow link and get type from there
     return  typeDescr[0].href.replace('http://localhost:8080/restful/domain-types/', '');
    }
+
+   //////////
+   // v2
+   // todo: use right method based on http vern
+   load<T>(url: string, useIsisHeader: boolean = false): Observable<T> {
+    return this.client.get(url, useIsisHeader).map(res => res.json());
+   }
+
+   loadLink<T>(link: IResourceLink, useIsisHeader: boolean = false): Observable<T> {
+    return this.load<T>(link.href, useIsisHeader);
+   }
+   /////////
 }

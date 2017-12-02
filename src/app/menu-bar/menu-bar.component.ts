@@ -1,8 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { IResourceListItem } from '../models/ro/iresource-list-item';
 import { IMenuBarSectionLoaded } from '../menu-bar-section/imenu-bar-section-loaded';
 import { MetamodelService } from '../services/metamodel.service';
-import { IResource } from '../models/ro/iresource';
+import { Resource } from '../models/ro/iresource';
 
 // loads resource: none
 // children: section
@@ -13,21 +12,16 @@ import { IResource } from '../models/ro/iresource';
   templateUrl: './menu-bar.component.html',
   styleUrls: ['./menu-bar.component.css']
 })
-export class MenuBarComponent implements OnInit {
-  sections: Array<IResource> = [];
+export class MenuBarComponent {
+  sections: Array<Resource> = [];
   @Input()
   title: string;
-
-  constructor() { }
-
-  ngOnInit() {
-  }
 
   isLast(index: number): boolean {
     return index === this.sections.length - 1;
   }
 
-  addSection(section: IResource): any {
+  addSection(section: Resource): any {
     this.sections.push(section);
   }
 

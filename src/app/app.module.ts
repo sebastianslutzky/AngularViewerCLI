@@ -1,8 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
 import { AppRoutingModule } from './app-routing.module';
-
 import { AppComponent } from './app.component';
 import { FooterComponent } from './footer/footer.component';
 import { BannerComponent } from './banner/banner.component';
@@ -25,9 +23,14 @@ import { MatMenuModule,
 import {MatIconModule} from '@angular/material/icon';
 import {MatButtonModule} from '@angular/material/button';
 import { ActionInvocationService } from './services/action-invocation.service';
-import { ListComponent } from './list/list.component';
+import { ListComponent} from './list/list.component';
 import { ComponentFactory } from '@angular/core/src/linker/component_factory';
 import { ComponentFactoryService } from './services/component-factory.service';
+import { CellComponent } from './cell/cell.component';
+import { CheckboxComponent } from './checkbox/checkbox.component';
+import { TextComponent } from './text/text.component';
+import { FormsModule } from '@angular/forms';
+import { ResourceFactoryService } from './services/resource-factory.service';
 
 
 @NgModule({
@@ -38,7 +41,10 @@ import { ComponentFactoryService } from './services/component-factory.service';
     MenuBarComponent,
     MenuBarSectionComponent,
     MenuActionComponent,
-    ListComponent
+    ListComponent,
+    CellComponent,
+    CheckboxComponent,
+    TextComponent
   ],
   imports: [
     HttpModule,
@@ -53,15 +59,19 @@ import { ComponentFactoryService } from './services/component-factory.service';
     MatExpansionModule,
     MatTooltipModule,
     MatCardModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    FormsModule
   ],
   providers: [HttpClientWithAuthService,
     MetamodelService,
     ActionInvocationService,
-    ComponentFactoryService],
+    ComponentFactoryService,
+    ResourceFactoryService],
   bootstrap: [AppComponent],
   entryComponents: [
-    ListComponent
+    ListComponent,
+    TextComponent,
+    CheckboxComponent
   ]
 })
 export class AppModule { }

@@ -1,15 +1,17 @@
-import { Component, OnInit, ViewChild, Injector } from '@angular/core';
+import { Component, OnInit, ViewChild, Injector, ViewContainerRef } from '@angular/core';
 import { MatTableDataSource, MatSort } from '@angular/material';
 import { AfterViewInit } from '@angular/core/src/metadata/lifecycle_hooks';
 import { XActionResultList, IXActionResultListItem } from '../models/ro/xaction-result-list';
 import { ActionInvokedArg } from '../services/iactioninvoked';
-import { IResource } from '../models/ro/iresource';
+import { Resource } from '../models/ro/iresource';
 import { MetamodelService } from '../services/metamodel.service';
 import { ComponentFactoryService } from '../services/component-factory.service';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/share';
 import { validateConfig } from '@angular/router/src/config';
 import { IResourceLink } from '../models/ro/iresource-link';
+import { ComponentFactory } from '@angular/core/src/linker/component_factory';
+import { error } from 'util';
 
 @Component({
   selector: 'app-list',
@@ -17,13 +19,13 @@ import { IResourceLink } from '../models/ro/iresource-link';
   styleUrls: ['./list.component.css']
 })
 export class ListComponent implements AfterViewInit {
-  descriptor: IResource;
+  descriptor: Resource;
   displayedColumns: Array<string> ;
   dataSource: MatTableDataSource<IXActionResultListItem>;
   resource: XActionResultList;
   public columns: Array<any>;
 
-  public elementType: IResource;
+  public elementType: Resource;
   private columnTypes = {};
 
   @ViewChild(MatSort) sort: MatSort;
@@ -55,15 +57,18 @@ export class ListComponent implements AfterViewInit {
     return this.displayedColumns.length === totalLoaded;
   }
 
+  getPropertyReturnType(columnName: string): string {
+    const propertyType = this.columnTypes[columnName];
+    return this.metamodel.getPropertyType(columnName, propertyType);
+  }
+
   renderCell(columName: string, value: string): string {
-    const propertyType = this.columnTypes[columName];
-    const returnType = this.metamodel.getPropertyType(columName, propertyType);
-    switch (returnType) {
+    switch (this.getPropertyReturnType(columName)) {
       case 'java.lang.String': {
         return value;
       }
       default: {
-        console.warn('don\'t know how to render columns of type: ' + returnType + '. Viewing as string');
+        console.warn('don\'t know how to render columns of type: . Viewing as string');
         return value;
       }
     }

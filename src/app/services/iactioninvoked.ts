@@ -1,9 +1,9 @@
-import { IActionResult, IResource } from '../models/ro/iresource';
+import { ActionResult, Resource } from '../models/ro/iresource';
 
 export class ActionInvokedArg {
-    Result: IActionResult;
+    Result: ActionResult;
     ExtendedResult: Array<any>;
-    ActionDescriptor: IResource;
+    ActionDescriptor: Resource;
 }
 
 export interface IActionInvoked {

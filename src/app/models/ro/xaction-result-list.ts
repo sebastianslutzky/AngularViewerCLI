@@ -1,4 +1,4 @@
-import { IResource } from './iresource';
+import { Resource } from './iresource';
 
 // tslint:disable-next-line:one-line
 export interface IXActionResultListItem {
@@ -10,7 +10,7 @@ export interface IXActionResultListItem {
 export class XActionResultList {
     XListItems: IXActionResultListItem[];
     PropertyNames: string[];
-    ROResult: IResource;
+    ROResult: Resource;
 
     constructor(result: any[]) {
        this.ROResult = result.splice(-1, 1)[0].$$ro;

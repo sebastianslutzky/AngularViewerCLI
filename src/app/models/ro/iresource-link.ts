@@ -1,4 +1,4 @@
-export interface IResourceLink {
+export class IResourceLink {
     rel: string;
     href: string;
     method: string;

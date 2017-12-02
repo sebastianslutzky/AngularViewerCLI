@@ -1,7 +1,6 @@
-import { IResourceListItem } from './iresource-list-item';
 import { IResourceLink } from './iresource-link';
 
-export interface IResource {
+export class Resource {
     value: IResourceListItem[];
     links: IResourceLink[];
     extensions: IResourceExtensions;
@@ -9,17 +8,31 @@ export interface IResource {
     title: string;
 }
 
-export interface IActionResult {
+export class ActionResult {
    links: IResourceLink[];
-   result: IResource;
+   result: Resource;
    resulttype: string;
 }
 
-export interface IAction extends IResource {
+export class IAction extends Resource {
     parameters: Array<any>;
 }
 
 export interface IResourceExtensions {
     friendlyName: string;
     menuBar: string;
+}
+
+////////// new
+export class ReprTypesList {
+ value: Array<ReprType>;
+ links: Array<IResourceLink>;
+}
+
+export class ReprType extends IResourceLink {
+    title: string;
+}
+
+export class IResourceListItem extends IResourceLink {
+    title: string;
 }

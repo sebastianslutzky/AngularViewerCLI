@@ -5,7 +5,7 @@ import { IMenuBarSectionLoaded } from './imenu-bar-section-loaded';
 import { log } from 'util';
 import { HttpClient } from 'selenium-webdriver/http';
 import { HttpClientWithAuthService } from '../services/http-client-with-auth.service';
-import { IResource } from '../models/ro/iresource';
+import { Resource } from '../models/ro/iresource';
 
 // loads a menu resource that will result in a section of the aggregation of menus
 // provided this section is not empty
@@ -18,7 +18,7 @@ import { IResource } from '../models/ro/iresource';
 export class MenuBarSectionComponent implements OnInit {
 
   @Input()
-  ResourceDescriptor: IResource;
+  ResourceDescriptor: Resource;
   @Input()
   NoDivision: boolean;
   @Output()
