@@ -1,8 +1,8 @@
 
  <div >
     <div *ngIf="!menuLoaded" class="fa fa-spinner fa-spin"></div>
-    <div  *ngFor="let action of this.actions">
-        <app-menu-action [hidden]="hidden" [ResourceDescriptor]='action'></app-menu-action>
+    <div  *ngFor="let actionLink of this.actions">
+        <app-menu-action [hidden]="hidden" [ActionLink]='actionLink'></app-menu-action>
     </div>
     <hr *ngIf="!NoDivision">
 </div> 

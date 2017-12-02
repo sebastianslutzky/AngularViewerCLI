@@ -26,11 +26,11 @@ export class MetamodelService {
   }
 
 
-  public getDetails(link: Resource): Observable<Resource> {
+  public getDetails<T>(link: Resource): Observable<T> {
     return this.get(this.getDetailsRel(link));
   }
 
-  public getDescribedBy(link: Resource): Observable<Resource> {
+  public getDescribedBy<T>(link: Resource): Observable<T> {
     const  describedby =  this.getFromRel(link, 'describedby');
     return this.get(describedby);
   }

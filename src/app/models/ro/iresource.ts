@@ -14,9 +14,15 @@ export class ActionResult {
    resulttype: string;
 }
 
-export class IAction extends Resource {
+export class Action extends Resource {
     parameters: Array<any>;
+
+    get hasParameters(): boolean{
+        return this.parameters && this.parameters.length > 0;
+    }
 }
+
+export class ActionDescription extends Action { }
 
 export interface IResourceExtensions {
     friendlyName: string;
