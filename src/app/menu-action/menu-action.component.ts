@@ -27,7 +27,7 @@ export class MenuActionComponent implements OnInit {
     this.metamodel.getDetails<Action>(this.ActionLink).subscribe(data => {
       this.Action = data;
       // get description
-      this.metamodel.getDescribedBy<ActionDescription>(this.Action).subscribe(action => {
+      this.metamodel.getDescribedBy(ActionDescription, this.Action).subscribe(action => {
         this.actionDescribedBy = action;
 
         const up =  this.metamodel.getFromRel(action, 'self') ;

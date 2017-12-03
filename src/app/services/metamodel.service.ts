@@ -3,10 +3,10 @@ import { HttpClientWithAuthService } from './http-client-with-auth.service';
 import { rootRoute } from '@angular/router/src/router_module';
 import 'rxjs/add/operator/map' ;
 import { Observable } from 'rxjs/Observable';
-import { Resource, ActionResult, ReprTypesList } from '../models/ro/iresource';
+import { Resource, ActionResult, ReprTypesList, ActionDescription } from '../models/ro/iresource';
 import { IResourceLink } from '../models/ro/iresource-link';
 import { ResourceFactoryService } from './resource-factory.service';
- 
+import {plainToClass, classToClass, plainToClassFromExist} from 'class-transformer';
 @Injectable()
 export class MetamodelService {
 
@@ -30,9 +30,9 @@ export class MetamodelService {
     return this.get(this.getDetailsRel(link));
   }
 
-  public getDescribedBy<T>(link: Resource): Observable<T> {
+  public getDescribedBy<T>(c: new() => T, link: Resource): Observable<T> {
     const  describedby =  this.getFromRel(link, 'describedby');
-    return this.get(describedby);
+    return this.loadLink(c , describedby);
   }
 
   // tslint:disable-next-line:one-line
@@ -46,7 +46,7 @@ export class MetamodelService {
   }
 
   public getUrl(url: string, isisHeader: boolean = false): Observable<any> {
-    return this.load<any>(url, isisHeader);
+    return this.load(null, url, isisHeader);
   }
 
   getDetailsRel(resource: Resource): IResourceLink {
@@ -65,10 +65,9 @@ export class MetamodelService {
     return links.filter(function(item: any){return item.rel.startsWith(rel); });
   }
 
-
    public getInvoke(resource: Resource): Observable<any> {
      const href = this.getFromRel(resource, 'urn:org.restfulobjects:rels/invoke');
-     return this.get(href, true);
+     return this.loadLink(null, href, true);
    }
 
 
@@ -92,12 +91,20 @@ export class MetamodelService {
    //////////
    // v2
    // todo: use right method based on http vern
-   load<T>(url: string, useIsisHeader: boolean = false): Observable<T> {
-    return this.client.get(url, useIsisHeader).map(res => res.json());
+   load<T>(c: new() => T, url: string, useIsisHeader: boolean = false): Observable<T> {
+    return this.client.get(url, useIsisHeader).map(res => res.json()).map(obj => this.toClass(c, obj));
    }
 
-   loadLink<T>(link: IResourceLink, useIsisHeader: boolean = false): Observable<T> {
-    return this.load<T>(link.href, useIsisHeader);
+   loadLink<T>(c: new() => T, link: IResourceLink, useIsisHeader: boolean = false): Observable<T> {
+    return this.load<T>(c, link.href, useIsisHeader);
    }
+
    /////////
+   toClass<T>(c: new() => T = null, plain: any): T {
+     if (!c) {
+       return plain;
+     }
+    return plainToClassFromExist(new c(), plain);
+  }
 }
+

@@ -48,7 +48,7 @@ export class BannerComponent implements OnInit {
   private SetUserName() {
     // TODO: move to ProfileService
     const meUrl = this.metamodel.buildUrl('services/isissecurity.MeService/actions/me/invoke');
-    this.metamodel.load<ActionResult>(meUrl).subscribe(data => {
+    this.metamodel.load(ActionResult, meUrl).subscribe(data => {
       this.userName =  data.result.title;
       this.tertiaryMenu.title = this.getTertiartyHeader();
     });
@@ -67,7 +67,7 @@ export class BannerComponent implements OnInit {
  }
 
  private AddSectionToRightMenuBar(serviceDescr: ReprType) {
-    this.metamodel.loadLink<Resource>(serviceDescr).subscribe(serviceEntity => {
+    this.metamodel.loadLink(Resource, serviceDescr).subscribe(serviceEntity => {
       const menuBar = <MenuBarComponent>this.menus[serviceEntity.extensions.menuBar];
 
       if (this.isNotEmpty(serviceEntity)) {
@@ -94,6 +94,6 @@ export class BannerComponent implements OnInit {
 
   public getServices(): Observable<ReprTypesList> {
     const servicesHRef =  this.metamodel.buildUrl('services');
-    return this.metamodel.load<ReprTypesList>(servicesHRef, true);
+    return this.metamodel.load(ReprTypesList, servicesHRef, true);
    }
 }

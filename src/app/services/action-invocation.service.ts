@@ -15,6 +15,13 @@ export class ActionInvocationService {
 
     // TODO: it will need to receive the full resource (including describedBy link, to get params)
     public invokeAction(action: Action, actionDescriptor: ActionDescription): void {
+         if (actionDescriptor.hasParameters) {
+            // emit event with args;
+            const params = actionDescriptor.parameters;
+            console.log('------ params -------');
+            console.log(params);
+            return;
+          }
       // Action invocation (will need to be a safe call, with proper error handling)
       this.metamodel.getInvoke(action).subscribe(data => {
           const result = data as Array<any>;
@@ -22,13 +29,6 @@ export class ActionInvocationService {
           arg.ExtendedResult = result;
           arg.ActionDescriptor = actionDescriptor;
 
-         if (arg.ActionDescriptor.hasParameters) {
-            // emit event with args;
-            const params = arg.ActionDescriptor.parameters;
-            console.log('------ params -------');
-            console.log(params);
-            return;
-          }
 
           this.actionInvoked.emit(arg);
        });
