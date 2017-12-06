@@ -7,6 +7,7 @@ import { IResourceLink } from '../models/ro/iresource-link';
 import { Resource, ReprType, ActionResult, ReprTypesList } from '../models/ro/iresource';
 import {MatMenuModule} from '@angular/material/menu';
 import { environment } from '../../environments/environment';
+import { Element } from '@angular/compiler';
 declare var $: any;
 
 // RO Resource: Services
@@ -35,15 +36,10 @@ export class BannerComponent implements OnInit {
     this.menus['SECONDARY'] = this.secondaryMenu;
     this.menus['TERTIARY'] = this.tertiaryMenu;
 
-    this.SetAppName();
-  this.SetUserName();
+    this.SetUserName();
     this.PopulateMenuBars();
   }
 
-  private SetAppName() {
-    // TODO: get from config
-    $('title').text('Home Page');
-   }
 
   private SetUserName() {
     // TODO: move to ProfileService
