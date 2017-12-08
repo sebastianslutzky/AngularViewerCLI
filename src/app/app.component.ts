@@ -3,6 +3,7 @@ import { ActionResult } from './models/ro/iresource';
 import { ActionInvocationService } from './services/action-invocation.service';
 import { ComponentFactoryService } from './services/component-factory.service';
 import { ListComponent } from './list/list.component';
+import { DialogComponent } from './dialog/dialog.component';
 
 @Component({
   selector: 'app-root',
@@ -16,8 +17,14 @@ export class AppComponent {
   constructor(private invoker: ActionInvocationService,
             private componentFactory: ComponentFactoryService) {
     invoker.actionInvoked.subscribe(data => {
-      const component = this.componentFactory.createComponent(this._desktop, ListComponent, {'actionResource': data});
-      //this._desktop.insert(component.hostView);
-  });
+       this.componentFactory.createComponent(this._desktop, ListComponent, {'actionResource': data});
+    });
+
+    invoker.actionParamsNeeded.subscribe(args => {
+      if (!args.Canvas) {
+        args.Canvas = this._desktop;
+      }
+       this.componentFactory.createComponent(args.Canvas, DialogComponent, {'args': args.ActionDescriptor});
+    });
  }
 }

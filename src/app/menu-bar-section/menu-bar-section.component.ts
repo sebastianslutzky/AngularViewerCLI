@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { MetamodelService } from '../services/metamodel.service';
-import { IResourceLink } from '../models/ro/iresource-link';
+import { ResourceLink } from '../models/ro/iresource-link';
 import { IMenuBarSectionLoaded } from './imenu-bar-section-loaded';
 import { log } from 'util';
 import { HttpClient } from 'selenium-webdriver/http';
@@ -23,7 +23,7 @@ export class MenuBarSectionComponent implements OnInit {
   NoDivision: boolean;
   @Output()
   onMenuSectionLoaded: EventEmitter<IMenuBarSectionLoaded> = new EventEmitter();
-  actions: Array<IResourceLink>= [];
+  actions: Array<ResourceLink>= [];
 
 
   constructor(private metamodel: MetamodelService, private client: HttpClientWithAuthService) { }
@@ -31,6 +31,6 @@ export class MenuBarSectionComponent implements OnInit {
   ngOnInit() {
     const descr = <any>this.ResourceDescriptor;
     const members = Object.keys(descr.members).map(function(k) {return descr.members[k]; });
-    this.actions = <IResourceLink[]> members;
+    this.actions = <ResourceLink[]> members;
   }
 }

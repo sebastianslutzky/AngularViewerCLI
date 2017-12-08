@@ -9,7 +9,6 @@ import { ComponentFactoryService } from '../services/component-factory.service';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/share';
 import { validateConfig } from '@angular/router/src/config';
-import { IResourceLink } from '../models/ro/iresource-link';
 import { ComponentFactory } from '@angular/core/src/linker/component_factory';
 import { error } from 'util';
 
@@ -68,7 +67,6 @@ export class ListComponent implements AfterViewInit {
         return value;
       }
       default: {
-        console.warn('don\'t know how to render columns of type: . Viewing as string');
         return value;
       }
     }

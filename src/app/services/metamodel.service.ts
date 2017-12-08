@@ -3,8 +3,7 @@ import { HttpClientWithAuthService } from './http-client-with-auth.service';
 import { rootRoute } from '@angular/router/src/router_module';
 import 'rxjs/add/operator/map' ;
 import { Observable } from 'rxjs/Observable';
-import { Resource, ActionResult, ReprTypesList, ActionDescription } from '../models/ro/iresource';
-import { IResourceLink } from '../models/ro/iresource-link';
+import { Resource, ActionResult, ReprTypesList, ActionDescription, IResource, ResourceLink } from '../models/ro/iresource';
 import { ResourceFactoryService } from './resource-factory.service';
 import {plainToClass, classToClass, plainToClassFromExist} from 'class-transformer';
 @Injectable()
@@ -26,14 +25,21 @@ export class MetamodelService {
   }
 
 
+  // Known rels
   public getDetails<T>(link: Resource): Observable<T> {
     return this.get(this.getDetailsRel(link));
   }
 
-  public getDescribedBy<T>(c: new() => T, link: Resource): Observable<T> {
+  public getDescribedBy<T>(c: new() => T, link: IResource): Observable<T> {
     const  describedby =  this.getFromRel(link, 'describedby');
     return this.loadLink(c , describedby);
   }
+
+  public loadReturnType<T>(c: new() => T, link: IResource): Observable<T> {
+    const  resourceLink =  this.getFromRel(link, 'urn:org.restfulobjects:rels/return-type');
+    return this.loadLink(c , resourceLink);
+  }
+  //
 
   // tslint:disable-next-line:one-line
   public getAction(link: Resource): Observable<Resource>{
@@ -41,7 +47,7 @@ export class MetamodelService {
     return this.get(rel);
   }
 
-  public get(link: IResourceLink, isisHeader: boolean = false): Observable<any> {
+  public get(link: ResourceLink, isisHeader: boolean = false): Observable<any> {
     return this.getUrl(link.href, isisHeader);
   }
 
@@ -49,32 +55,33 @@ export class MetamodelService {
     return this.load(null, url, isisHeader);
   }
 
-  getDetailsRel(resource: Resource): IResourceLink {
+  getDetailsRel(resource: IResource): ResourceLink {
     return this.getFromRel(resource, 'urn:org.restfulobjects:rels/details');
   }
 
-  public getFromRel(resource: Resource, rel: string): IResourceLink {
+  public getFromRel(resource: IResource, rel: string): ResourceLink {
     const links = this.findFromRel(resource.links, rel);
     if (links.length === 0) {
+        console.log(resource);
         throw new Error(('rel not found: ' + rel));
     }
     return links[0];
   }
 
-  public findFromRel(links: IResourceLink[], rel: string): IResourceLink[] {
+  public findFromRel(links: ResourceLink[], rel: string): ResourceLink[] {
     return links.filter(function(item: any){return item.rel.startsWith(rel); });
   }
 
-   public getInvoke(resource: Resource): Observable<any> {
+   public getInvoke(resource: IResource): Observable<any> {
      const href = this.getFromRel(resource, 'urn:org.restfulobjects:rels/invoke');
      return this.loadLink(null, href, true);
    }
 
 
    // Object Type
-   public getProperty(links: IResourceLink[], propertyName: string): Observable<any> {
+   public getProperty(links: ResourceLink[], propertyName: string): Observable<any> {
      const properties = this.findFromRel(links, 'urn:org.restfulobjects:rels/property');
-     const matches = properties.filter(function(item: IResourceLink){return item.href.endsWith('properties/' + propertyName); });
+     const matches = properties.filter(function(item: ResourceLink){return item.href.endsWith('properties/' + propertyName); });
      if (matches.length === 0) {
       throw new Error('property not found: ' + propertyName);
      }
@@ -95,7 +102,7 @@ export class MetamodelService {
     return this.client.get(url, useIsisHeader).map(res => res.json()).map(obj => this.toClass(c, obj));
    }
 
-   loadLink<T>(c: new() => T, link: IResourceLink, useIsisHeader: boolean = false): Observable<T> {
+   loadLink<T>(c: new() => T, link: ResourceLink, useIsisHeader: boolean = false): Observable<T> {
     return this.load<T>(c, link.href, useIsisHeader);
    }
 

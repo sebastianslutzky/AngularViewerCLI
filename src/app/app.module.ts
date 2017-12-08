@@ -19,7 +19,11 @@ import { MatMenuModule,
         MatExpansionModule,
         MatTooltipModule,
         MatCardModule,
-        MatCheckboxModule} from '@angular/material';
+        MatDialogModule,
+        MatCheckboxModule,
+        MatFormField,
+        MatFormFieldModule,
+        MatInputModule} from '@angular/material';
 import {MatIconModule} from '@angular/material/icon';
 import {MatButtonModule} from '@angular/material/button';
 import { ActionInvocationService } from './services/action-invocation.service';
@@ -31,6 +35,10 @@ import { CheckboxComponent } from './checkbox/checkbox.component';
 import { TextComponent } from './text/text.component';
 import { FormsModule } from '@angular/forms';
 import { ResourceFactoryService } from './services/resource-factory.service';
+import { DialogComponent } from './dialog/dialog.component';
+import { DialogContainerComponent } from './dialog-container/dialog-container.component';
+import { ActionParamComponent } from './action-param/action-param.component';
+import { TextParamComponent } from './text-param/text-param.component';
 
 
 @NgModule({
@@ -44,7 +52,11 @@ import { ResourceFactoryService } from './services/resource-factory.service';
     ListComponent,
     CellComponent,
     CheckboxComponent,
-    TextComponent
+    TextComponent,
+    DialogComponent,
+    DialogContainerComponent,
+    ActionParamComponent,
+    TextParamComponent
   ],
   imports: [
     HttpModule,
@@ -59,7 +71,10 @@ import { ResourceFactoryService } from './services/resource-factory.service';
     MatExpansionModule,
     MatTooltipModule,
     MatCardModule,
+    MatFormFieldModule,
     MatCheckboxModule,
+    MatDialogModule,
+    MatInputModule,
     FormsModule
   ],
   providers: [HttpClientWithAuthService,
@@ -71,7 +86,10 @@ import { ResourceFactoryService } from './services/resource-factory.service';
   entryComponents: [
     ListComponent,
     TextComponent,
-    CheckboxComponent
+    TextParamComponent,
+    CheckboxComponent,
+    DialogComponent,
+    DialogContainerComponent
   ]
 })
 export class AppModule { }

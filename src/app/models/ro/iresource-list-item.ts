@@ -1,2 +1,2 @@
-import { IResourceLink } from './iresource-link';
+import { ResourceLink } from './iresource-link';
 

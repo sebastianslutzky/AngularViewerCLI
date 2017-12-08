@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, Injector } from '@angular/core';
 import { inject } from '@angular/core/testing';
+import { ParamDescription } from '../models/ro/iresource';
 
 @Component({
   selector: 'app-text',
@@ -8,10 +9,11 @@ import { inject } from '@angular/core/testing';
 })
 export class TextComponent implements OnInit {
 
-  value: string;
+  param: ParamDescription;
 
   constructor(private injector: Injector) {
-    this.value = injector.get('value');
+    this.param = injector.get('args');
+    console.log(this.param);
    }
 
   ngOnInit() {

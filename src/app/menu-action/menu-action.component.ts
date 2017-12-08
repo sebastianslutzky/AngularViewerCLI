@@ -1,7 +1,6 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { IResourceLink } from '../models/ro/iresource-link';
+import { Component, OnInit, Input, ViewContainerRef } from '@angular/core';
 import { MetamodelService } from '../services/metamodel.service';
-import {  Resource, Action, ActionDescription } from '../models/ro/iresource';
+import {  Resource, Action, ActionDescription, ObjectAction } from '../models/ro/iresource';
 import { ActionInvocationService } from '../services/action-invocation.service';
 
 @Component({
@@ -15,7 +14,7 @@ export class MenuActionComponent implements OnInit {
 
   @Input()
   ActionLink: Resource;
-  Action: Action;
+  Action: ObjectAction;
   get friendlyName(): string {
     return this.actionDescribedBy && this.actionDescribedBy.extensions.friendlyName || '';
   }
@@ -24,7 +23,7 @@ export class MenuActionComponent implements OnInit {
 
   ngOnInit() {
     // get action resource
-    this.metamodel.getDetails<Action>(this.ActionLink).subscribe(data => {
+    this.metamodel.getDetails<ObjectAction>(this.ActionLink).subscribe(data => {
       this.Action = data;
       // get description
       this.metamodel.getDescribedBy(ActionDescription, this.Action).subscribe(action => {

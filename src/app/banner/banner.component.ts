@@ -3,7 +3,6 @@ import { MetamodelService } from '../services/metamodel.service';
 import {Observable} from 'rxjs/Observable';
 import { MenuBarComponent } from '../menu-bar/menu-bar.component';
 import { forEach } from '@angular/router/src/utils/collection';
-import { IResourceLink } from '../models/ro/iresource-link';
 import { Resource, ReprType, ActionResult, ReprTypesList } from '../models/ro/iresource';
 import {MatMenuModule} from '@angular/material/menu';
 import { environment } from '../../environments/environment';
