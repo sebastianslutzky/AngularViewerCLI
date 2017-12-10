@@ -11,6 +11,10 @@ import { ActionParametersNeededArgs } from '../services/iactioninvoked';
   styleUrls: ['./dialog-container.component.css']
 })
 export class DialogContainerComponent implements OnInit {
+  // pass the whole map to params and the key to the specific param
+  // change the param input to the dictionary[key] as the model
+
+  DialogInput: any = {};
 
   get actionName(): string{
     return this.action.extensions.friendlyName;
@@ -23,5 +27,20 @@ export class DialogContainerComponent implements OnInit {
    }
 
   ngOnInit() {
+    this.DialogInput.params =  this.action.parameters.reduce((map, p) => {
+      map[p.rel] =  new ParamInput();
+      return map;
+    }, {});
   }
  }
+
+ export class ParamInput {
+
+   public name: string;
+   public value = '';
+
+   public toQueryString(): string {
+     return `${this.name}=${this.value}` ;
+   }
+ }
+

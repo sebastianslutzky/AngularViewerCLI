@@ -72,9 +72,9 @@ export class MetamodelService {
     return links.filter(function(item: any){return item.rel.startsWith(rel); });
   }
 
-   public getInvoke(resource: IResource): Observable<any> {
+   public getInvoke(resource: IResource, queryString: string = null): Observable<any> {
      const href = this.getFromRel(resource, 'urn:org.restfulobjects:rels/invoke');
-     return this.loadLink(null, href, true);
+     return this.loadLink(null, href, true,queryString);
    }
 
 
@@ -98,12 +98,15 @@ export class MetamodelService {
    //////////
    // v2
    // todo: use right method based on http vern
-   load<T>(c: new() => T, url: string, useIsisHeader: boolean = false): Observable<T> {
+   load<T>(c: new() => T, url: string, useIsisHeader: boolean = false, queryString: string = null): Observable<T> {
+     if (queryString) {
+       url += '?' + queryString;
+     }
     return this.client.get(url, useIsisHeader).map(res => res.json()).map(obj => this.toClass(c, obj));
    }
 
-   loadLink<T>(c: new() => T, link: ResourceLink, useIsisHeader: boolean = false): Observable<T> {
-    return this.load<T>(c, link.href, useIsisHeader);
+   loadLink<T>(c: new() => T, link: ResourceLink, useIsisHeader: boolean = false, queryString: string = null): Observable<T> {
+    return this.load<T>(c, link.href, useIsisHeader, queryString);
    }
 
    /////////

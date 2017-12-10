@@ -1,19 +1,20 @@
-import { Component, OnInit, Injector } from '@angular/core';
+import { Component, OnInit, Injector, EventEmitter, Output } from '@angular/core';
 import { MetamodelService } from '../services/metamodel.service';
 import { ComponentFactoryService } from '../services/component-factory.service';
 import {MatDialog} from '@angular/material';
-import { DialogContainerComponent } from '../dialog-container/dialog-container.component';
+import { DialogContainerComponent, ParamInput } from '../dialog-container/dialog-container.component';
 import { ActionParametersNeededArgs } from '../services/iactioninvoked';
-import { ActionDescription } from '../models/ro/iresource';
+import { ActionDescription, ObjectAction } from '../models/ro/iresource';
 
 @Component({
   selector: 'app-dialog',
   templateUrl: './dialog.component.html',
   styleUrls: ['./dialog.component.css']
 })
-export class DialogComponent implements OnInit {
-
+export class DialogComponent {
   private args: ActionDescription;
+  @Output()
+  onParamtersCollected: EventEmitter<ActionParameterCollection> = new EventEmitter();
 
 
   // this component could be reduced to just 1 static handler function that opens the dialog
@@ -21,7 +22,7 @@ export class DialogComponent implements OnInit {
     public dialog: MatDialog,
     public injector: Injector) {
        this.args = injector.get('args');
-        this.openDialog();
+       this.openDialog();
   }
 
   openDialog() {
@@ -31,10 +32,17 @@ export class DialogComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log(`Dialog result: ${result}`);
+      const args = new ActionParameterCollection(result.params);
+      this.onParamtersCollected.emit(args);
     });
   }
-  ngOnInit() {
-  }
+}
 
+export class ActionParameterCollection {
+  constructor(public params: {[key: string]: ParamInput}) {}
+
+  public asQueryString(): string {
+   const params = Object.values(this.params).map(input => input.toQueryString());
+   return params.join('&');
+  }
 }

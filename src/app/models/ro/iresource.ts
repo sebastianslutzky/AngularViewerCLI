@@ -71,6 +71,7 @@ export class DomainType {
     canonicalName: string;
 }
 
+// action type
 export class ActionDescription {
     id: string;
     memberType: string;
@@ -83,11 +84,11 @@ export class ActionDescription {
     }
 }
 
+// instance of an action
 export class ObjectAction {
    id: string;
     memberType: string;
     links: ResourceLink[];
     extensions: IResourceExtensions;
     parameters: any;
-
 }

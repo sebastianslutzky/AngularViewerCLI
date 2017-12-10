@@ -13,7 +13,12 @@ export class ActionParamComponent implements OnInit {
 
   @Input()
   Parameter: ResourceLink;
- descriptor: ParamDescription;
+  @Input()
+  Context: any;
+  @Input()
+  Key: string;
+
+  descriptor: ParamDescription;
 
  get friendlyName(): string {
   return this.descriptor.extensions.friendlyName;
@@ -27,7 +32,10 @@ export class ActionParamComponent implements OnInit {
         this.descriptor = paramDescr;
         this.metamodel.loadReturnType(DomainType, paramDescr).subscribe(paramType => {
           const view = this.renderInput(paramType.canonicalName);
-          this.componentFactory.createComponent(this.container, view, {'args': paramDescr});
+          this.componentFactory.createComponent(this.container, view,
+            {'args': paramDescr,
+            'ctx': this.Context,
+          'key': this.Key});
         });
       });
   }
@@ -43,6 +51,5 @@ export class ActionParamComponent implements OnInit {
         }
       }
   }
-
 }
 

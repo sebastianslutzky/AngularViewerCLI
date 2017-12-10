@@ -9,11 +9,10 @@ import { ParamDescription } from '../models/ro/iresource';
 })
 export class TextComponent implements OnInit {
 
-  param: ParamDescription;
+  value: string;
 
   constructor(private injector: Injector) {
-    this.param = injector.get('args');
-    console.log(this.param);
+    this.value = injector.get('value');
    }
 
   ngOnInit() {

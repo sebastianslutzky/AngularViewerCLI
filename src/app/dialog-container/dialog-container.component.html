@@ -1,10 +1,10 @@
 <h2 mat-dialog-title>{{actionName}}</h2>
 <mat-dialog-content>
-  <app-action-param *ngFor="let param of action.parameters" [Parameter]='param'>
+  <app-action-param *ngFor="let param of action.parameters" [Parameter]='param' [Context]='DialogInput' [Key]='param.rel' >
     </app-action-param> 
 </mat-dialog-content>
 <mat-dialog-actions>
-  <button mat-button [mat-dialog-close]="true" tabindex="1">OK</button>
+  <button mat-button [mat-dialog-close]="DialogInput" tabindex="1">OK</button>
   <button mat-button mat-dialog-close tabindex="-1">Cancel</button>
 </mat-dialog-actions>
 

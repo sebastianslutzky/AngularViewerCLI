@@ -1,4 +1,4 @@
-import { ActionResult, Resource, ActionDescription } from '../models/ro/iresource';
+import { ActionResult, Resource, ActionDescription, ObjectAction } from '../models/ro/iresource';
 import { ViewRef } from '@angular/core/src/linker/view_ref';
 import { ViewContainerRef } from '@angular/core/src/linker/view_container_ref';
 
@@ -9,6 +9,7 @@ export class ActionInvokedArg {
 }
 
 export class ActionParametersNeededArgs {
+    ObjectAction: ObjectAction;
     ActionDescriptor: ActionDescription;
     Canvas: ViewContainerRef;
 }
