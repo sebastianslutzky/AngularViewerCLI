@@ -28,7 +28,7 @@ export class TextParamComponent implements OnInit {
     this.Key = injector.get('key');
 
     // TODO: Fix this mess (pass friendly name as an input to this component)
-    (this.Context.params[this.Key] as ParamInput).name = this.description.name.toLocaleLowerCase();
+    (this.Context.params[this.Key] as ParamInput).name = this.description.name.toLocaleLowerCase().replace(' ', '');
    }
 
   ngOnInit() {

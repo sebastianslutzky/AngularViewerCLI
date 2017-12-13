@@ -27,13 +27,14 @@ export class DialogComponent {
 
   openDialog() {
     const dialogRef = this.dialog.open(DialogContainerComponent, {
-      height: '350px',
       data : {args: this.args}
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      const args = new ActionParameterCollection(result.params);
-      this.onParamtersCollected.emit(args);
+      if (result) {
+        const args = new ActionParameterCollection(result.params);
+        this.onParamtersCollected.emit(args);
+      }
     });
   }
 }
