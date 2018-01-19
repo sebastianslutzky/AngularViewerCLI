@@ -3,7 +3,7 @@ import { MatTableDataSource, MatSort } from '@angular/material';
 import { AfterViewInit } from '@angular/core/src/metadata/lifecycle_hooks';
 import { XActionResultList, IXActionResultListItem } from '../models/ro/xaction-result-list';
 import { ActionInvokedArg } from '../services/iactioninvoked';
-import { Resource } from '../models/ro/iresource';
+import { Resource, ActionDescription } from '../models/ro/iresource';
 import { MetamodelService } from '../services/metamodel.service';
 import { ComponentFactoryService } from '../services/component-factory.service';
 import { Observable } from 'rxjs/Observable';
@@ -18,7 +18,7 @@ import { error } from 'util';
   styleUrls: ['./list.component.css']
 })
 export class ListComponent implements AfterViewInit {
-  descriptor: Resource;
+  descriptor: ActionDescription;
   displayedColumns: Array<string> ;
   dataSource: MatTableDataSource<IXActionResultListItem>;
   resource: XActionResultList;
