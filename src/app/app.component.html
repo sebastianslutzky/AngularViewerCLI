@@ -1,5 +1,16 @@
 <app-banner></app-banner>
-<template #desktop>
+<mat-sidenav-container item-height="500" [dragula]>
+    hi
+        <mat-sidenav [dragula] mode="side" opened="true">
+        <nav [dragula]='shelves-bag'>
+            <section>Recent</section>
+            <section>something else</section>
+        </nav></mat-sidenav>
+        <mat-sidenav-content>
+<template #desktop [dragula]='main-bag'>
 </template>
 <router-outlet></router-outlet>
+    </mat-sidenav-content>
+</mat-sidenav-container>
+
 <app-footer></app-footer>

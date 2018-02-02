@@ -1,4 +1,4 @@
-<div class="example-container mat-elevation-z8">
+<div [dragula] class="example-container mat-elevation-z8">
 <div *ngIf="areAllColumnsLoaded">
 <mat-accordion>
   <mat-expansion-panel [expanded]='true'>
@@ -16,8 +16,10 @@
     <ng-container *ngFor="let column of displayedColumns" matColumnDef="{{column}}"> <!-- for each column -->
       <mat-header-cell *matHeaderCellDef mat-sort-header> {{column}} </mat-header-cell>
       <mat-cell *matCellDef="let element"> 
+        <a [routerLink]="getObjectUrl(element)">
        <app-cell [value]='element[column]' [type]='getPropertyReturnType(column)'>
-         </app-cell> 
+        </app-cell>
+      </a>
     <!-- //    {{renderCell(column,element[column])}} -->
       </mat-cell>
     </ng-container>

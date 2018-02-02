@@ -5,19 +5,21 @@ import 'rxjs/add/operator/map' ;
 import { Observable } from 'rxjs/Observable';
 import { Resource, ActionResult, ReprTypesList, ActionDescription, IResource, ResourceLink } from '../models/ro/iresource';
 import { ResourceFactoryService } from './resource-factory.service';
+import { environment } from '../../environments/environment';
 import {plainToClass, classToClass, plainToClassFromExist} from 'class-transformer';
 @Injectable()
 export class MetamodelService {
-
-  private rootUrl: string;
+private rootUrl: string;
 
   constructor(private client: HttpClientWithAuthService, private resourceFactory: ResourceFactoryService) {
-        const host = 'localhost';
-        const port = '8080';
         const apiRoot = 'restful';
         const protocol = 'http';
 
-        this.rootUrl = protocol  + '://' + host + ':' + port + '/' + apiRoot;
+        this.rootUrl = environment.backendAddress + '/' + apiRoot;
+   }
+
+   public getRelativePath(absolutePath: string) {
+     return absolutePath.replace(this.rootUrl, '');
    }
 
   public buildUrl(endpoint: string): string {

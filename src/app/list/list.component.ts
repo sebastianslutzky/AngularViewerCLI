@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, Injector, ViewContainerRef } from '@angular/core';
+import { Component, OnInit, ViewChild, Injector, ViewContainerRef, SecurityContext } from '@angular/core';
 import { MatTableDataSource, MatSort } from '@angular/material';
 import { AfterViewInit } from '@angular/core/src/metadata/lifecycle_hooks';
 import { XActionResultList, IXActionResultListItem } from '../models/ro/xaction-result-list';
@@ -11,6 +11,7 @@ import 'rxjs/add/operator/share';
 import { validateConfig } from '@angular/router/src/config';
 import { ComponentFactory } from '@angular/core/src/linker/component_factory';
 import { error } from 'util';
+import { DomSanitizer} from '@angular/platform-browser';
 
 @Component({
   selector: 'app-list',
@@ -31,7 +32,8 @@ export class ListComponent implements AfterViewInit {
 
   constructor(public injector: Injector,
             private metamodel: MetamodelService,
-            private viewFactory: ComponentFactoryService) {
+            private viewFactory: ComponentFactoryService,
+            private sanitizer: DomSanitizer) {
     const rawResult = this.injector.get('actionResource') as ActionInvokedArg;
     // todo: if this class applies to all action results, move to action invocation service
     this.resource = new XActionResultList(rawResult.ExtendedResult);
@@ -59,6 +61,10 @@ export class ListComponent implements AfterViewInit {
   getPropertyReturnType(columnName: string): string {
     const propertyType = this.columnTypes[columnName];
     return this.metamodel.getPropertyType(columnName, propertyType);
+  }
+
+  getObjectUrl(element: IXActionResultListItem) {
+    return 'object/' + encodeURIComponent(element.$$href);
   }
 
   renderCell(columName: string, value: string): string {

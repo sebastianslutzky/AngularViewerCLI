@@ -23,7 +23,8 @@ import { MatMenuModule,
         MatCheckboxModule,
         MatFormField,
         MatFormFieldModule,
-        MatInputModule} from '@angular/material';
+        MatInputModule,
+        MatSidenavModule} from '@angular/material';
 import {MatIconModule} from '@angular/material/icon';
 import {MatButtonModule} from '@angular/material/button';
 import { ActionInvocationService } from './services/action-invocation.service';
@@ -39,6 +40,9 @@ import { DialogComponent } from './dialog/dialog.component';
 import { DialogContainerComponent } from './dialog-container/dialog-container.component';
 import { ActionParamComponent } from './action-param/action-param.component';
 import { TextParamComponent } from './text-param/text-param.component';
+import { ObjectComponent } from './object/object.component';
+import { ObjectContainerComponent } from './object-container/object-container.component';
+import {DragulaModule} from 'ng2-dragula';
 
 
 @NgModule({
@@ -56,9 +60,12 @@ import { TextParamComponent } from './text-param/text-param.component';
     DialogComponent,
     DialogContainerComponent,
     ActionParamComponent,
-    TextParamComponent
+    TextParamComponent,
+    ObjectComponent,
+    ObjectContainerComponent
   ],
   imports: [
+    DragulaModule,
     HttpModule,
     BrowserModule,
     BrowserAnimationsModule,
@@ -75,6 +82,7 @@ import { TextParamComponent } from './text-param/text-param.component';
     MatCheckboxModule,
     MatDialogModule,
     MatInputModule,
+    MatSidenavModule,
     FormsModule
   ],
   providers: [HttpClientWithAuthService,
@@ -89,7 +97,8 @@ import { TextParamComponent } from './text-param/text-param.component';
     TextParamComponent,
     CheckboxComponent,
     DialogComponent,
-    DialogContainerComponent
+    DialogContainerComponent,
+    ObjectComponent
   ]
 })
 export class AppModule { }
