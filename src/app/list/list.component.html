@@ -4,9 +4,10 @@
   <mat-expansion-panel [expanded]='true'>
     <mat-expansion-panel-header>
       <mat-panel-title>
-        {{actionName}}
+        {{actionName}} 
       </mat-panel-title>
       <mat-panel-description>
+        {{resource.Timestamp| date: 'HH:mm:ss'}}
       </mat-panel-description>
     </mat-expansion-panel-header>
 

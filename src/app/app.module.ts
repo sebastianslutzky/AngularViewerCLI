@@ -43,6 +43,7 @@ import { TextParamComponent } from './text-param/text-param.component';
 import { ObjectComponent } from './object/object.component';
 import { ObjectContainerComponent } from './object-container/object-container.component';
 import {DragulaModule} from 'ng2-dragula';
+import { SessionService } from './services/session.service';
 
 
 @NgModule({
@@ -89,7 +90,8 @@ import {DragulaModule} from 'ng2-dragula';
     MetamodelService,
     ActionInvocationService,
     ComponentFactoryService,
-    ResourceFactoryService],
+    ResourceFactoryService,
+    SessionService],
   bootstrap: [AppComponent],
   entryComponents: [
     ListComponent,

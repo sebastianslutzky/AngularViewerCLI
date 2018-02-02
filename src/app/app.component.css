@@ -1,4 +1,4 @@
-app-root {
+:host {
     display: flex;
     flex-direction: column;
     position: absolute;
@@ -6,6 +6,10 @@ app-root {
     bottom: 0;
     left: 0;
     right: 0;
+  }
+
+  .mat-sidenav-container{
+      flex: 1;
   }
 
   @media (max-width: 720px) {

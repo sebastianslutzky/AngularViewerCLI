@@ -12,10 +12,13 @@ export class XActionResultList {
     PropertyNames: string[];
     ROResult: Resource;
 
+    Timestamp: Date;
+
     constructor(result: any[]) {
        this.ROResult = result.splice(-1, 1)[0].$$ro;
        this.XListItems = result;
        this.PropertyNames = this.getPropertyNames();
+       this.Timestamp = new Date();
     }
 
     private getPropertyNames(): string[] {

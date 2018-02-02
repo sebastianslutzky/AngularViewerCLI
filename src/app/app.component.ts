@@ -5,6 +5,7 @@ import { ComponentFactoryService } from './services/component-factory.service';
 import { ListComponent } from './list/list.component';
 import { DialogComponent } from './dialog/dialog.component';
 import { ComponentRef } from '@angular/core/src/linker/component_factory';
+import { SessionService } from './services/session.service';
 
 @Component({
   selector: 'app-root',
@@ -12,13 +13,23 @@ import { ComponentRef } from '@angular/core/src/linker/component_factory';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
+
+  get currentResults(): Set<any>{
+    return this.session.currentResults;
+  }
   title = 'app';
   @ViewChild('desktop', {read: ViewContainerRef}) private _desktop: ViewContainerRef;
 
   constructor(private invoker: ActionInvocationService,
-            private componentFactory: ComponentFactoryService) {
+            private componentFactory: ComponentFactoryService,
+            private session: SessionService) {
     invoker.actionInvoked.subscribe(data => {
-       this.componentFactory.createComponent(this._desktop, ListComponent, {'actionResource': data});
+      // a new action returned a result
+      // store in sessionService.currentResults
+      this.session.indexCurrentResult(data);
+       //this.componentFactory.createComponent(this._desktop, ListComponent, {'actionResource': data});
+       //then change main body to render session.CurrentResults as, for now, listcomponents
+       //then  implement session.shelvedResults for dragula and render as minimized cards
     });
 
     // action params needed

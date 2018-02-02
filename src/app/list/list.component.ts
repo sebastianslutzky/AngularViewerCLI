@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, Injector, ViewContainerRef, SecurityContext } from '@angular/core';
+import { Component, OnInit, ViewChild, Injector, ViewContainerRef, SecurityContext, Input } from '@angular/core';
 import { MatTableDataSource, MatSort } from '@angular/material';
 import { AfterViewInit } from '@angular/core/src/metadata/lifecycle_hooks';
 import { XActionResultList, IXActionResultListItem } from '../models/ro/xaction-result-list';
@@ -18,7 +18,7 @@ import { DomSanitizer} from '@angular/platform-browser';
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.css']
 })
-export class ListComponent implements AfterViewInit {
+export class ListComponent implements AfterViewInit,  OnInit {
   descriptor: ActionDescription;
   displayedColumns: Array<string> ;
   dataSource: MatTableDataSource<IXActionResultListItem>;
@@ -26,7 +26,12 @@ export class ListComponent implements AfterViewInit {
   public columns: Array<any>;
 
   public elementType: Resource;
+
+  @Input()
+  public actionResult: ActionInvokedArg;
+
   private columnTypes = {};
+
 
   @ViewChild(MatSort) sort: MatSort;
 
@@ -34,14 +39,6 @@ export class ListComponent implements AfterViewInit {
             private metamodel: MetamodelService,
             private viewFactory: ComponentFactoryService,
             private sanitizer: DomSanitizer) {
-    const rawResult = this.injector.get('actionResource') as ActionInvokedArg;
-    // todo: if this class applies to all action results, move to action invocation service
-    this.resource = new XActionResultList(rawResult.ExtendedResult);
-    this.descriptor = rawResult.ActionDescriptor;
-    this.dataSource = new MatTableDataSource(this.resource.XListItems);
-    this.displayedColumns = this.resource.PropertyNames;
-
-    this.preLoadPropertyTypes(rawResult);
   }
 
   preLoadPropertyTypes(rawResult: ActionInvokedArg) {
@@ -82,7 +79,24 @@ export class ListComponent implements AfterViewInit {
     return this.descriptor && this.descriptor.extensions.friendlyName || null;
   }
 
+  get timestamp(): string {
+    return this.descriptor && this.descriptor.extensions.friendlyName || null;
+  }
+
   ngAfterViewInit() {
     this.dataSource.sort = this.sort;
+  }
+  ngOnInit(): void {
+    if (!this.actionResult) {
+      this.actionResult = this.injector.get('actionResource') as ActionInvokedArg;
+    }
+
+    // todo: if this class applies to all action results, move to action invocation service
+    this.resource = new XActionResultList(this.actionResult.ExtendedResult);
+    this.descriptor = this.actionResult.ActionDescriptor;
+    this.dataSource = new MatTableDataSource(this.resource.XListItems);
+    this.displayedColumns = this.resource.PropertyNames;
+
+    this.preLoadPropertyTypes(this.actionResult);
   }
 }

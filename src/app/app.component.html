@@ -1,5 +1,5 @@
-<app-banner></app-banner>
-<mat-sidenav-container item-height="500" [dragula]>
+ <app-banner></app-banner>
+ <mat-sidenav-container [dragula]>
     hi
         <mat-sidenav [dragula] mode="side" opened="true">
         <nav [dragula]='shelves-bag'>
@@ -9,8 +9,12 @@
         <mat-sidenav-content>
 <template #desktop [dragula]='main-bag'>
 </template>
-<router-outlet></router-outlet>
+<router-outlet>
+ <div>
+        <app-list *ngFor="let result of currentResults" [actionResult]="result">
+        </app-list>
+</div>
+</router-outlet>
     </mat-sidenav-content>
 </mat-sidenav-container>
-
-<app-footer></app-footer>
+<app-footer></app-footer> 
