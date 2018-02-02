@@ -3,12 +3,10 @@ import { Injectable } from '@angular/core';
 @Injectable()
 export class SessionService {
 
-  public currentResults: Set<any>;
-  constructor() {
-    this.currentResults = new Set<any>();
-   }
+  public currentResults: any[] = [];
+  public shelvedResults: any[] = [];
 
   indexCurrentResult(result: any): any {
-    this.currentResults.add(result);
+    this.currentResults.push(result);
   }
 }

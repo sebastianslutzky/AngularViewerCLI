@@ -78,6 +78,11 @@ export class ActionDescription {
     links: ResourceLink[];
     parameters: ResourceLink[];
     extensions: IResourceExtensions;
+    Timestamp: Date = new Date();
+
+    get friendlyName(): string{
+        return this.extensions.friendlyName;
+    }
 
     get hasParameters(): boolean{
         return this.parameters && this.parameters.length > 0;

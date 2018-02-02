@@ -14,9 +14,6 @@ import { SessionService } from './services/session.service';
 })
 export class AppComponent {
 
-  get currentResults(): Set<any>{
-    return this.session.currentResults;
-  }
   title = 'app';
   @ViewChild('desktop', {read: ViewContainerRef}) private _desktop: ViewContainerRef;
 
@@ -27,6 +24,7 @@ export class AppComponent {
       // a new action returned a result
       // store in sessionService.currentResults
       this.session.indexCurrentResult(data);
+
        //this.componentFactory.createComponent(this._desktop, ListComponent, {'actionResource': data});
        //then change main body to render session.CurrentResults as, for now, listcomponents
        //then  implement session.shelvedResults for dragula and render as minimized cards

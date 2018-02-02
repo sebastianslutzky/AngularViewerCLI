@@ -1,20 +1,41 @@
  <app-banner></app-banner>
- <mat-sidenav-container [dragula]>
-    hi
-        <mat-sidenav [dragula] mode="side" opened="true">
-        <nav [dragula]='shelves-bag'>
-            <section>Recent</section>
-            <section>something else</section>
-        </nav></mat-sidenav>
+  <mat-sidenav-container  class="wrapper" >
+        <mat-sidenav  class='sidebar'  mode="side" opened="true" >
+        <nav>
+            <section >Shelved</section>
+        <div [dragula]='"bag"' style="height:500px"  [dragulaModel]='session.shelvedResults'>
+        <mat-card  *ngFor="let result of session.shelvedResults" >
+            {{result.ActionDescriptor.friendlyName }} ({{result.ActionDescriptor.Timestamp| date:'HH:mm:ss'}})
+        </mat-card>
+
+            </div>
+        </nav>
+    </mat-sidenav>
         <mat-sidenav-content>
-<template #desktop [dragula]='main-bag'>
+<template  >
 </template>
 <router-outlet>
- <div>
-        <app-list *ngFor="let result of currentResults" [actionResult]="result">
+ <div #desktop [dragula]='"bag"' class="deck" #daPanel [dragulaModel]='session.currentResults' >
+        <app-list *ngFor="let result of session.currentResults" [actionResult]="result">
         </app-list>
-</div>
+</div> 
 </router-outlet>
     </mat-sidenav-content>
 </mat-sidenav-container>
+<!-- <hr>
+
+Maximized:
+
+<ul>
+  <li *ngFor="let item of session.currentResults" >
+    {{item}}
+  </li>
+</ul>
+
+Minimized:
+<ul>
+  <li *ngFor="let item of session.shelvedResults" >
+    {{item}}
+  </li>
+</ul> -->
 <app-footer></app-footer> 
