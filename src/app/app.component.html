@@ -1,41 +1,11 @@
  <app-banner></app-banner>
-  <mat-sidenav-container  class="wrapper" >
-        <mat-sidenav  class='sidebar'  mode="side" opened="true" >
-        <nav>
-            <section >Shelved</section>
-        <div [dragula]='"bag"' style="height:500px"  [dragulaModel]='session.shelvedResults'>
-        <mat-card  *ngFor="let result of session.shelvedResults" >
-            {{result.ActionDescriptor.friendlyName }} ({{result.Timestamp| date:'HH:mm:ss'}})
+      <mat-grid-list cols="10">
+        <mat-grid-tile  *ngFor="let result of session.universe" >
+        <mat-card >
+            <!-- todo: show object as is, title should be in the object. wrap mat-card in and object -->
+            <mat-card-title>{{result.ActionDescriptor.friendlyName }}</mat-card-title>
+            <mat-card-subtitle>{{result.Timestamp| date:'HH:mm:ss'}}</mat-card-subtitle>
         </mat-card>
-
-            </div>
-        </nav>
-    </mat-sidenav>
-        <mat-sidenav-content>
-<template  >
-</template>
-<router-outlet>
- <div #desktop [dragula]='"bag"' class="deck" #daPanel [dragulaModel]='session.currentResults' >
-        <app-list *ngFor="let result of session.currentResults" [actionResult]="result">
-        </app-list>
-</div> 
-</router-outlet>
-    </mat-sidenav-content>
-</mat-sidenav-container>
-<!-- <hr>
-
-Maximized:
-
-<ul>
-  <li *ngFor="let item of session.currentResults" >
-    {{item}}
-  </li>
-</ul>
-
-Minimized:
-<ul>
-  <li *ngFor="let item of session.shelvedResults" >
-    {{item}}
-  </li>
-</ul> -->
+        </mat-grid-tile>
+    </mat-grid-list> 
 <app-footer></app-footer> 

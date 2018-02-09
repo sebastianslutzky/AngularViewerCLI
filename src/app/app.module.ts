@@ -24,7 +24,9 @@ import { MatMenuModule,
         MatFormField,
         MatFormFieldModule,
         MatInputModule,
-        MatSidenavModule} from '@angular/material';
+        MatSidenavModule,
+        MatGridListModule,
+        MatGridList} from '@angular/material';
 import {MatIconModule} from '@angular/material/icon';
 import {MatButtonModule} from '@angular/material/button';
 import { ActionInvocationService } from './services/action-invocation.service';
@@ -48,6 +50,7 @@ import { IdentityMapComponent } from './models/identity-map/identity-map.compone
 
 
 @NgModule({
+  exports: [MatGridList],
   declarations: [
     AppComponent,
     FooterComponent,
@@ -86,6 +89,7 @@ import { IdentityMapComponent } from './models/identity-map/identity-map.compone
     MatDialogModule,
     MatInputModule,
     MatSidenavModule,
+    MatGridListModule,
     FormsModule
   ],
   providers: [HttpClientWithAuthService,

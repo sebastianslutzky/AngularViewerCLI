@@ -3,21 +3,20 @@ import { IdentityMap } from '../models/identity-map';
 
 @Injectable()
 export class SessionService {
-  public currentResults: any[] = [];
-  public shelvedResults: any[] = [];
+  public universe: any[] = [];
   private registry: IdentityMap;
 
   constructor() {
     this.registry = new IdentityMap();
   }
 
-  indexCurrentResult(result: any): any {
+  indexResult(result: any): any {
    this.addToIdentityMap(result);
-   this.addToCurrentResults(result);
+   this.addToUniverse(result);
   }
 
-  private addToCurrentResults(result: any) {
-    this.currentResults.push(result);
+  private addToUniverse(result: any) {
+    this.universe.push(result);
   }
   private addToIdentityMap(result: any): any {
     this.registry.index(result);

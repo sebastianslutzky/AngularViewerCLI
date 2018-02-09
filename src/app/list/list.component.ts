@@ -1,5 +1,5 @@
-import { Component, OnInit, ViewChild, Injector, ViewContainerRef, SecurityContext, Input } from '@angular/core';
-import { MatTableDataSource, MatSort } from '@angular/material';
+import { Component, OnInit, ViewChild, Injector, ViewContainerRef, SecurityContext, Input, Inject } from '@angular/core';
+import { MatTableDataSource, MatSort, MAT_DIALOG_DATA } from '@angular/material';
 import { AfterViewInit } from '@angular/core/src/metadata/lifecycle_hooks';
 import { XActionResultList, IXActionResultListItem } from '../models/ro/xaction-result-list';
 import { ActionInvokedArg } from '../services/iactioninvoked';
@@ -38,7 +38,8 @@ export class ListComponent implements AfterViewInit,  OnInit {
   constructor(public injector: Injector,
             private metamodel: MetamodelService,
             private viewFactory: ComponentFactoryService,
-            private sanitizer: DomSanitizer) {
+            private sanitizer: DomSanitizer,
+             @Inject(MAT_DIALOG_DATA) public data: any) {
   }
 
   preLoadPropertyTypes(rawResult: ActionInvokedArg) {
@@ -88,7 +89,7 @@ export class ListComponent implements AfterViewInit,  OnInit {
   }
   ngOnInit(): void {
     if (!this.actionResult) {
-      this.actionResult = this.injector.get('actionResource') as ActionInvokedArg;
+      this.actionResult = this.data.args as ActionInvokedArg;
     }
 
     // todo: if this class applies to all action results, move to action invocation service
