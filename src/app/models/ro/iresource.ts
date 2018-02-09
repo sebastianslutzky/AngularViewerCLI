@@ -1,13 +1,31 @@
+import { error } from "util";
+
 export interface IResource {
  links: ResourceLink[];
 }
 
-export class Resource {
+export interface IIndexable {
+    id: string;
+}
+
+export class Resource implements IIndexable {
+    get id(): string{
+
+    }
     value: ResourceListItem[];
     links: ResourceLink[];
     extensions: IResourceExtensions;
     members: ResourceLink[];
     title: string;
+
+    // todo: deduplicate this method (copied from metamodelservice)
+    // extract to some libr
+  public getSelf(links: ResourceLink[], rel: string): ResourceLink {
+    const self = links.filter(function(item: any){return item.rel.startsWith('self'); });
+    if (self.length === 0) {
+        throw new Error('self link not found for action');
+    }
+  }
 }
 
 export class ActionResult {
@@ -78,7 +96,6 @@ export class ActionDescription {
     links: ResourceLink[];
     parameters: ResourceLink[];
     extensions: IResourceExtensions;
-    Timestamp: Date = new Date();
 
     get friendlyName(): string{
         return this.extensions.friendlyName;

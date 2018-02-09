@@ -5,7 +5,7 @@
             <section >Shelved</section>
         <div [dragula]='"bag"' style="height:500px"  [dragulaModel]='session.shelvedResults'>
         <mat-card  *ngFor="let result of session.shelvedResults" >
-            {{result.ActionDescriptor.friendlyName }} ({{result.ActionDescriptor.Timestamp| date:'HH:mm:ss'}})
+            {{result.ActionDescriptor.friendlyName }} ({{result.Timestamp| date:'HH:mm:ss'}})
         </mat-card>
 
             </div>

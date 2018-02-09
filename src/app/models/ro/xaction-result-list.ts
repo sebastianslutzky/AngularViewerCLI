@@ -14,11 +14,11 @@ export class XActionResultList {
 
     Timestamp: Date;
 
-    constructor(result: any[]) {
+    constructor(result: any[], actionTimestamp: Date) {
        this.ROResult = result.splice(-1, 1)[0].$$ro;
        this.XListItems = result;
        this.PropertyNames = this.getPropertyNames();
-       this.Timestamp = new Date();
+       this.Timestamp = actionTimestamp;
     }
 
     private getPropertyNames(): string[] {

@@ -1,14 +1,18 @@
-import { ActionResult, Resource, ActionDescription, ObjectAction } from '../models/ro/iresource';
+import { ActionResult, Resource, ActionDescription, ObjectAction, IIndexable } from '../models/ro/iresource';
 import { ViewRef } from '@angular/core/src/linker/view_ref';
 import { ViewContainerRef } from '@angular/core/src/linker/view_container_ref';
 
-export class ActionInvokedArg {
+export class ActionInvokedArg implements IIndexable {
+    get id(): string{
+        return this.Result.id;
+    }
     get shortName(): string{
-        return this.ActionDescriptor.friendlyName 
+        return this.ActionDescriptor.friendlyName;
     }
     Result: ActionResult;
     ExtendedResult: Array<any>;
     ActionDescriptor: ActionDescription;
+    Timestamp: Date = new Date();
 }
 
 export class ActionParametersNeededArgs {
@@ -16,7 +20,6 @@ export class ActionParametersNeededArgs {
     ActionDescriptor: ActionDescription;
     Canvas: ViewContainerRef;
 }
-
 
 export interface IActionInvoked {
     Arg: ActionInvokedArg;

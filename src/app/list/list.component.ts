@@ -92,7 +92,7 @@ export class ListComponent implements AfterViewInit,  OnInit {
     }
 
     // todo: if this class applies to all action results, move to action invocation service
-    this.resource = new XActionResultList(this.actionResult.ExtendedResult);
+    this.resource = new XActionResultList(this.actionResult.ExtendedResult, this.actionResult.Timestamp);
     this.descriptor = this.actionResult.ActionDescriptor;
     this.dataSource = new MatTableDataSource(this.resource.XListItems);
     this.displayedColumns = this.resource.PropertyNames;

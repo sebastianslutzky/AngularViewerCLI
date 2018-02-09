@@ -44,6 +44,7 @@ import { ObjectComponent } from './object/object.component';
 import { ObjectContainerComponent } from './object-container/object-container.component';
 import {DragulaModule} from 'ng2-dragula';
 import { SessionService } from './services/session.service';
+import { IdentityMapComponent } from './models/identity-map/identity-map.component';
 
 
 @NgModule({
@@ -63,7 +64,8 @@ import { SessionService } from './services/session.service';
     ActionParamComponent,
     TextParamComponent,
     ObjectComponent,
-    ObjectContainerComponent
+    ObjectContainerComponent,
+    IdentityMapComponent
   ],
   imports: [
     DragulaModule,
