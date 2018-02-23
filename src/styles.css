@@ -4,18 +4,6 @@
 /* @import '~@angular/material/prebuilt-themes/purple-green.css'; */
 /* @import '~@angular/material/prebuilt-themes/pink-bluegrey.css'; */
 
-.deck {
-    height: 100%;
-  }
-
-  .card {
-    background: #96FFE2;
-    height: 100px;
-    width: 100px;
-    margin: 1em;
-    flex: 0 0 100px;
-  }
-
 /* default dragula styles */
 .gu-mirror {
     position: fixed !important;

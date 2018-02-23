@@ -24,6 +24,7 @@ export class ObjectContainerComponent implements OnInit {
         return;
 
         // NOT EXECUTED
+        /*
     console.log('at object component');
     this.route.params.subscribe(params => {
       const rawUrl = params['url'];
@@ -35,10 +36,11 @@ export class ObjectContainerComponent implements OnInit {
         // remove this once popup is closed
       });
     });
+      */
   }
 
   openModal(data) {
-    const windowRef = this.dialog.open(ListComponent, {data: {args: data}, height: '300px'});
+    const windowRef = this.dialog.open(ListComponent, {data: {args: data}, width: '900px', });
     windowRef.afterClosed().subscribe(result => {
       console.log('object closed');
     });

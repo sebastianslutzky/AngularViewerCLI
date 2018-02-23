@@ -46,7 +46,8 @@ import { ObjectComponent } from './object/object.component';
 import { ObjectContainerComponent } from './object-container/object-container.component';
 import {DragulaModule} from 'ng2-dragula';
 import { SessionService } from './services/session.service';
-import { IdentityMapComponent } from './models/identity-map/identity-map.component';
+import { ObjectRouterComponent } from './object-router/object-router.component';
+import { RouteLogComponent } from './route-log/route-log.component';
 
 
 @NgModule({
@@ -68,7 +69,8 @@ import { IdentityMapComponent } from './models/identity-map/identity-map.compone
     TextParamComponent,
     ObjectComponent,
     ObjectContainerComponent,
-    IdentityMapComponent
+    ObjectRouterComponent,
+    RouteLogComponent
   ],
   imports: [
     DragulaModule,
@@ -106,7 +108,8 @@ import { IdentityMapComponent } from './models/identity-map/identity-map.compone
     CheckboxComponent,
     DialogComponent,
     DialogContainerComponent,
-    ObjectComponent
+    ObjectComponent,
+    ObjectContainerComponent
   ]
 })
 export class AppModule { }

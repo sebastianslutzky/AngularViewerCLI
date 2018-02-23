@@ -7,11 +7,18 @@ import { Resource, ActionResult, ReprTypesList, ActionDescription, IResource, Re
 import { ResourceFactoryService } from './resource-factory.service';
 import { environment } from '../../environments/environment';
 import {plainToClass, classToClass, plainToClassFromExist} from 'class-transformer';
+import { Router, ActivatedRoute } from '@angular/router';
+import { SessionService } from './session.service';
 @Injectable()
 export class MetamodelService {
 private rootUrl: string;
 
-  constructor(private client: HttpClientWithAuthService, private resourceFactory: ResourceFactoryService) {
+  constructor(private client: HttpClientWithAuthService,
+    private resourceFactory: ResourceFactoryService,
+  private router: Router,
+
+  private session: SessionService,
+  private activator: ActivatedRoute ) {
         const apiRoot = 'restful';
         const protocol = 'http';
 
@@ -35,6 +42,19 @@ private rootUrl: string;
   public getDescribedBy<T>(c: new() => T, link: IResource): Observable<T> {
     const  describedby =  this.getFromRel(link, 'describedby');
     return this.loadLink(c , describedby);
+  }
+
+  public getActionDescriptor(link: IResource): Observable<ActionDescription> {
+     const  describedby =  this.getFromRel(link, 'describedby');
+     if (this.session.containsAction(describedby)) {
+       throw new Error('a reusarlo');
+     }
+
+     return this.getDescribedBy(ActionDescription, link).map(p => {
+       // index after loading
+        this.session.indexActionDescriptor(p);
+        return p;
+     });
   }
 
   public loadReturnType<T>(c: new() => T, link: IResource): Observable<T> {
@@ -79,6 +99,16 @@ private rootUrl: string;
      return this.loadLink(null, href, true,queryString);
    }
 
+   public routeToGet(resource: IResource, queryString: string = null){
+     const href = this.getFromRel(resource, 'urn:org.restfulobjects:rels/invoke');
+     if (queryString == null) {
+       queryString = '';
+     } else {
+       queryString  = '?' + queryString;
+     }
+     this.router.navigate(['menu', encodeURIComponent(href.href + queryString)]);
+   }
+
 
    // Object Type
    public getProperty(links: ResourceLink[], propertyName: string): Observable<any> {
@@ -90,6 +120,7 @@ private rootUrl: string;
      return this.get(matches[0]);
    }
 
+     // tslint:disable-next-line:one-line
    getPropertyType(name: string, propertyDescriptor: Resource): string {
     const typeDescr = this.findFromRel(propertyDescriptor.links, 'urn:org.restfulobjects:rels/return-type');
     // HACK:
@@ -101,7 +132,7 @@ private rootUrl: string;
    // v2
    // todo: use right method based on http vern
    load<T>(c: new() => T, url: string, useIsisHeader: boolean = false, queryString: string = null): Observable<T> {
-     if (queryString) {
+     if (queryString != null) {
        url += '?' + queryString;
      }
     return this.client.get(url, useIsisHeader).map(res => res.json()).map(obj => this.toClass(c, obj));

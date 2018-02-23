@@ -1,15 +1,15 @@
-<div [dragula] class="example-container mat-elevation-z8">
-<div *ngIf="areAllColumnsLoaded">
-<mat-accordion>
-  <mat-expansion-panel [expanded]='true'>
-    <mat-expansion-panel-header>
+
+<div mat-dialog-title>
       <mat-panel-title>
         {{actionName}} 
       </mat-panel-title>
       <mat-panel-description>
         {{resource.Timestamp| date: 'HH:mm:ss'}}
       </mat-panel-description>
-    </mat-expansion-panel-header>
+</div>
+
+<mat-dialog-content>
+<div *ngIf="areAllColumnsLoaded">
 
   <mat-table #table  [dataSource]="dataSource"  matSort>
 
@@ -28,7 +28,5 @@
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
     <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
   </mat-table>
-  </mat-expansion-panel>
-</mat-accordion>
 </div>
-</div>
+</mat-dialog-content>
