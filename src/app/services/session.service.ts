@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { IdentityMap } from '../models/identity-map';
-import { ActionDescription, ResourceLink } from '../models/ro/iresource';
+import { ActionDescription, ResourceLink, IIndexable } from '../models/ro/iresource';
 
 @Injectable()
 export class SessionService {
@@ -25,7 +25,7 @@ export class SessionService {
   private addToUniverse(result: any) {
     this.universe.push(result);
   }
-  private addToIdentityMap(result: any): any {
+  private addToIdentityMap(result: IIndexable): any {
     this.registry.index(result);
   }
 

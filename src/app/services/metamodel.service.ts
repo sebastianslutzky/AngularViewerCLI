@@ -9,6 +9,9 @@ import { environment } from '../../environments/environment';
 import {plainToClass, classToClass, plainToClassFromExist} from 'class-transformer';
 import { Router, ActivatedRoute } from '@angular/router';
 import { SessionService } from './session.service';
+import { MetamodelHelper } from './MetamodelHelper';
+
+
 @Injectable()
 export class MetamodelService {
 private rootUrl: string;
@@ -40,12 +43,12 @@ private rootUrl: string;
   }
 
   public getDescribedBy<T>(c: new() => T, link: IResource): Observable<T> {
-    const  describedby =  this.getFromRel(link, 'describedby');
+    const  describedby =  MetamodelHelper.getFromRel(link, 'describedby');
     return this.loadLink(c , describedby);
   }
 
   public getActionDescriptor(link: IResource): Observable<ActionDescription> {
-     const  describedby =  this.getFromRel(link, 'describedby');
+     const  describedby =  MetamodelHelper.getFromRel(link, 'describedby');
      if (this.session.containsAction(describedby)) {
        throw new Error('a reusarlo');
      }
@@ -58,14 +61,14 @@ private rootUrl: string;
   }
 
   public loadReturnType<T>(c: new() => T, link: IResource): Observable<T> {
-    const  resourceLink =  this.getFromRel(link, 'urn:org.restfulobjects:rels/return-type');
+    const  resourceLink =  MetamodelHelper.getFromRel(link, 'urn:org.restfulobjects:rels/return-type');
     return this.loadLink(c , resourceLink);
   }
   //
 
   // tslint:disable-next-line:one-line
   public getAction(link: Resource): Observable<Resource>{
-    const rel =  this.getFromRel(link, 'urn:org.restfulobjects:rels/action');
+    const rel =  MetamodelHelper.getFromRel(link, 'urn:org.restfulobjects:rels/action');
     return this.get(rel);
   }
 
@@ -78,29 +81,16 @@ private rootUrl: string;
   }
 
   getDetailsRel(resource: IResource): ResourceLink {
-    return this.getFromRel(resource, 'urn:org.restfulobjects:rels/details');
-  }
-
-  public getFromRel(resource: IResource, rel: string): ResourceLink {
-    const links = this.findFromRel(resource.links, rel);
-    if (links.length === 0) {
-        console.log(resource);
-        throw new Error(('rel not found: ' + rel));
-    }
-    return links[0];
-  }
-
-  public findFromRel(links: ResourceLink[], rel: string): ResourceLink[] {
-    return links.filter(function(item: any){return item.rel.startsWith(rel); });
+    return MetamodelHelper.getFromRel(resource, 'urn:org.restfulobjects:rels/details');
   }
 
    public getInvoke(resource: IResource, queryString: string = null): Observable<any> {
-     const href = this.getFromRel(resource, 'urn:org.restfulobjects:rels/invoke');
-     return this.loadLink(null, href, true,queryString);
+     const href = MetamodelHelper.getFromRel(resource, 'urn:org.restfulobjects:rels/invoke');
+     return this.loadLink(null, href, true, queryString);
    }
 
    public routeToGet(resource: IResource, queryString: string = null){
-     const href = this.getFromRel(resource, 'urn:org.restfulobjects:rels/invoke');
+     const href = MetamodelHelper.getFromRel(resource, 'urn:org.restfulobjects:rels/invoke');
      if (queryString == null) {
        queryString = '';
      } else {
@@ -112,7 +102,7 @@ private rootUrl: string;
 
    // Object Type
    public getProperty(links: ResourceLink[], propertyName: string): Observable<any> {
-     const properties = this.findFromRel(links, 'urn:org.restfulobjects:rels/property');
+     const properties = MetamodelHelper.findFromRel(links, 'urn:org.restfulobjects:rels/property');
      const matches = properties.filter(function(item: ResourceLink){return item.href.endsWith('properties/' + propertyName); });
      if (matches.length === 0) {
       throw new Error('property not found: ' + propertyName);
@@ -122,7 +112,7 @@ private rootUrl: string;
 
      // tslint:disable-next-line:one-line
    getPropertyType(name: string, propertyDescriptor: Resource): string {
-    const typeDescr = this.findFromRel(propertyDescriptor.links, 'urn:org.restfulobjects:rels/return-type');
+    const typeDescr = MetamodelHelper.findFromRel(propertyDescriptor.links, 'urn:org.restfulobjects:rels/return-type');
     // HACK:
     // TODO: follow link and get type from there
     return  typeDescr[0].href.replace('http://localhost:8080/restful/domain-types/', '');

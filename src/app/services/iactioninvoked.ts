@@ -3,8 +3,8 @@ import { ViewRef } from '@angular/core/src/linker/view_ref';
 import { ViewContainerRef } from '@angular/core/src/linker/view_container_ref';
 
 export class ActionInvokedArg implements IIndexable {
-    get id(): string{
-        return this.Result.id;
+    get indexableKey(): string{
+        return this.ActionDescriptor.indexableKey;
     }
     get shortName(): string{
         return this.ActionDescriptor.friendlyName;

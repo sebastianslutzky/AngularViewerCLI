@@ -1,16 +1,22 @@
-import { error } from "util";
+import { error } from 'util';
+import { MetamodelService} from '../../services/metamodel.service';
+import { MetamodelHelper } from '../../services/MetamodelHelper';
 
 export interface IResource {
  links: ResourceLink[];
 }
 
 export interface IIndexable {
-    id: string;
+    indexableKey: string;
 }
 
 export class Resource implements IIndexable {
     get id(): string{
        return this.getSelf(this.links).href ;
+    }
+
+    get indexableKey(): string{
+        return this.id;
     }
     value: ResourceListItem[];
     links: ResourceLink[];
@@ -94,8 +100,12 @@ export class DomainType {
 }
 
 // action type
-export class ActionDescription implements IIndexable {
+export class ActionDescription implements IIndexable, IResource {
     id: string;
+
+    get indexableKey(): string{
+        return MetamodelHelper.getFromRel(this, 'self').href;
+    }
     memberType: string;
     links: ResourceLink[];
     parameters: ResourceLink[];

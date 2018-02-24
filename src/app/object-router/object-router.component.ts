@@ -4,6 +4,7 @@ import { MetamodelService } from '../services/metamodel.service';
 import { ActionInvokedArg } from '../services/iactioninvoked';
 import { ActionInvocationService } from '../services/action-invocation.service';
 import { SessionService } from '../services/session.service';
+import { Resource } from '../models/ro/iresource';
 
 @Component({
   selector: 'app-object-router',
@@ -18,11 +19,11 @@ import { SessionService } from '../services/session.service';
   *  - [todo] check the cache first
   *  - index result (deal with cache too)
 *  RENDERING
-*    - select view for result and render   
+*    - select view for result and render   describedby
  * 
  */
 export class ObjectRouterComponent implements OnInit {
-  @Output()
+
   constructor(private _route: ActivatedRoute,
     private metamodel: MetamodelService,
     private invoker: ActionInvocationService,
@@ -32,30 +33,23 @@ export class ObjectRouterComponent implements OnInit {
 
   ngOnInit() {
     this._route.paramMap.subscribe(data => {
-      //PARSE ACTION
+      // PARSE ACTION
       const destination = data.get('destination');
       const decoded = decodeURIComponent(destination);
 
       console.log('at object router onInit, new params');
       console.log(decoded);
 
-      //LOAD RESOURCE
+      // LOAD RESOURCE (or invoke action)
       this.metamodel.getUrl(decoded, true).subscribe(data1 => {
-        const result = data1 as Array<any>;
-        const arg = new ActionInvokedArg();
-        arg.ExtendedResult = result;
+       const result = data1  as Resource;
 
-     // GET ACTION DESCRIPTOR
-      this.metamodel.getAction
+      // INDEX RESOURCE
+      this.session.indexResult(result);
 
-      //INDEX RESOURCE
-      this.session.indexResult(arg);
-
-      this.invoker.actionInvoked.emit(arg);
-
-
+      // this.invoker.actionInvoked.emit(result);
     });
-      //arg.ActionDescriptor = actionDescriptor;
+      // arg.ActionDescriptor = actionDescriptor;
 
 
   });

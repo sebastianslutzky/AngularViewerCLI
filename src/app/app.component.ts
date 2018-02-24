@@ -23,9 +23,9 @@ export class AppComponent {
     private session: SessionService,
     private container: ViewContainerRef) {
 
-    // HANDLE ACTION INVOKED (for menu actions)
     invoker.actionInvoked.subscribe(data => {
       this.session.indexResult(data);
+      // action results displayed without routing 
       this.componentFactory.createComponent(container, ObjectContainerComponent, {'data': data});
     });
 

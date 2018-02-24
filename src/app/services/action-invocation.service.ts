@@ -41,19 +41,18 @@ export class ActionInvocationService {
 
     private doInvokeAction(action: ObjectAction, actionDescriptor: ActionDescription, param: ActionParameterCollection = null) {
         // Action invocation (will need to be a safe call, with proper error handling)
-        
         const queryString = param ? param.asQueryString() : null;
-        this.metamodel.routeToGet(action, queryString) ;
-        return;
+      //  this.metamodel.routeToGet(action, queryString) ;
+       // return;
 
-        // this.metamodel.getInvoke(action, queryString).subscribe(data => {
-        //     const result = data as Array<any>;
-        //     const arg = new ActionInvokedArg();
-        //     arg.ExtendedResult = result;
-        //     arg.ActionDescriptor = actionDescriptor;
+         this.metamodel.getInvoke(action, queryString).subscribe(data => {
+             const result = data as Array<any>;
+             const arg = new ActionInvokedArg();
+             arg.ExtendedResult = result;
+             arg.ActionDescriptor = actionDescriptor;
 
-        //     this.actionInvoked.emit(arg);
-        // });
+             this.actionInvoked.emit(arg);
+         });
     }
 
 }

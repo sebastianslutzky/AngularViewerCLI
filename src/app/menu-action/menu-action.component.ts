@@ -1,7 +1,8 @@
 import { Component, OnInit, Input, ViewContainerRef } from '@angular/core';
-import { MetamodelService } from '../services/metamodel.service';
+import { MetamodelService} from '../services/metamodel.service';
 import {  Resource, Action, ActionDescription, ObjectAction } from '../models/ro/iresource';
 import { ActionInvocationService } from '../services/action-invocation.service';
+import { MetamodelHelper } from '../services/MetamodelHelper';
 
 @Component({
   selector: 'app-menu-action',
@@ -29,7 +30,7 @@ export class MenuActionComponent implements OnInit {
       // This should first hit the session.Action
       this.metamodel.getActionDescriptor(this.Action).subscribe(action => {
         this.actionDescribedBy = action;
-        const up =  this.metamodel.getFromRel(action, 'self') ;
+        const up =  MetamodelHelper.getFromRel(action, 'self') ;
         this.tooltip = up.href;
       });
     });

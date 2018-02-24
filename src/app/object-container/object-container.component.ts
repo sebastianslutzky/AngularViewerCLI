@@ -20,7 +20,6 @@ export class ObjectContainerComponent implements OnInit {
     const data: any = this.injector.get('data');
         console.log(data);
         this.openModal(data);
-        console.log('done, returning from object container component');
         return;
 
         // NOT EXECUTED
@@ -40,9 +39,14 @@ export class ObjectContainerComponent implements OnInit {
   }
 
   openModal(data) {
-    const windowRef = this.dialog.open(ListComponent, {data: {args: data}, width: '900px', });
-    windowRef.afterClosed().subscribe(result => {
-      console.log('object closed');
-    });
+     setTimeout(() => {
+        const windowRef =
+            this.dialog.open(
+              ListComponent, {data: {args: data}, width: '900px', });
+
+            windowRef.afterClosed().subscribe(result => {
+              console.log('object closed');
+            });
+      });
   }
 }

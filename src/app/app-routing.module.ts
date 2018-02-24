@@ -5,8 +5,8 @@ import { ObjectRouterComponent } from './object-router/object-router.component';
 import { RouteLogComponent } from './route-log/route-log.component';
 
 const routes: Routes = [
-  {path: 'menu/:destination', component: ObjectRouterComponent}
-  //{path: 'object/:url', component: ObjectRouterComponent}
+  // {path: 'menu/:destination', component: ObjectRouterComponent}
+  {path: 'object/:destination', component: ObjectRouterComponent}
 ];
 
 @NgModule({
