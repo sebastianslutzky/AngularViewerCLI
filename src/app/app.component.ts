@@ -43,5 +43,22 @@ export class AppComponent {
         this.invoker.invokeAction(args.ObjectAction, args.ActionDescriptor, null, data);
       });
     });
+
   }
+
+     //move to card, or ven better, to resource
+     getFriendlyName(result): string {
+
+      // if displayng the result of an action (lists)
+      if(result.ActionDescriptor) {
+        return result.ActionDescriptor.friendlyName;
+      }
+
+      // if displaying an object (it should be the only valid case)
+      if(result.title){
+        return result.title;
+      }
+
+      return 'unknown';
+    }
 }

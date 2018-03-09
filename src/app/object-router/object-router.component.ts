@@ -41,10 +41,9 @@ export class ObjectRouterComponent implements OnInit {
       console.log(decoded);
 
       // LOAD RESOURCE (or invoke action)
-      this.metamodel.getUrl(decoded, true).subscribe(data1 => {
-       const result = data1  as Resource;
+      this.metamodel.load(Resource, decoded).subscribe(data1 => {
+      const result = data1  as Resource;
 
-      // INDEX RESOURCE
       this.session.indexResult(result);
 
       // this.invoker.actionInvoked.emit(result);

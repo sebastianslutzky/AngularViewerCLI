@@ -125,7 +125,14 @@ private rootUrl: string;
      if (queryString != null) {
        url += '?' + queryString;
      }
-    return this.client.get(url, useIsisHeader).map(res => res.json()).map(obj => this.toClass(c, obj));
+    return this.client.get(url, useIsisHeader)
+      //  .map(res => res['as_of_date'] = ) // add timestamp as field
+       .map(res => {
+         const f = res.headers.get('Date') ;
+         return res;
+       })
+        .map(res => res.json())
+        .map(obj => this.toClass(c, obj));
    }
 
    loadLink<T>(c: new() => T, link: ResourceLink, useIsisHeader: boolean = false, queryString: string = null): Observable<T> {

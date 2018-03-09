@@ -6,6 +6,7 @@ import { ActionDescription, ResourceLink, IIndexable } from '../models/ro/iresou
 export class SessionService {
   public universe: any[] = [];
   private registry: IdentityMap<any>;
+  private objectDescriptors: IdentityMap<any>;
   private actionDescriptors: IdentityMap<ActionDescription>;
 
   constructor() {
@@ -31,6 +32,14 @@ export class SessionService {
 
   public containsAction(link: ResourceLink): boolean {
     return this.actionDescriptors.contains(link.href);
+  }
+
+  public containsObjectDescriptor(key) {
+     return this.objectDescriptors.contains(key);
+  }
+
+  public indexObjectDescriptor(objectDescriptor) {
+    this.objectDescriptors.index(objectDescriptor);
   }
 }
 
