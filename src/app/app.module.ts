@@ -24,7 +24,9 @@ import { MatMenuModule,
         MatFormField,
         MatFormFieldModule,
         MatInputModule,
-        MatSidenavModule} from '@angular/material';
+        MatSidenavModule,
+        MatGridListModule,
+        MatGridList} from '@angular/material';
 import {MatIconModule} from '@angular/material/icon';
 import {MatButtonModule} from '@angular/material/button';
 import { ActionInvocationService } from './services/action-invocation.service';
@@ -44,10 +46,12 @@ import { ObjectComponent } from './object/object.component';
 import { ObjectContainerComponent } from './object-container/object-container.component';
 import {DragulaModule} from 'ng2-dragula';
 import { SessionService } from './services/session.service';
-import { IdentityMapComponent } from './models/identity-map/identity-map.component';
+import { ObjectRouterComponent } from './object-router/object-router.component';
+import { RouteLogComponent } from './route-log/route-log.component';
 
 
 @NgModule({
+  exports: [MatGridList],
   declarations: [
     AppComponent,
     FooterComponent,
@@ -65,7 +69,8 @@ import { IdentityMapComponent } from './models/identity-map/identity-map.compone
     TextParamComponent,
     ObjectComponent,
     ObjectContainerComponent,
-    IdentityMapComponent
+    ObjectRouterComponent,
+    RouteLogComponent
   ],
   imports: [
     DragulaModule,
@@ -86,6 +91,7 @@ import { IdentityMapComponent } from './models/identity-map/identity-map.compone
     MatDialogModule,
     MatInputModule,
     MatSidenavModule,
+    MatGridListModule,
     FormsModule
   ],
   providers: [HttpClientWithAuthService,
@@ -102,7 +108,8 @@ import { IdentityMapComponent } from './models/identity-map/identity-map.compone
     CheckboxComponent,
     DialogComponent,
     DialogContainerComponent,
-    ObjectComponent
+    ObjectComponent,
+    ObjectContainerComponent
   ]
 })
 export class AppModule { }

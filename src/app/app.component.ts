@@ -6,6 +6,7 @@ import { ListComponent } from './list/list.component';
 import { DialogComponent } from './dialog/dialog.component';
 import { ComponentRef } from '@angular/core/src/linker/component_factory';
 import { SessionService } from './services/session.service';
+import {ObjectContainerComponent} from './object-container/object-container.component';
 
 @Component({
   selector: 'app-root',
@@ -15,19 +16,17 @@ import { SessionService } from './services/session.service';
 export class AppComponent {
 
   title = 'app';
-  @ViewChild('desktop', {read: ViewContainerRef}) private _desktop: ViewContainerRef;
+  @ViewChild('desktop', { read: ViewContainerRef }) private _desktop: ViewContainerRef;
 
   constructor(private invoker: ActionInvocationService,
-            private componentFactory: ComponentFactoryService,
-            private session: SessionService) {
-    invoker.actionInvoked.subscribe(data => {
-      // a new action returned a result
-      // store in sessionService.currentResults
-      this.session.indexCurrentResult(data);
+    private componentFactory: ComponentFactoryService,
+    private session: SessionService,
+    private container: ViewContainerRef) {
 
-       //this.componentFactory.createComponent(this._desktop, ListComponent, {'actionResource': data});
-       //then change main body to render session.CurrentResults as, for now, listcomponents
-       //then  implement session.shelvedResults for dragula and render as minimized cards
+    invoker.actionInvoked.subscribe(data => {
+      this.session.indexResult(data);
+      // action results displayed without routing 
+      this.componentFactory.createComponent(container, ObjectContainerComponent, {'data': data});
     });
 
     // action params needed
@@ -36,13 +35,30 @@ export class AppComponent {
         args.Canvas = this._desktop;
       }
 
-      const dialog =  this.componentFactory.createComponent(
+      const dialog = this.componentFactory.createComponent(
         args.Canvas,
-        DialogComponent, {'args': args.ActionDescriptor}) as ComponentRef<DialogComponent>;
+        DialogComponent, { 'args': args.ActionDescriptor }) as ComponentRef<DialogComponent>;
 
-         dialog.instance.onParamtersCollected.subscribe(data => {
-           this.invoker.invokeAction(args.ObjectAction, args.ActionDescriptor, null, data);
-         });
+      dialog.instance.onParamtersCollected.subscribe(data => {
+        this.invoker.invokeAction(args.ObjectAction, args.ActionDescriptor, null, data);
+      });
     });
- }
+
+  }
+
+     //move to card, or ven better, to resource
+     getFriendlyName(result): string {
+
+      // if displayng the result of an action (lists)
+      if(result.ActionDescriptor) {
+        return result.ActionDescriptor.friendlyName;
+      }
+
+      // if displaying an object (it should be the only valid case)
+      if(result.title){
+        return result.title;
+      }
+
+      return 'unknown';
+    }
 }

@@ -5,6 +5,7 @@ import { Resource, ActionResult, Action, ActionDescription, ObjectAction} from '
 import { ViewRef } from '@angular/core/src/linker/view_ref';
 import { ViewContainerRef } from '@angular/core/src/linker/view_container_ref';
 import { ActionParameterCollection } from '../dialog/dialog.component';
+import { SessionService } from './session.service';
 
 @Injectable()
 export class ActionInvocationService {
@@ -41,14 +42,17 @@ export class ActionInvocationService {
     private doInvokeAction(action: ObjectAction, actionDescriptor: ActionDescription, param: ActionParameterCollection = null) {
         // Action invocation (will need to be a safe call, with proper error handling)
         const queryString = param ? param.asQueryString() : null;
-        this.metamodel.getInvoke(action, queryString).subscribe(data => {
-            const result = data as Array<any>;
-            const arg = new ActionInvokedArg();
-            arg.ExtendedResult = result;
-            arg.ActionDescriptor = actionDescriptor;
+      //  this.metamodel.routeToGet(action, queryString) ;
+       // return;
 
-            this.actionInvoked.emit(arg);
-        });
+         this.metamodel.getInvoke(action, queryString).subscribe(data => {
+             const result = data as Array<any>;
+             const arg = new ActionInvokedArg();
+             arg.ExtendedResult = result;
+             arg.ActionDescriptor = actionDescriptor;
+
+             this.actionInvoked.emit(arg);
+         });
     }
 
 }

@@ -1,16 +1,22 @@
-import { error } from "util";
+import { error } from 'util';
+import { MetamodelService} from '../../services/metamodel.service';
+import { MetamodelHelper } from '../../services/MetamodelHelper';
 
 export interface IResource {
  links: ResourceLink[];
 }
 
 export interface IIndexable {
-    id: string;
+    indexableKey: string;
 }
 
 export class Resource implements IIndexable {
     get id(): string{
+       return this.getSelf(this.links).href ;
+    }
 
+    get indexableKey(): string{
+        return this.id;
     }
     value: ResourceListItem[];
     links: ResourceLink[];
@@ -20,15 +26,19 @@ export class Resource implements IIndexable {
 
     // todo: deduplicate this method (copied from metamodelservice)
     // extract to some libr
-  public getSelf(links: ResourceLink[], rel: string): ResourceLink {
+  public getSelf(links: ResourceLink[]): ResourceLink {
     const self = links.filter(function(item: any){return item.rel.startsWith('self'); });
     if (self.length === 0) {
         throw new Error('self link not found for action');
     }
+    return self[0];
   }
 }
 
 export class ActionResult {
+    get id(): string{
+        throw new Error('not implemented');
+    }
    links: ResourceLink[];
    result: Resource;
    resulttype: string;
@@ -90,8 +100,12 @@ export class DomainType {
 }
 
 // action type
-export class ActionDescription {
+export class ActionDescription implements IIndexable, IResource {
     id: string;
+
+    get indexableKey(): string{
+        return MetamodelHelper.getFromRel(this, 'self').href;
+    }
     memberType: string;
     links: ResourceLink[];
     parameters: ResourceLink[];

@@ -1,25 +1,46 @@
 import { Injectable } from '@angular/core';
 import { IdentityMap } from '../models/identity-map';
+import { ActionDescription, ResourceLink, IIndexable } from '../models/ro/iresource';
 
 @Injectable()
 export class SessionService {
-  public currentResults: any[] = [];
-  public shelvedResults: any[] = [];
-  private registry: IdentityMap;
+  public universe: any[] = [];
+  private registry: IdentityMap<any>;
+  private objectDescriptors: IdentityMap<any>;
+  private actionDescriptors: IdentityMap<ActionDescription>;
 
   constructor() {
     this.registry = new IdentityMap();
+    this.actionDescriptors = new IdentityMap();
   }
 
-  indexCurrentResult(result: any): any {
+  indexResult(result: any): any {
    this.addToIdentityMap(result);
-   this.addToCurrentResults(result);
+   this.addToUniverse(result);
   }
 
-  private addToCurrentResults(result: any) {
-    this.currentResults.push(result);
+  indexActionDescriptor(action: ActionDescription) {
+    this.actionDescriptors.index(action);
   }
-  private addToIdentityMap(result: any): any {
+
+  private addToUniverse(result: any) {
+    this.universe.push(result);
+  }
+  private addToIdentityMap(result: IIndexable): any {
     this.registry.index(result);
   }
+
+  public containsAction(link: ResourceLink): boolean {
+    return this.actionDescriptors.contains(link.href);
+  }
+
+  public containsObjectDescriptor(key) {
+     return this.objectDescriptors.contains(key);
+  }
+
+  public indexObjectDescriptor(objectDescriptor) {
+    this.objectDescriptors.index(objectDescriptor);
+  }
 }
+
+
