@@ -5,7 +5,7 @@
 /* @import '~@angular/material/prebuilt-themes/pink-bluegrey.css'; */
 
 /* default dragula styles */
-.gu-mirror {
+/* .gu-mirror {
     position: fixed !important;
     margin: 0 !important;
     z-index: 9999 !important;
@@ -27,4 +27,4 @@
     -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=20)";
     filter: alpha(opacity=20);
   }
-  
+   */

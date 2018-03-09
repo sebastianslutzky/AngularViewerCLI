@@ -128,3 +128,21 @@ export class ObjectAction {
     extensions: IResourceExtensions;
     parameters: any;
 }
+
+export class ObjectRepr {
+    links: ResourceLink[];
+    extension: IResourceExtensions;
+    title: string;
+    domainType: string;
+    instanceId: string;
+    members: ObjectMember[];
+}
+
+export interface ObjectMember {
+    id: string;
+    memberType: string; // todo: cast into enumeration
+    links: ResourceLink[];
+    value: string;
+    extensions: any;
+    disabledReason: string;
+}

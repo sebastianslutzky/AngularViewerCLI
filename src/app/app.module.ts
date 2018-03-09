@@ -26,7 +26,8 @@ import { MatMenuModule,
         MatInputModule,
         MatSidenavModule,
         MatGridListModule,
-        MatGridList} from '@angular/material';
+        MatGridList,
+        MatChipsModule} from '@angular/material';
 import {MatIconModule} from '@angular/material/icon';
 import {MatButtonModule} from '@angular/material/button';
 import { ActionInvocationService } from './services/action-invocation.service';
@@ -48,6 +49,7 @@ import {DragulaModule} from 'ng2-dragula';
 import { SessionService } from './services/session.service';
 import { ObjectRouterComponent } from './object-router/object-router.component';
 import { RouteLogComponent } from './route-log/route-log.component';
+import { PropertyComponent } from './property/property.component';
 
 
 @NgModule({
@@ -70,7 +72,9 @@ import { RouteLogComponent } from './route-log/route-log.component';
     ObjectComponent,
     ObjectContainerComponent,
     ObjectRouterComponent,
-    RouteLogComponent
+    RouteLogComponent,
+    PropertyComponent
+
   ],
   imports: [
     DragulaModule,
@@ -92,7 +96,8 @@ import { RouteLogComponent } from './route-log/route-log.component';
     MatInputModule,
     MatSidenavModule,
     MatGridListModule,
-    FormsModule
+    FormsModule,
+    MatChipsModule
   ],
   providers: [HttpClientWithAuthService,
     MetamodelService,

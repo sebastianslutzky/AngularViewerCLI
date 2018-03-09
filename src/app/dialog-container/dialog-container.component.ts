@@ -22,7 +22,7 @@ export class DialogContainerComponent implements OnInit {
 
   private action: ActionDescription;
 
-  constructor(private factory: ComponentFactoryService, @Inject(MAT_DIALOG_DATA) public data: any) {
+  constructor(@Inject(MAT_DIALOG_DATA) public data: any) {
     this.action = data.args as ActionDescription;
    }
 

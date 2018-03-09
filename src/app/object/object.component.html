@@ -1,3 +1,18 @@
-<p>
-  {{title}}
-</p>
+<h2 mat-dialog-title>{{objectData.title}}</h2>
+<div class="button-row">
+  <button mat-fab> Properties  </button>
+  <button mat-fab> Collections  </button>
+  <button mat-fab> Actions  </button>
+  <a mat-fab routerlink='.'>link</a>'
+</div>
+<mat-dialog-content>
+  <ol>
+    <app-property *ngFor='let property of properties' [Property]='property'>
+    </app-property>
+    </ol>
+</mat-dialog-content>
+<div mat-dialog-actions>
+  <button mat-button [mat-dialog-close]="DialogInput" tabindex="2">OK</button>
+  <button mat-button mat-dialog-close tabindex="-1">Cancel</button>
+</div>
+
