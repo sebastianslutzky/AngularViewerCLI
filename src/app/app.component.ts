@@ -7,6 +7,8 @@ import { DialogComponent } from './dialog/dialog.component';
 import { ComponentRef } from '@angular/core/src/linker/component_factory';
 import { SessionService } from './services/session.service';
 import {ObjectContainerComponent} from './object-container/object-container.component';
+import { MatIconRegistry } from '@angular/material';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-root',
@@ -21,9 +23,14 @@ export class AppComponent {
   constructor(private invoker: ActionInvocationService,
     private componentFactory: ComponentFactoryService,
     private session: SessionService,
-    private container: ViewContainerRef) {
+    private container: ViewContainerRef,
+    private iconRegistry: MatIconRegistry, sanitizer: DomSanitizer) {
+
+      iconRegistry.addSvgIconSet(sanitizer.bypassSecurityTrustResourceUrl('./assets/mdi.svg'));
+
 
     invoker.actionInvoked.subscribe(data => {
+
       this.session.indexResult(data);
       // action results displayed without routing 
       this.componentFactory.createComponent(container, ObjectContainerComponent, {'data': data});

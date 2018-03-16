@@ -38,7 +38,7 @@ private rootUrl: string;
 
 
   // Known rels
-  public getDetails<T>(link: Resource): Observable<T> {
+  public getDetails<T>(link: IResource): Observable<T> {
     return this.get(this.getDetailsRel(link));
   }
 

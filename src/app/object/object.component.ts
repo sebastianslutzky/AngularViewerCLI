@@ -26,6 +26,12 @@ export class ObjectComponent implements OnInit {
    get properties(): ObjectMember[]{
      return this.members.filter(m => m.memberType === 'property');
    }
+   get actions(): ObjectMember[]{
+     return this.members.filter(m => m.memberType === 'action');
+   }
+   get collections(): ObjectMember[]{
+     return this.members.filter(m => m.memberType === 'collection');
+   }
    get members(): ObjectMember[]{
     return Object.keys(this.objectData.members)
       .map((m) => {
@@ -34,7 +40,7 @@ export class ObjectComponent implements OnInit {
    }
 
   ngOnInit() {}
-    // todo: get object data
+    // 
     // done get properties only
     // for each prop, create a StringFieldComponent via factory
     // show all property/value pairs in text

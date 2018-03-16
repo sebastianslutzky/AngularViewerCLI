@@ -120,6 +120,27 @@ export class ActionDescription implements IIndexable, IResource {
     }
 }
 
+export class PropertyDescription implements IIndexable, IResource {
+    id: string;
+
+    // Property specific
+    optional: boolean;
+    maxLength: number;
+
+    get indexableKey(): string{
+        return MetamodelHelper.getFromRel(this, 'self').href;
+    }
+    memberType: string;
+    links: ResourceLink[];
+    extensions: IResourceExtensions;
+
+    get friendlyName(): string{
+        return this.extensions.friendlyName;
+    }
+
+
+}
+
 // instance of an action
 export class ObjectAction {
    id: string;
@@ -138,8 +159,9 @@ export class ObjectRepr {
     members: ObjectMember[];
 }
 
-export interface ObjectMember {
+export interface ObjectMember extends IIndexable {
     id: string;
+
     memberType: string; // todo: cast into enumeration
     links: ResourceLink[];
     value: string;

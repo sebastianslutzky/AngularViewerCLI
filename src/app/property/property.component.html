@@ -1,3 +1,5 @@
-<p>
-   {{_property.id}}:{{ _property.value}} - {{_property.memberType}}
-</p>
+        <mat-form-field *ngIf="!isBoolean; else asCheckBox" >
+          <input matInput  [placeholder]='Name' [(ngModel)]="Value" readonly='true'>
+        </mat-form-field>
+
+          <mat-checkbox #asCheckBox  *ngIf="isBoolean" [(ngModel)]='Value' disabled="true"></mat-checkbox>

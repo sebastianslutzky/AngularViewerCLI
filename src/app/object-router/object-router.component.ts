@@ -22,8 +22,7 @@ import { ObjectComponent } from '../object/object.component';
   *  - index result (deal with cache too)
 *  RENDERING
 *    - select view for result and render   describedby
- * 
- */
+*/
 export class ObjectRouterComponent implements OnInit {
 
   constructor(private _route: ActivatedRoute,
@@ -49,8 +48,6 @@ export class ObjectRouterComponent implements OnInit {
 
         this.openModal(result);
       // todo: display aan objectcomponent as a popup
-      
-
     });
       // arg.ActionDescriptor = actionDescriptor;
 

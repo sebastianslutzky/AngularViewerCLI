@@ -26,10 +26,11 @@ import { MatMenuModule,
         MatInputModule,
         MatSidenavModule,
         MatGridListModule,
+        MatButtonModule,
         MatGridList,
-        MatChipsModule} from '@angular/material';
-import {MatIconModule} from '@angular/material/icon';
-import {MatButtonModule} from '@angular/material/button';
+        MatIconModule,
+        MatChipsModule,
+        MatTabsModule} from '@angular/material';
 import { ActionInvocationService } from './services/action-invocation.service';
 import { ListComponent} from './list/list.component';
 import { ComponentFactory } from '@angular/core/src/linker/component_factory';
@@ -45,11 +46,11 @@ import { ActionParamComponent } from './action-param/action-param.component';
 import { TextParamComponent } from './text-param/text-param.component';
 import { ObjectComponent } from './object/object.component';
 import { ObjectContainerComponent } from './object-container/object-container.component';
-import {DragulaModule} from 'ng2-dragula';
 import { SessionService } from './services/session.service';
 import { ObjectRouterComponent } from './object-router/object-router.component';
 import { RouteLogComponent } from './route-log/route-log.component';
 import { PropertyComponent } from './property/property.component';
+import { HttpClientModule } from '@angular/common/http';
 
 
 @NgModule({
@@ -74,11 +75,10 @@ import { PropertyComponent } from './property/property.component';
     ObjectRouterComponent,
     RouteLogComponent,
     PropertyComponent
-
   ],
   imports: [
-    DragulaModule,
     HttpModule,
+    HttpClientModule,
     BrowserModule,
     BrowserAnimationsModule,
     AppRoutingModule,
@@ -94,8 +94,10 @@ import { PropertyComponent } from './property/property.component';
     MatCheckboxModule,
     MatDialogModule,
     MatInputModule,
+    MatTabsModule,
     MatSidenavModule,
     MatGridListModule,
+    MatButtonModule,
     FormsModule,
     MatChipsModule
   ],
