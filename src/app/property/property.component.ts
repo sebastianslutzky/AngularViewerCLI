@@ -33,12 +33,9 @@ export class PropertyComponent implements OnInit {
           propertyDescriptor => {this._propertyDescriptor = propertyDescriptor;
           this.Name = this._propertyDescriptor.friendlyName;
         }
-      )
+       );
+     }
     );
-    // TODO: load details rel, then load described by
-    // render as a string property component
-    // this component fill consume string specific properties (e.g. max length)
-    // the property.component will use higher level properties (e.g immutable, disabled)
   }
 
 }

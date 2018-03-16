@@ -51,6 +51,7 @@ import { ObjectRouterComponent } from './object-router/object-router.component';
 import { RouteLogComponent } from './route-log/route-log.component';
 import { PropertyComponent } from './property/property.component';
 import { HttpClientModule } from '@angular/common/http';
+import { ActionComponent } from './action/action.component';
 
 
 @NgModule({
@@ -74,7 +75,8 @@ import { HttpClientModule } from '@angular/common/http';
     ObjectContainerComponent,
     ObjectRouterComponent,
     RouteLogComponent,
-    PropertyComponent
+    PropertyComponent,
+    ActionComponent
   ],
   imports: [
     HttpModule,

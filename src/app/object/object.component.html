@@ -1,25 +1,31 @@
 <h2 mat-dialog-title>{{objectData.title}}</h2>
 <mat-tab-group>
-  <mat-tab >
+  <mat-tab label='Properties' >
+
     <ng-template mat-tab-label >
       <mat-icon svgIcon="message-bulleted" matTooltip='properties'>properties</mat-icon>
     </ng-template>
     <ol>
+    <h2>Properties</h2>
         <app-property *ngFor='let property of properties' [Property]='property'>
         </app-property>
-        </ol>
+      </ol>
   </mat-tab>
+
   <mat-tab >
     <ng-template mat-tab-label >
       <mat-icon svgIcon="run" matTooltip='actions'>actions</mat-icon>
     </ng-template>
-    <ol>
-        </ol>
+    <h2>Actions</h2>
+        <app-action *ngFor="let action of actions"[Action]='action'>
+        </app-action>
   </mat-tab>
+
   <mat-tab >
     <ng-template mat-tab-label >
       <mat-icon svgIcon="hexagon-multiple" matTooltip='collections'>collections</mat-icon>
     </ng-template>
+    <h2>Collections</h2>
   </mat-tab>
 </mat-tab-group>
 
