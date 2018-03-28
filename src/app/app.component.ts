@@ -30,7 +30,6 @@ export class AppComponent {
 
 
     invoker.actionInvoked.subscribe(data => {
-
       this.session.indexResult(data);
       // action results displayed without routing 
       this.componentFactory.createComponent(container, ObjectContainerComponent, {'data': data});
@@ -44,7 +43,7 @@ export class AppComponent {
 
       const dialog = this.componentFactory.createComponent(
         args.Canvas,
-        DialogComponent, { 'args': args.ActionDescriptor }) as ComponentRef<DialogComponent>;
+        DialogComponent, { 'args': args }) as ComponentRef<DialogComponent>;
 
       dialog.instance.onParamtersCollected.subscribe(data => {
         this.invoker.invokeAction(args.ObjectAction, args.ActionDescriptor, null, data);
@@ -53,16 +52,16 @@ export class AppComponent {
 
   }
 
-     //move to card, or ven better, to resource
+     // move to card, or ven better, to resource
      getFriendlyName(result): string {
 
       // if displayng the result of an action (lists)
-      if(result.ActionDescriptor) {
+      if (result.ActionDescriptor) {
         return result.ActionDescriptor.friendlyName;
       }
 
       // if displaying an object (it should be the only valid case)
-      if(result.title){
+      if (result.title) {
         return result.title;
       }
 

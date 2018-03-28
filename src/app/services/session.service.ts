@@ -4,13 +4,15 @@ import { ActionDescription, ResourceLink, IIndexable } from '../models/ro/iresou
 
 @Injectable()
 export class SessionService {
-  public universe: any[] = [];
+  private universe: IdentityMap<any>;
   private registry: IdentityMap<any>;
   private objectDescriptors: IdentityMap<any>;
   private actionDescriptors: IdentityMap<ActionDescription>;
 
   constructor() {
     this.registry = new IdentityMap();
+    this.universe = new IdentityMap();
+    this.objectDescriptors = new IdentityMap();
     this.actionDescriptors = new IdentityMap();
   }
 
@@ -24,10 +26,10 @@ export class SessionService {
   }
 
   private addToUniverse(result: any) {
-    this.universe.push(result);
+    this.universe.index(result);
   }
   private addToIdentityMap(result: IIndexable): any {
-    this.registry.index(result);
+    return this.registry.index(result);
   }
 
   public containsAction(link: ResourceLink): boolean {
@@ -38,8 +40,16 @@ export class SessionService {
      return this.objectDescriptors.contains(key);
   }
 
-  public indexObjectDescriptor(objectDescriptor) {
-    this.objectDescriptors.index(objectDescriptor);
+  public getDescriptor(key){
+    return this.objectDescriptors.Items[key];
+  }
+
+  public indexObjectDescriptor(objectDescriptor, key) {
+    this.objectDescriptors.index(objectDescriptor, key);
+  }
+
+  public getUniverseItems():Iterable<any>{
+    return this.universe.Items;
   }
 }
 

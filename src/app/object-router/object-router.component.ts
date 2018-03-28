@@ -14,15 +14,6 @@ import { ObjectComponent } from '../object/object.component';
   styleUrls: ['./object-router.component.css']
 })
 
-/**
- * RESOURCE LOADING
- * - parse url
- * - load resource
-  *  - [todo] check the cache first
-  *  - index result (deal with cache too)
-*  RENDERING
-*    - select view for result and render   describedby
-*/
 export class ObjectRouterComponent implements OnInit {
 
   constructor(private _route: ActivatedRoute,
@@ -47,14 +38,8 @@ export class ObjectRouterComponent implements OnInit {
       this.session.indexResult(result);
 
         this.openModal(result);
-      // todo: display aan objectcomponent as a popup
     });
-      // arg.ActionDescriptor = actionDescriptor;
-
-
   });
-    // load url
-    // create list as popup
   }
 
   openModal(data) {

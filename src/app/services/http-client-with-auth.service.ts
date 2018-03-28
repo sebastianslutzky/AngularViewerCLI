@@ -16,6 +16,10 @@ export class HttpClientWithAuthService {
       headers.append('Accept', 'application/json;profile="urn:org.apache.isis/v1"');
   }
 
+  post(url: string, body: any){
+    return this.http.post(url,body);
+  }
+
   get(url: string, isisHeader: boolean = false) {
     const headers = new Headers();
     this.createAuthorizationHeader(headers);

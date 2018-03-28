@@ -1,12 +1,9 @@
  <app-banner></app-banner>
       <mat-grid-list cols="8">
-        <mat-grid-tile  *ngFor="let result of session.universe" >
-        <mat-card >
-            <!-- todo: show object as is, title should be in the object. wrap mat-card in and object -->
-            <mat-card-title>{{ getFriendlyName(result)}}</mat-card-title>
-            <mat-card-subtitle>{{result.Timestamp| date:'HH:mm:ss'}}</mat-card-subtitle>
-        </mat-card>
-        </mat-grid-tile>
-    </mat-grid-list> 
+                <mat-grid-tile *ngFor="let result of session.getUniverseItems()" >
+                    <app-minimized-object  [Context]='result'>
+                    </app-minimized-object>
+                </mat-grid-tile>
+      </mat-grid-list> 
     <router-outlet #desktop></router-outlet>
-<app-footer></app-footer> 
+<app-footer></app-footer>  

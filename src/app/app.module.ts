@@ -52,6 +52,7 @@ import { RouteLogComponent } from './route-log/route-log.component';
 import { PropertyComponent } from './property/property.component';
 import { HttpClientModule } from '@angular/common/http';
 import { ActionComponent } from './action/action.component';
+import { MinimizedObjectComponent } from './minimized-object/minimized-object.component';
 
 
 @NgModule({
@@ -76,7 +77,8 @@ import { ActionComponent } from './action/action.component';
     ObjectRouterComponent,
     RouteLogComponent,
     PropertyComponent,
-    ActionComponent
+    ActionComponent,
+    MinimizedObjectComponent
   ],
   imports: [
     HttpModule,

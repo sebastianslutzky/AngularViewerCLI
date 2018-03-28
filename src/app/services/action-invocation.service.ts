@@ -45,7 +45,7 @@ export class ActionInvocationService {
       //  this.metamodel.routeToGet(action, queryString) ;
        // return;
 
-         this.metamodel.getInvoke(action, queryString).subscribe(data => {
+         this.metamodel.invokeGet(action, queryString).subscribe(data => {
              const result = data as Array<any>;
              const arg = new ActionInvokedArg();
              arg.ExtendedResult = result;

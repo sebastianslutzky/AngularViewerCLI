@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { MetamodelService } from '../services/metamodel.service';
-import { ObjectMember, ActionDescription } from '../models/ro/iresource';
+import { ObjectMember, ActionDescription, ObjectAction } from '../models/ro/iresource';
+import { ActionInvocationService } from '../services/action-invocation.service';
 
 @Component({
   selector: 'app-action',
@@ -8,10 +9,10 @@ import { ObjectMember, ActionDescription } from '../models/ro/iresource';
   styleUrls: ['./action.component.css']
 })
 export class ActionComponent implements OnInit {
-  private _action: ObjectMember;
+  private _objectActionLink: ObjectMember;
   @Input()
   set Action(val: ObjectMember) {
-    this._action = val;
+    this._objectActionLink = val;
   }
 
   private _actionDescriptor: ActionDescription;
@@ -20,18 +21,21 @@ export class ActionComponent implements OnInit {
   ReasonDisabled: string ;
   isDisabled: boolean ;
 
-  constructor(private metamodel: MetamodelService) {
+  constructor(private metamodel: MetamodelService,private invoker: ActionInvocationService) {
     this.isDisabled = false;
     this.ReasonDisabled = '';
    }
 
 public InvokeAction() {
-  console.log('invoking action');
-  console.log(this._actionDescriptor);
-  console.log(this._actionInstance);
+  const actionLink = this._objectActionLink.links[0].href;
+
+  this.metamodel.loadLink(ObjectAction, this._objectActionLink.links[0]).subscribe(
+    objectAction => {
+      this.invoker.invokeAction(objectAction, this._actionDescriptor);
+    });
 }
   ngOnInit() {
-    this.metamodel.getDetails<ObjectMember>(this._action).subscribe(
+    this.metamodel.getDetails<ObjectMember>(this._objectActionLink).subscribe(
       actionInstance => {
         this._actionInstance = actionInstance;
         this.metamodel.getDescribedBy(ActionDescription, actionInstance).subscribe(
@@ -41,7 +45,5 @@ public InvokeAction() {
           });
       }
     );
-
   }
-
 }

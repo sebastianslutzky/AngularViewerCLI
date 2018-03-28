@@ -12,7 +12,7 @@ import { ActionDescription, ObjectAction } from '../models/ro/iresource';
   styleUrls: ['./dialog.component.css']
 })
 export class DialogComponent {
-  private args: ActionDescription;
+  private args: ActionParametersNeededArgs;
   @Output()
   onParamtersCollected: EventEmitter<ActionParameterCollection> = new EventEmitter();
 

@@ -19,7 +19,6 @@ export class CellComponent implements OnInit {
   constructor(private componentFactory: ComponentFactoryService, private container: ViewContainerRef, private injector: Injector) {
   }
 
-
   ngOnInit(): void {
     const view = this.renderCell(this.type);
     this.componentFactory.createComponent(this.container, view, {'value': this.value});

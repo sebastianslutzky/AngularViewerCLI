@@ -3,6 +3,9 @@ import { TextParamComponent } from '../text-param/text-param.component';
 import { ComponentFactoryService } from '../services/component-factory.service';
 import { MetamodelService } from '../services/metamodel.service';
 import { ResourceLink, ParamDescription,  DomainType } from '../models/ro/iresource';
+import { ParameterInfo } from '../services/iactioninvoked';
+import { SessionService } from '../services/session.service';
+import { ActionParameterCollection } from '../dialog/dialog.component';
 
 @Component({
   selector: 'app-action-param',
@@ -12,7 +15,7 @@ import { ResourceLink, ParamDescription,  DomainType } from '../models/ro/iresou
 export class ActionParamComponent implements OnInit {
 
   @Input()
-  Parameter: ResourceLink;
+  Parameter: ParameterInfo;
   @Input()
   Context: any;
   @Input()
@@ -25,19 +28,27 @@ export class ActionParamComponent implements OnInit {
  }
 
   constructor(private componentFactory: ComponentFactoryService, private container: ViewContainerRef,
-     private metamodel: MetamodelService) { }
+     private metamodel: MetamodelService, private session: SessionService) { }
 
   ngOnInit() {
-    this.metamodel.loadLink(ParamDescription, this.Parameter).subscribe(paramDescr => {
+    this.metamodel.loadLink(ParamDescription, this.Parameter.typeLink).subscribe(paramDescr => {
         this.descriptor = paramDescr;
-        this.metamodel.loadReturnType(DomainType, paramDescr).subscribe(paramType => {
-          const view = this.renderInput(paramType.canonicalName);
+       this.metamodel.loadReturnType(DomainType, paramDescr).subscribe(paramType => {
+         if(paramType === null){
+           throw new Error('uhh');
+         } else { 
+           this.createConcreteComponent(paramType,this.Parameter.typeLink);
+         }
+        });
+      });
+  }
+
+  createConcreteComponent(paramType: DomainType, paramDescr: ResourceLink) {
+       const view = this.renderInput(paramType.canonicalName);
           this.componentFactory.createComponent(this.container, view,
             {'args': paramDescr,
             'ctx': this.Context,
           'key': this.Key});
-        });
-      });
   }
 
   renderInput(propertyType: string): any {

@@ -65,7 +65,7 @@ export class ReprTypesList {
  value: Array<ReprType>;
  links: Array<ResourceLink>;
 }
-export class ResourceLink {
+export class ResourceLink   {
     rel: string;
     href: string;
     method: string;
@@ -94,9 +94,13 @@ export class ParamDescription {
     parameters: any;
 }
 
-export class DomainType {
+export class DomainType implements IIndexable {
     links: ResourceLink[];
     canonicalName: string;
+
+    get indexableKey(): string{
+        return this.canonicalName;
+    }
 }
 
 // action type
@@ -150,7 +154,11 @@ export class ObjectAction {
     parameters: any;
 }
 
-export class ObjectRepr {
+export class ObjectRepr implements IIndexable {
+
+    get indexableKey(): string{
+        return MetamodelHelper.getFromRel(this, 'self').href;
+    }
     links: ResourceLink[];
     extension: IResourceExtensions;
     title: string;

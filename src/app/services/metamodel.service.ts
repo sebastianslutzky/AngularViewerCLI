@@ -3,7 +3,7 @@ import { HttpClientWithAuthService } from './http-client-with-auth.service';
 import { rootRoute } from '@angular/router/src/router_module';
 import 'rxjs/add/operator/map' ;
 import { Observable } from 'rxjs/Observable';
-import { Resource, ActionResult, ReprTypesList, ActionDescription, IResource, ResourceLink } from '../models/ro/iresource';
+import { Resource, ActionResult, ReprTypesList, ActionDescription, IResource, ResourceLink, ObjectAction } from '../models/ro/iresource';
 import { ResourceFactoryService } from './resource-factory.service';
 import { environment } from '../../environments/environment';
 import {plainToClass, classToClass, plainToClassFromExist} from 'class-transformer';
@@ -62,12 +62,23 @@ private rootUrl: string;
 
   public loadReturnType<T>(c: new() => T, link: IResource): Observable<T> {
     const  resourceLink =  MetamodelHelper.getFromRel(link, 'urn:org.restfulobjects:rels/return-type');
-    return this.loadLink(c , resourceLink);
+    // if(this.session.containsObjectDescriptor(resourceLink.href)) {
+    //   const cached = this.session.getDescriptor(resourceLink.href);
+    //   const source = Observable.create(observer => {
+    //     observer.next(cached);
+    //   });
+    //   return source;
+    // }
+    // cache miss:
+    return this.loadLink(c , resourceLink).map(x => {
+      this.session.indexObjectDescriptor(x, resourceLink.href);
+      return x;
+    });
   }
   //
 
   // tslint:disable-next-line:one-line
-  public getAction(link: Resource): Observable<Resource>{
+  public getAction(link: IResource): Observable<Resource>{
     const rel =  MetamodelHelper.getFromRel(link, 'urn:org.restfulobjects:rels/action');
     return this.get(rel);
   }
@@ -84,12 +95,19 @@ private rootUrl: string;
     return MetamodelHelper.getFromRel(resource, 'urn:org.restfulobjects:rels/details');
   }
 
-   public getInvoke(resource: IResource, queryString: string = null): Observable<any> {
-     const href = MetamodelHelper.getFromRel(resource, 'urn:org.restfulobjects:rels/invoke');
-     return this.loadLink(null, href, true, queryString);
+  getSelf(resource: IResource): ResourceLink {
+    return MetamodelHelper.getFromRel(resource, 'self');
+  }
+
+   public invokeGet(resource: IResource, queryString: string = null): Observable<any> {
+     return this.loadLink(null, this.getInvokeLink(resource), true, queryString);
    }
 
-   public routeToGet(resource: IResource, queryString: string = null){
+   public getInvokeLink(resource:IResource){
+     return  MetamodelHelper.getFromRel(resource, 'urn:org.restfulobjects:rels/invoke');
+   }
+
+   public routeMenuAction(resource: IResource, queryString: string = null) {
      const href = MetamodelHelper.getFromRel(resource, 'urn:org.restfulobjects:rels/invoke');
      if (queryString == null) {
        queryString = '';
@@ -97,6 +115,11 @@ private rootUrl: string;
        queryString  = '?' + queryString;
      }
      this.router.navigate(['menu', encodeURIComponent(href.href + queryString)]);
+   }
+
+   public routeToObject(resource: Resource) {
+     const link = this.getSelf(resource);
+     this.router.navigate(['object', encodeURIComponent(link.href)]);
    }
 
 
@@ -121,18 +144,26 @@ private rootUrl: string;
    //////////
    // v2
    // todo: use right method based on http vern
-   load<T>(c: new() => T, url: string, useIsisHeader: boolean = false, queryString: string = null): Observable<T> {
-     if (queryString != null) {
-       url += '?' + queryString;
+   load<T>(c: new() => T, url: string, useIsisHeader: boolean = false, queryString: string = null,method: string = "GET"): Observable<T> {
+     switch(method){
+       case 'GET':
+            if (queryString != null) {
+              url += '?' + queryString;
+            }
+
+            return this.client.get(url, useIsisHeader)
+              //  .map(res => res['as_of_date'] = ) // add timestamp as field
+              .map(res => {
+                const f = res.headers.get('Date') ;
+                return res;
+              })
+              .map(res => res.json())
+              .map(obj => this.toClass(c, obj));
+       case 'POST':
+              return this.client.post(url, {}).map(obj => this.toClass(c, obj));
+       default:
+        throw new Error ('method not implemented yet: ' + method);
      }
-    return this.client.get(url, useIsisHeader)
-      //  .map(res => res['as_of_date'] = ) // add timestamp as field
-       .map(res => {
-         const f = res.headers.get('Date') ;
-         return res;
-       })
-        .map(res => res.json())
-        .map(obj => this.toClass(c, obj));
    }
 
    loadLink<T>(c: new() => T, link: ResourceLink, useIsisHeader: boolean = false, queryString: string = null): Observable<T> {
