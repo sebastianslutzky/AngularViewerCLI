@@ -7,6 +7,7 @@ import { SessionService } from '../services/session.service';
 import { Resource, ObjectRepr } from '../models/ro/iresource';
 import { MatDialog } from '@angular/material';
 import { ObjectComponent } from '../object/object.component';
+import {Location} from '@angular/common';
 
 @Component({
   selector: 'app-object-router',
@@ -21,7 +22,8 @@ export class ObjectRouterComponent implements OnInit {
     private invoker: ActionInvocationService,
     private dialog: MatDialog,
     private injector: Injector,
-    private session: SessionService) {
+    private session: SessionService,
+    private location: Location) {
     console.log('at object router constructtor');
    }
 
@@ -50,6 +52,7 @@ export class ObjectRouterComponent implements OnInit {
 
            windowRef.afterClosed().subscribe(result => {
              console.log('object closed');
+             this.location.back();
            });
      });
  }
