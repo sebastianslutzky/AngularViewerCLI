@@ -41,18 +41,35 @@ export class ActionInvocationService {
 
     private doInvokeAction(action: ObjectAction, actionDescriptor: ActionDescription, param: ActionParameterCollection = null) {
         // Action invocation (will need to be a safe call, with proper error handling)
-        const queryString = param ? param.asQueryString() : null;
       //  this.metamodel.routeToGet(action, queryString) ;
        // return;
 
-         this.metamodel.invokeGet(action, queryString).subscribe(data => {
-             const result = data as Array<any>;
-             const arg = new ActionInvokedArg();
-             arg.ExtendedResult = result;
-             arg.ActionDescriptor = actionDescriptor;
+         const invoke = this.metamodel.getInvokeLink(action);
+         switch (invoke.method) {
+             case 'GET':
+                const queryString = param ? param.asQueryString() : null;
+                this.metamodel.invokeGet(action, queryString).subscribe(data => {
+                    const result = data as Array<any>;
+                    const arg = new ActionInvokedArg();
+                    arg.ExtendedResult = result;
+                    arg.ActionDescriptor = actionDescriptor;
 
-             this.actionInvoked.emit(arg);
-         });
+                    this.actionInvoked.emit(arg);
+                });
+                break;
+            case 'POST':
+                const body = param ? param.asJsonBody() : null;
+                this.metamodel.invokePost(action, queryString).subscribe(data => {
+                    const result = data as Array<any>;
+                    const arg = new ActionInvokedArg();
+                    arg.ExtendedResult = result;
+                    arg.ActionDescriptor = actionDescriptor;
+
+                    this.actionInvoked.emit(arg);
+                });
+                break;
+             default:
+                throw new Error(`${invoke.method} invocation of actions is not supported`);
+        }
     }
-
 }

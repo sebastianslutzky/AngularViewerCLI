@@ -26,7 +26,6 @@ export class TextParamComponent implements OnInit {
 
     this.Context = injector.get('ctx');
     this.Key = injector.get('key');
-    this.Field = this.description.default;
 
     // TODO: Fix this mess (pass friendly name as an input to this component)
     //const paramInput = this.Context.params[this.Key] as ParamInput;

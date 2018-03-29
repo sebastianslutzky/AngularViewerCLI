@@ -92,7 +92,11 @@ private rootUrl: string;
      return this.loadLink(null, this.getInvokeLink(resource), true, queryString);
    }
 
-   public getInvokeLink(resource:IResource){
+   public invokePost(resource: IResource, body: string): Observable<any>{
+     return this.loadLink(null, this.getInvokeLink(resource),false,body) ;
+   }
+
+   public getInvokeLink(resource: IResource){
      return  MetamodelHelper.getFromRel(resource, 'urn:org.restfulobjects:rels/invoke');
    }
 
@@ -133,11 +137,11 @@ private rootUrl: string;
    //////////
    // v2
    // todo: use right method based on http vern
-   load<T>(c: new() => T, url: string, useIsisHeader: boolean = false, queryString: string = null,method: string = "GET"): Observable<T> {
+   load<T>(c: new() => T, url: string, useIsisHeader: boolean = false, args: string = null,method: string = "GET"): Observable<T> {
      switch(method){
        case 'GET':
-            if (queryString != null) {
-              url += '?' + queryString;
+            if (args != null) {
+              url += '?' + args;
             }
 
             return this.client.get(url, useIsisHeader)
@@ -149,14 +153,14 @@ private rootUrl: string;
               .map(res => res.json())
               .map(obj => this.toClass(c, obj));
        case 'POST':
-              return this.client.post(url, {}).map(obj => this.toClass(c, obj));
+              return this.client.post(url, args).map(obj => this.toClass(c, obj));
        default:
         throw new Error ('method not implemented yet: ' + method);
      }
    }
 
    loadLink<T>(c: new() => T, link: ResourceLink, useIsisHeader: boolean = false, queryString: string = null): Observable<T> {
-    return this.load<T>(c, link.href, useIsisHeader, queryString);
+    return this.load<T>(c, link.href, useIsisHeader, queryString, link.method);
    }
 
    /////////

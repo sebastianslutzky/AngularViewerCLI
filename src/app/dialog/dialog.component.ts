@@ -46,4 +46,14 @@ export class ActionParameterCollection {
    const params = Object.values(this.params).map(input => input.toQueryString());
    return params.join('&');
   }
+
+  public asJsonBody(): string {
+    const body = Object.values(this.params)
+      .reduce((acc, curr) => {
+          acc[curr.name] = {'value': curr.value};
+          return acc;
+      }, {});
+
+    return JSON.stringify(body);
+  }
 }
