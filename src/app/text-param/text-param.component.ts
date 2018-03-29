@@ -1,6 +1,7 @@
 import { Component, OnInit, Injector, Input } from '@angular/core';
 import { ParamDescription } from '../models/ro/iresource';
 import { ParamInput } from '../dialog-container/dialog-container.component';
+import { ParameterInfo } from '../services/iactioninvoked';
 
 @Component({
   selector: 'app-text-param',
@@ -21,11 +22,11 @@ export class TextParamComponent implements OnInit {
   private description: ParamDescription;
 
   constructor(private injector: Injector) {
-    this.description = injector.get('args') as ParamDescription;
-
+    this.description = (injector.get('args') as ParameterInfo).instance;
 
     this.Context = injector.get('ctx');
     this.Key = injector.get('key');
+    this.Field = this.description.default;
 
     // TODO: Fix this mess (pass friendly name as an input to this component)
     //const paramInput = this.Context.params[this.Key] as ParamInput;

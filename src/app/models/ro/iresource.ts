@@ -86,6 +86,7 @@ export class ParamDescription {
     id: string;
     memberType: string;
     links: ResourceLink[];
+    default: string;
     name: string;
     number: number;
     maxLength: number;

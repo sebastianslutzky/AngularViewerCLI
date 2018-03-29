@@ -33,18 +33,14 @@ export class ActionParamComponent implements OnInit {
   ngOnInit() {
     this.metamodel.loadLink(ParamDescription, this.Parameter.typeLink).subscribe(paramDescr => {
         this.descriptor = paramDescr;
-       this.metamodel.loadReturnType(DomainType, paramDescr).subscribe(paramType => {
-         if(paramType === null){
-           throw new Error('uhh');
-         } else { 
-           this.createConcreteComponent(paramType,this.Parameter.typeLink);
-         }
+       this.metamodel.loadReturnType(DomainType, paramDescr).subscribe(returnType => {
+           this.createConcreteComponent(returnType, this.Parameter);
         });
       });
   }
 
-  createConcreteComponent(paramType: DomainType, paramDescr: ResourceLink) {
-       const view = this.renderInput(paramType.canonicalName);
+  createConcreteComponent(returnType: DomainType, paramDescr: ParameterInfo) {
+       const view = this.renderInput(returnType.canonicalName);
           this.componentFactory.createComponent(this.container, view,
             {'args': paramDescr,
             'ctx': this.Context,

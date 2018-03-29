@@ -20,9 +20,8 @@ export class DialogContainerComponent implements OnInit {
     return this.actionDescr.extensions.friendlyName;
   }
 
-  get parametros(): ParameterInfo[]{
-    return this.args.ParametersInfo.slice(0, 1);
-  }
+  parametros: ParameterInfo[];
+
 
   get actionDescr(): ActionDescription{
     return this.args.ActionDescriptor;
@@ -38,6 +37,7 @@ export class DialogContainerComponent implements OnInit {
    }
 
   ngOnInit() {
+    this.parametros = this.args.ParametersInfo;
     this.DialogInput.params =  this.parametros.reduce((map, p) => {
       map[p.typeLink.rel] =  new ParamInput();
       return map;

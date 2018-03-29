@@ -62,18 +62,7 @@ private rootUrl: string;
 
   public loadReturnType<T>(c: new() => T, link: IResource): Observable<T> {
     const  resourceLink =  MetamodelHelper.getFromRel(link, 'urn:org.restfulobjects:rels/return-type');
-    // if(this.session.containsObjectDescriptor(resourceLink.href)) {
-    //   const cached = this.session.getDescriptor(resourceLink.href);
-    //   const source = Observable.create(observer => {
-    //     observer.next(cached);
-    //   });
-    //   return source;
-    // }
-    // cache miss:
-    return this.loadLink(c , resourceLink).map(x => {
-      this.session.indexObjectDescriptor(x, resourceLink.href);
-      return x;
-    });
+    return this.loadLink(c , resourceLink);
   }
   //
 
