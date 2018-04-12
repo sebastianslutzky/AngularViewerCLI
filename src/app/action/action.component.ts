@@ -18,10 +18,11 @@ export class ActionComponent implements OnInit {
   private _actionDescriptor: ActionDescription;
   private _actionInstance: ObjectMember;
   Name: string;
+  ToolTipText: string;
   ReasonDisabled: string ;
   isDisabled: boolean ;
 
-  constructor(private metamodel: MetamodelService,private invoker: ActionInvocationService) {
+  constructor(private metamodel: MetamodelService, private invoker: ActionInvocationService) {
     this.isDisabled = false;
     this.ReasonDisabled = '';
    }
@@ -42,6 +43,7 @@ public InvokeAction() {
           actionDescriptor => {
             this._actionDescriptor = actionDescriptor;
             this.Name = actionDescriptor.friendlyName;
+            this.ToolTipText = this._actionDescriptor.indexableKey;
           });
       }
     );

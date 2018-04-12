@@ -173,7 +173,7 @@ export interface ObjectMember extends IIndexable {
 
     memberType: string; // todo: cast into enumeration
     links: ResourceLink[];
-    value: string;
+    value: any;
     extensions: any;
     disabledReason: string;
 }

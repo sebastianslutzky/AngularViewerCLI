@@ -31,7 +31,9 @@ export class DialogComponent {
     });
 
     dialogRef.afterClosed().subscribe(result => {
+      console.log("closing dialog component");
       if (result) {
+      console.log("!closing dialog component");
         const args = new ActionParameterCollection(result.params);
         this.onParamtersCollected.emit(args);
       }

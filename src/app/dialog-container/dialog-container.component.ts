@@ -56,7 +56,7 @@ export class DialogContainerComponent implements OnInit {
      return `${this.name}=${this.value}` ;
    }
 
-   public toJson(): string{
+   public toJson(): string {
      return `"${name}": {${JSON.stringify(this.value)}}`;
    }
  }

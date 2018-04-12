@@ -27,10 +27,12 @@ export class ObjectRouterComponent implements OnInit {
     console.log('at object router constructtor');
    }
 
+  IsBackNavigation: boolean;
+
   ngOnInit() {
     this._route.paramMap.subscribe(data => {
       // PARSE ACTION
-      const destination = data.get('destination');
+      const destination = data.get('destination')
       const decoded = decodeURIComponent(destination);
 
       // LOAD RESOURCE (or invoke action)
@@ -38,21 +40,21 @@ export class ObjectRouterComponent implements OnInit {
       const result = data1 ;
 
       this.session.indexResult(result);
-
-        this.openModal(result);
+      this.openModal(result);
     });
   });
   }
 
   openModal(data) {
     setTimeout(() => {
+      this.session.IncrementOverlays();
+
        const windowRef =
            this.dialog.open(
              ObjectComponent, {data: {args: data}, width: '900px', });
 
            windowRef.afterClosed().subscribe(result => {
-             console.log('object closed');
-             this.location.back();
+           //   this.location.back();
            });
      });
  }

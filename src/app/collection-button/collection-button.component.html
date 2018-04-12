@@ -1,0 +1,17 @@
+<mat-accordion>
+    <mat-expansion-panel [expanded]='true'>
+        <mat-expansion-panel-header>
+            <mat-panel-title>
+              {{Name}}
+            </mat-panel-title> 
+            <mat-panel-description >
+              #{{Quantity}}
+            </mat-panel-description>
+          </mat-expansion-panel-header>
+    <mat-list role="list">
+      <mat-list-item *ngFor="let item of Items" role="listitem">
+        <a  (click)="openItem(item)">{{item.title}}</a></mat-list-item>
+    </mat-list>
+    </mat-expansion-panel>
+
+</mat-accordion>

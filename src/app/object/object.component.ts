@@ -40,7 +40,6 @@ export class ObjectComponent implements OnInit {
    }
 
   ngOnInit() {}
-    // 
     // done get properties only
     // for each prop, create a StringFieldComponent via factory
     // show all property/value pairs in text

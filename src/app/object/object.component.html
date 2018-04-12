@@ -26,6 +26,14 @@
       <mat-icon svgIcon="hexagon-multiple" matTooltip='collections'>collections</mat-icon>
     </ng-template>
     <h2>Collections</h2>
+      <!-- 
+        todo:  
+        *  add table icon for table view
+            * route to collection
+        * make items in this list clickable (to route to object)
+      -->
+        <app-collection-button *ngFor="let collection of collections" [Context]='collection'>
+        </app-collection-button>
   </mat-tab>
 </mat-tab-group>
 

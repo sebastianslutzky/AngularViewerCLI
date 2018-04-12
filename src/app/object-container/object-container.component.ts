@@ -4,6 +4,7 @@ import { MetamodelService } from '../services/metamodel.service';
 import { MatDialog } from '@angular/material';
 import { ObjectComponent } from '../object/object.component';
 import { ListComponent } from '../list/list.component';
+import { SessionService } from '../services/session.service';
 
 @Component({
   templateUrl: './object-container.component.html',
@@ -14,7 +15,8 @@ export class ObjectContainerComponent implements OnInit {
   constructor(private route: ActivatedRoute,
     private metamodel: MetamodelService,
     private dialog: MatDialog,
-    private injector: Injector) { }
+    private injector: Injector,
+    private session: SessionService) { }
 
   ngOnInit() {
     const data: any = this.injector.get('data');
@@ -40,11 +42,14 @@ export class ObjectContainerComponent implements OnInit {
 
   openModal(data) {
      setTimeout(() => {
+       this.session.IncrementOverlays();
         const windowRef =
             this.dialog.open(
               ListComponent, {data: {args: data}, width: '900px', });
 
             windowRef.afterClosed().subscribe(result => {
+              this.session.DecrementOverlays();
+              console.log("closing obejct container");
               console.log('object closed');
             });
       });

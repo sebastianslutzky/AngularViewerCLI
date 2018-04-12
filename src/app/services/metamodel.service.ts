@@ -92,11 +92,11 @@ private rootUrl: string;
      return this.loadLink(null, this.getInvokeLink(resource), true, queryString);
    }
 
-   public invokePost(resource: IResource, body: string): Observable<any>{
-     return this.loadLink(null, this.getInvokeLink(resource),false,body) ;
+   public invokePost(resource: IResource, body: string): Observable<any> {
+     return this.loadLink(null, this.getInvokeLink(resource), false, body) ;
    }
 
-   public getInvokeLink(resource: IResource){
+   public getInvokeLink(resource: IResource) {
      return  MetamodelHelper.getFromRel(resource, 'urn:org.restfulobjects:rels/invoke');
    }
 
@@ -113,6 +113,10 @@ private rootUrl: string;
    public routeToObject(resource: Resource) {
      const link = this.getSelf(resource);
      this.router.navigate(['object', encodeURIComponent(link.href)]);
+   }
+
+   public routeToObjectFromLink(resource: ResourceLink) {
+     this.router.navigate(['object', encodeURIComponent(resource.href)]);
    }
 
 
@@ -137,8 +141,8 @@ private rootUrl: string;
    //////////
    // v2
    // todo: use right method based on http vern
-   load<T>(c: new() => T, url: string, useIsisHeader: boolean = false, args: string = null,method: string = "GET"): Observable<T> {
-     switch(method){
+   load<T>(c: new() => T, url: string, useIsisHeader: boolean = false, args: string = null, method: string = 'GET'): Observable<T> {
+     switch (method) {
        case 'GET':
             if (args != null) {
               url += '?' + args;
