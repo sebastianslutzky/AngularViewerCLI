@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, Injector, ViewContainerRef, SecurityContext, Input, Inject } from '@angular/core';
-import { MatTableDataSource, MatSort, MAT_DIALOG_DATA } from '@angular/material';
+import { MatTableDataSource, MatSort, MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { AfterViewInit } from '@angular/core/src/metadata/lifecycle_hooks';
 import { XActionResultList, IXActionResultListItem } from '../models/ro/xaction-result-list';
 import { ActionInvokedArg } from '../services/iactioninvoked';
@@ -13,6 +13,7 @@ import { ComponentFactory } from '@angular/core/src/linker/component_factory';
 import { error } from 'util';
 import { DomSanitizer} from '@angular/platform-browser';
 import { MetamodelHelper } from '../services/MetamodelHelper';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-list',
@@ -34,13 +35,22 @@ export class ListComponent implements AfterViewInit,  OnInit {
   private columnTypes = {};
 
 
+
+
   @ViewChild(MatSort) sort: MatSort;
 
   constructor(public injector: Injector,
             private metamodel: MetamodelService,
             private viewFactory: ComponentFactoryService,
             private sanitizer: DomSanitizer,
-             @Inject(MAT_DIALOG_DATA) public data: any) {
+             @Inject(MAT_DIALOG_DATA) public data: any,
+            private dialogRef: MatDialogRef<ListComponent>,
+            private router: Router) {
+  }
+
+  goTo(selectedElement) {
+    this.router.navigate([this.getObjectUrl(selectedElement)]);
+    this.dialogRef.close({data: this.data});
   }
 
   preLoadPropertyTypes(rawResult: ActionInvokedArg) {

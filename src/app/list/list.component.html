@@ -17,7 +17,7 @@
     <ng-container *ngFor="let column of displayedColumns" matColumnDef="{{column}}"> <!-- for each column -->
       <mat-header-cell *matHeaderCellDef mat-sort-header> {{column}} </mat-header-cell>
       <mat-cell *matCellDef="let element"> 
-        <a [routerLink]="getObjectUrl(element)">
+        <a  (click)="goTo(element)" style="cursor: pointer">
        <app-cell [value]='element[column]' [type]='getPropertyReturnType(column)'>
         </app-cell>
       </a>

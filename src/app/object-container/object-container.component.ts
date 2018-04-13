@@ -45,11 +45,10 @@ export class ObjectContainerComponent implements OnInit {
        this.session.IncrementOverlays();
         const windowRef =
             this.dialog.open(
-              ListComponent, {data: {args: data}, width: '900px', });
+              ListComponent, {data: {args: data}, width: '900px'});
 
             windowRef.afterClosed().subscribe(result => {
-              this.session.DecrementOverlays();
-              console.log("closing obejct container");
+              console.log(result);
               console.log('object closed');
             });
       });

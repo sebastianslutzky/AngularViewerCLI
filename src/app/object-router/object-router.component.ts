@@ -54,6 +54,7 @@ export class ObjectRouterComponent implements OnInit {
              ObjectComponent, {data: {args: data}, width: '900px', });
 
            windowRef.afterClosed().subscribe(result => {
+             
            //   this.location.back();
            });
      });
