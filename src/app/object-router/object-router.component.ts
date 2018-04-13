@@ -1,5 +1,5 @@
 import { Component, OnInit, Output, EventEmitter, Injector } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MetamodelService } from '../services/metamodel.service';
 import { ActionInvokedArg } from '../services/iactioninvoked';
 import { ActionInvocationService } from '../services/action-invocation.service';
@@ -23,7 +23,8 @@ export class ObjectRouterComponent implements OnInit {
     private dialog: MatDialog,
     private injector: Injector,
     private session: SessionService,
-    private location: Location) {
+    private location: Location,
+  private route: Router) {
     console.log('at object router constructtor');
    }
 
@@ -54,8 +55,9 @@ export class ObjectRouterComponent implements OnInit {
              ObjectComponent, {data: {args: data}, width: '900px', });
 
            windowRef.afterClosed().subscribe(result => {
-             
-           //   this.location.back();
+            if (!result || !result.routed)  {
+              this.route.navigate(['.']);
+            }
            });
      });
  }

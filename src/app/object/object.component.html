@@ -32,7 +32,8 @@
             * route to collection
         * make items in this list clickable (to route to object)
       -->
-        <app-collection-button *ngFor="let collection of collections" [Context]='collection'>
+
+        <app-collection-button *ngFor="let collection of collections" [Context]='collection' (onGetObjectRequired)="onCollectionItemClicked($event)">
         </app-collection-button>
   </mat-tab>
 </mat-tab-group>

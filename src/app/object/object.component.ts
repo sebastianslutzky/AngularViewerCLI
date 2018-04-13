@@ -1,8 +1,8 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { ComponentFactoryService } from '../services/component-factory.service';
-import { MAT_DIALOG_DATA } from '@angular/material';
-import { ObjectRepr, ObjectMember } from '../models/ro/iresource';
-import { OutletContext } from '@angular/router';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
+import { ObjectRepr, ObjectMember, ResourceLink } from '../models/ro/iresource';
+import { OutletContext, Router } from '@angular/router';
 
 @Component({
   selector: 'app-object',
@@ -15,12 +15,12 @@ export class ObjectComponent implements OnInit {
 
   private title: string;
 
-  constructor( @Inject(MAT_DIALOG_DATA) public data: any) {
+  constructor( @Inject(MAT_DIALOG_DATA) public data: any,
+        private route: Router,
+        private dialogRef: MatDialogRef<ObjectComponent>) {
     this.objectData = data.args as ObjectRepr;
 
     this.title = this.objectData.title;
-    console.log('object data:');
-    console.log(this.objectData);
    }
 
    get properties(): ObjectMember[]{
@@ -38,6 +38,14 @@ export class ObjectComponent implements OnInit {
         return this.objectData.members[m];
       } );
    }
+
+   onCollectionItemClicked(item: ResourceLink) {
+    this.route.navigate([this.getObjectUrl(item.href)]);
+    this.dialogRef.close({routed: true});
+   }
+  getObjectUrl(element: string) {
+    return 'object/' + encodeURIComponent(element);
+  }
 
   ngOnInit() {}
     // done get properties only

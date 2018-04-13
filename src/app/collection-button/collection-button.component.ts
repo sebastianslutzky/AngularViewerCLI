@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { MetamodelService } from '../services/metamodel.service';
 import { ObjectMember, ActionDescription, ResourceLink } from '../models/ro/iresource';
 
@@ -19,6 +19,8 @@ export class CollectionButtonComponent implements OnInit {
   @Input()
   Context: ObjectMember;
   constructor(private metamodel: MetamodelService) { }
+  @Output()
+  public onGetObjectRequired: EventEmitter<ResourceLink> = new EventEmitter<ResourceLink>();
 
   ngOnInit() {
     this.metamodel.getDetails<ObjectMember>(this.Context).subscribe(
@@ -37,7 +39,8 @@ export class CollectionButtonComponent implements OnInit {
       }
 
       openItem(item: ResourceLink) {
-        this.metamodel.routeToObjectFromLink(item);
+        this.onGetObjectRequired.emit(item);
       }
-
 }
+
+
