@@ -48,11 +48,13 @@ export class ObjectRouterComponent implements OnInit {
 
   openModal(data) {
     setTimeout(() => {
-      this.session.IncrementOverlays();
 
        const windowRef =
            this.dialog.open(
-             ObjectComponent, {data: {args: data}, width: '900px', });
+             ObjectComponent, {data: {args: data}});
+            
+          windowRef.updatePosition({top:'1px',left:'1px'})
+          windowRef.updateSize( '200px', '300px');
 
            windowRef.afterClosed().subscribe(result => {
             if (!result || !result.routed)  {

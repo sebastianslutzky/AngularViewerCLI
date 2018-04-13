@@ -1,9 +1,4 @@
- <app-banner></app-banner>
-      <mat-grid-list cols="8">
-                <mat-grid-tile *ngFor="let result of session.getUniverseItems()" >
-                    <app-minimized-object  [Context]='result'>
-                    </app-minimized-object>
-                </mat-grid-tile>
-      </mat-grid-list> 
-    <router-outlet #desktop></router-outlet>
+<app-banner></app-banner>
+<app-desktop></app-desktop>
+<router-outlet #desktop></router-outlet>
 <app-footer></app-footer>  

@@ -54,6 +54,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { ActionComponent } from './action/action.component';
 import { MinimizedObjectComponent } from './minimized-object/minimized-object.component';
 import { CollectionButtonComponent } from './collection-button/collection-button.component';
+import { DesktopComponent } from './desktop/desktop.component';
 
 
 @NgModule({
@@ -80,7 +81,8 @@ import { CollectionButtonComponent } from './collection-button/collection-button
     PropertyComponent,
     ActionComponent,
     MinimizedObjectComponent,
-    CollectionButtonComponent
+    CollectionButtonComponent,
+    DesktopComponent
   ],
   imports: [
     HttpModule,
