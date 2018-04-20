@@ -33,3 +33,39 @@
      width: 60px;
      height: 30px;
    } */
+
+/* color for each block */
+:host{
+  width: 100%;
+    min-height: 100vh;
+    display: flex;
+    flex-flow: column;
+    flex-direction: column;
+}
+
+
+
+/* footer at foot */
+:host  * {
+  width: 100%;
+}
+:host ::ng-deep app-footer{
+  /* height: 3em; */
+  align-self: flex-end;
+}
+
+:host ::ng-deep router-link{
+  /* height: 3em; */
+  align-self: flex-end;
+}
+:host ::ng-deep app-desktop{
+  /* height: 3em; */
+  flex-grow: 1;
+}
+
+:host ::ng-deep app-banner{
+  align-self: flex-end;
+}
+
+/* take full width for the three */
+/* desktop can stresh.shrink, footer is sticky */ 

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ElementRef, Output, EventEmitter } from '@angular/core';
 import { SessionService } from '../services/session.service';
 
 @Component({
@@ -8,8 +8,19 @@ import { SessionService } from '../services/session.service';
 })
 export class DesktopComponent implements OnInit {
 
-  constructor(private session: SessionService) { }
+  @Output()
+  onDekstopDimensionsChanged: EventEmitter<DesktopDimensions> = new EventEmitter<DesktopDimensions>();
+
+  constructor(private session: SessionService, private elRef: ElementRef) { }
 
   ngOnInit() {
+    this.onDekstopDimensionsChanged.emit({left: '1px', top: '1px', width: '300px', height: '200px'});
   }
+}
+
+export interface DesktopDimensions {
+  left: string;
+  top: string;
+  width: string;
+  height: string;
 }

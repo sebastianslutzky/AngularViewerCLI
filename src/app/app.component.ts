@@ -1,4 +1,4 @@
-import { Component, ElementRef, ViewContainerRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, ViewContainerRef, ViewChild, OnInit, AfterContentInit } from '@angular/core';
 import { ActionResult } from './models/ro/iresource';
 import { ActionInvocationService } from './services/action-invocation.service';
 import { ComponentFactoryService } from './services/component-factory.service';
@@ -9,29 +9,33 @@ import { SessionService } from './services/session.service';
 import {ObjectContainerComponent} from './object-container/object-container.component';
 import { MatIconRegistry } from '@angular/material';
 import { DomSanitizer } from '@angular/platform-browser';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
+export class AppComponent  implements AfterContentInit {
 
   title = 'app';
+  @ViewChild('banner', { read: ViewContainerRef }) private _banner: ViewContainerRef;
   @ViewChild('desktop', { read: ViewContainerRef }) private _desktop: ViewContainerRef;
+  @ViewChild('footer', { read: ViewContainerRef }) private _footer: ViewContainerRef;
 
   constructor(private invoker: ActionInvocationService,
     private componentFactory: ComponentFactoryService,
     private session: SessionService,
     private container: ViewContainerRef,
-    private iconRegistry: MatIconRegistry, sanitizer: DomSanitizer) {
+    private iconRegistry: MatIconRegistry,
+    private activatedRoute: ActivatedRoute,
+    sanitizer: DomSanitizer) {
 
       iconRegistry.addSvgIconSet(sanitizer.bypassSecurityTrustResourceUrl('./assets/mdi.svg'));
 
-
     invoker.actionInvoked.subscribe(data => {
-      this.session.indexResult(data);
       // action results displayed without routing 
+      data.CanvasSize = this.getDesktopDimensions();
       this.componentFactory.createComponent(container, ObjectContainerComponent, {'data': data});
     });
 
@@ -50,8 +54,22 @@ export class AppComponent {
       });
     });
 
+//    this.session.DesktopSize = this.getDesktopDimensions();
   }
 
+  getDesktopDimensions(){
+    console.log(this._desktop.element.nativeElement.offsetTop);
+    console.log(this._footer.element.nativeElement.offsetTop);
+    const top = this._desktop.element.nativeElement.offsetTop;
+    const bottom = this._footer.element.nativeElement.offsetTop;
+    const left = this._desktop.element.nativeElement.offsetLeft;
+
+    return {top: top, height: bottom - top, left: left };
+  }
+
+  ngAfterContentInit(): void {
+    this.session.DesktopSize = this.getDesktopDimensions();
+  }
      // move to card, or ven better, to resource
      getFriendlyName(result): string {
 

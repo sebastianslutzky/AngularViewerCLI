@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter, Injector } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Injector, ViewContainerRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MetamodelService } from '../services/metamodel.service';
 import { ActionInvokedArg } from '../services/iactioninvoked';
@@ -24,9 +24,9 @@ export class ObjectRouterComponent implements OnInit {
     private injector: Injector,
     private session: SessionService,
     private location: Location,
-  private route: Router) {
-    console.log('at object router constructtor');
-   }
+    private route: Router) {
+      console.log('at object router constructtor');
+     }
 
   IsBackNavigation: boolean;
 
@@ -53,10 +53,9 @@ export class ObjectRouterComponent implements OnInit {
            this.dialog.open(
              ObjectComponent, {data: {args: data}});
             
-          windowRef.updatePosition({top:'1px',left:'1px'})
-          windowRef.updateSize( '200px', '300px');
-
-           windowRef.afterClosed().subscribe(result => {
+          windowRef.updatePosition({top: this.session.DesktopSize.top +  'px', left: '8px'});
+          windowRef.updateSize('100vw' , this.session.DesktopSize.height + 'px');
+          windowRef.afterClosed().subscribe(result => {
             if (!result || !result.routed)  {
               this.route.navigate(['.']);
             }

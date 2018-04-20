@@ -42,7 +42,6 @@ export class ObjectContainerComponent implements OnInit {
 
   openModal(data) {
      setTimeout(() => {
-       this.session.IncrementOverlays();
         const windowRef =
             this.dialog.open(
               ListComponent, {data: {args: data}, width: '900px'});
