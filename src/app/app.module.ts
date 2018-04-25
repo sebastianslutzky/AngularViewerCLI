@@ -55,6 +55,9 @@ import { ActionComponent } from './action/action.component';
 import { MinimizedObjectComponent } from './minimized-object/minimized-object.component';
 import { CollectionButtonComponent } from './collection-button/collection-button.component';
 import { DesktopComponent } from './desktop/desktop.component';
+import { ThemePickerComponent } from './theme-picker/theme-picker.component';
+import { StyleManager } from './services/style-manager.service';
+import { ThemeStorage } from './services/theme-storage.service';
 
 
 @NgModule({
@@ -82,7 +85,8 @@ import { DesktopComponent } from './desktop/desktop.component';
     ActionComponent,
     MinimizedObjectComponent,
     CollectionButtonComponent,
-    DesktopComponent
+    DesktopComponent,
+    ThemePickerComponent
   ],
   imports: [
     HttpModule,
@@ -114,6 +118,8 @@ import { DesktopComponent } from './desktop/desktop.component';
     ActionInvocationService,
     ComponentFactoryService,
     ResourceFactoryService,
+    StyleManager,
+    ThemeStorage,
     SessionService],
   bootstrap: [AppComponent],
   entryComponents: [

@@ -10,6 +10,7 @@ import {ObjectContainerComponent} from './object-container/object-container.comp
 import { MatIconRegistry } from '@angular/material';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
+import { ThemePickerComponent } from './theme-picker/theme-picker.component';
 
 @Component({
   selector: 'app-root',

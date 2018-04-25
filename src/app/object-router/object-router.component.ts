@@ -33,16 +33,21 @@ export class ObjectRouterComponent implements OnInit {
   ngOnInit() {
     this._route.paramMap.subscribe(data => {
       // PARSE ACTION
-      const destination = data.get('destination')
+      const destination = data.get('destination');
       const decoded = decodeURIComponent(destination);
 
-      // LOAD RESOURCE (or invoke action)
+      // LOAD RESOURCE 
       this.metamodel.load(ObjectRepr, decoded).subscribe(data1 => {
       const result = data1 ;
 
       this.session.indexResult(result);
       this.openModal(result);
     });
+
+    //TODO: Load layout
+    // then parse xml into some object
+    //pass layout to dialog
+
   });
   }
 
@@ -52,7 +57,6 @@ export class ObjectRouterComponent implements OnInit {
        const windowRef =
            this.dialog.open(
              ObjectComponent, {data: {args: data}});
-            
           windowRef.updatePosition({top: this.session.DesktopSize.top +  'px', left: '8px'});
           windowRef.updateSize('100vw' , this.session.DesktopSize.height + 'px');
           windowRef.afterClosed().subscribe(result => {
