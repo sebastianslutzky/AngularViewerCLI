@@ -3,6 +3,7 @@ import { ComponentFactoryService } from '../services/component-factory.service';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { ObjectRepr, ObjectMember, ResourceLink } from '../models/ro/iresource';
 import { OutletContext, Router } from '@angular/router';
+import { ObjectLayout } from '../services/layout.service';
 
 @Component({
   selector: 'app-object',
@@ -12,15 +13,18 @@ import { OutletContext, Router } from '@angular/router';
 export class ObjectComponent implements OnInit {
 
   private objectData: ObjectRepr;
+  private layout: ObjectLayout;
 
   private title: string;
 
   constructor( @Inject(MAT_DIALOG_DATA) public data: any,
         private route: Router,
         private dialogRef: MatDialogRef<ObjectComponent>) {
-    this.objectData = data.args as ObjectRepr;
 
+    this.objectData = data.args as ObjectRepr;
+    this.layout = data.layout as ObjectLayout;
     this.title = this.objectData.title;
+
    }
 
    get properties(): ObjectMember[]{

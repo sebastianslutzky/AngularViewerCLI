@@ -8,6 +8,8 @@ import { Resource, ObjectRepr } from '../models/ro/iresource';
 import { MatDialog } from '@angular/material';
 import { ObjectComponent } from '../object/object.component';
 import {Location} from '@angular/common';
+import { LayoutModule } from '@angular/cdk/layout';
+import { LayoutService, ObjectLayout } from '../services/layout.service';
 
 @Component({
   selector: 'app-object-router',
@@ -24,7 +26,8 @@ export class ObjectRouterComponent implements OnInit {
     private injector: Injector,
     private session: SessionService,
     private location: Location,
-    private route: Router) {
+    private route: Router,
+  private layoutService: LayoutService) {
       console.log('at object router constructtor');
      }
 
@@ -33,25 +36,31 @@ export class ObjectRouterComponent implements OnInit {
   ngOnInit() {
     this._route.paramMap.subscribe(data => {
       // PARSE ACTION
-      const destination = data.get('destination')
-      const decoded = decodeURIComponent(destination);
+      const destination = data.get('destination');
+        const decoded = decodeURIComponent(destination);
 
       // LOAD RESOURCE (or invoke action)
       this.metamodel.load(ObjectRepr, decoded).subscribe(data1 => {
       const result = data1 ;
 
+
       this.session.indexResult(result);
-      this.openModal(result);
+
+      // todo: load layout 
+
+      this.layoutService.load(result).subscribe(objLayout => {
+        this.openModal(result, objLayout);
+      });
     });
   });
   }
 
-  openModal(data) {
+  openModal(data, layout: ObjectLayout) {
     setTimeout(() => {
 
        const windowRef =
            this.dialog.open(
-             ObjectComponent, {data: {args: data}});
+             ObjectComponent, {data: {args: data, layout: layout}});
             
           windowRef.updatePosition({top: this.session.DesktopSize.top +  'px', left: '8px'});
           windowRef.updateSize('100vw' , this.session.DesktopSize.height + 'px');

@@ -30,7 +30,7 @@ export class ActionParametersNeededArgs {
     }
 }
 
-export class ParameterInfo{
+export class ParameterInfo {
  constructor(public instance: any, public typeLink: ResourceLink) {
  }
 }

@@ -55,6 +55,9 @@ import { ActionComponent } from './action/action.component';
 import { MinimizedObjectComponent } from './minimized-object/minimized-object.component';
 import { CollectionButtonComponent } from './collection-button/collection-button.component';
 import { DesktopComponent } from './desktop/desktop.component';
+import { ObjectTabGroupComponent } from './object-tab-group/object-tab-group.component';
+import { LayoutService } from './services/layout.service';
+import { PropertyGroupComponent } from './property-group/property-group.component';
 
 
 @NgModule({
@@ -82,7 +85,9 @@ import { DesktopComponent } from './desktop/desktop.component';
     ActionComponent,
     MinimizedObjectComponent,
     CollectionButtonComponent,
-    DesktopComponent
+    DesktopComponent,
+    ObjectTabGroupComponent,
+    PropertyGroupComponent
   ],
   imports: [
     HttpModule,
@@ -114,6 +119,7 @@ import { DesktopComponent } from './desktop/desktop.component';
     ActionInvocationService,
     ComponentFactoryService,
     ResourceFactoryService,
+    LayoutService,
     SessionService],
   bootstrap: [AppComponent],
   entryComponents: [
