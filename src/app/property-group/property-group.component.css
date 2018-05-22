@@ -1,0 +1,11 @@
+:host ::ng-deep .group-bar{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+:host ::ng-deep .filler{
+    flex-grow: 1;
+}
+
+

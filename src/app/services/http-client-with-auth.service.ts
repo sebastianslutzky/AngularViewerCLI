@@ -11,7 +11,6 @@ export class HttpClientWithAuthService {
 
   private x2js: any;
   constructor(private http: Http) {
-
     this.x2js = new X2JS();
     const xmlText = '<MyRoot><test>Success</test><test2><item>val1</item><item>val2</item></test2></MyRoot>';
     const jsonObj = this.x2js.xml2js( xmlText );

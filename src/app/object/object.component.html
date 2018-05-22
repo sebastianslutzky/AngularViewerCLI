@@ -2,19 +2,54 @@
 <h2 mat-dialog-title> 
   <!-- todo: get icon name from response-->
  <mat-icon svgIcon="asterisk"></mat-icon>{{objectData.title}}</h2> 
+ <div class="content-container">
+ <div class='object-properties-and-actions'>
+  <mat-tab-group>
+    <mat-tab  *ngFor='let tab of layout.getPropertyTabs()' label='{{tab._name}}'>
+      <app-property-group 
+          [Context]='members' 
+          [TabLayout]='tab' 
+          [Name]="tab._name" 
+          [Layout]="layout.getPropertyTabs()">
 
-<mat-tab-group>
-  <mat-tab *ngFor="let group of layout.getPropertyGroups()" label='Properties' >
-    <ng-template mat-tab-label >
-      <mat-icon>properties</mat-icon>
-    </ng-template>
-    <ol>
-    <h2>Properties</h2>
-        <app-property *ngFor='let property of properties' [Property]='property'>
-        </app-property>
-      </ol>
-  </mat-tab>
-</mat-tab-group>
+      </app-property-group> 
+    </mat-tab>
+    
+  </mat-tab-group>
+</div>
+<div class='object-collections' >
+  <span *ngFor='let tab of layout.getCollections()'>
+     placeholder for collection
+  </span> 
+  <!-- todo
+    * render each collection 
+      * get collection href
+      * display name from layout
+      * display number of items in title bar
+    * OPEN:
+      * show "collection  item" component (plain text)
+      * start resolving item by item within the collectionItem 
+      * once resolved, display like a table item
+
+
+    <mat-expansion-panel (opened)="panelOpenState = true"
+                       (closed)="panelOpenState = false">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Self aware panel
+      </mat-panel-title>
+      <mat-panel-description>
+        Currently I am {{panelOpenState ? 'open' : 'closed'}}
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+    <p>I'm visible because I am open</p>
+  </mat-expansion-panel>
+</mat-accordion>
+
+    and pass it to CollectionComponent
+  -->
+</div>
+ </div>
 
 <div mat-dialog-actions>
   <button mat-button [mat-dialog-close]="DialogInput" tabindex="2">OK</button>

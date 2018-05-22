@@ -22,7 +22,7 @@ export class LayoutService {
 export class ObjectLayout {
   public grid: any;
 
-  getPropertyGroups(): any[] {
+  getPropertyTabs(): any[] {
     // for now, ignore rows and cols (return property group only)
     const rows = this.grid.row as any[];
 
@@ -35,10 +35,14 @@ export class ObjectLayout {
 
     return allTabs;
   }
-  getPropertiesTab(): any {
-    const rows = this.grid.row as any[];
-    const reducer = (accumulator, currentValue) => accumulator.concat(currentValue.col.tabGroup);
 
-    return rows.reduce(reducer, []);
+  getCollections():  any[] {
+    const rows = this.grid.row as any[];
+
+    const allCols =  rows.reduce((accumulator, currentValue) => accumulator.concat(currentValue.col), []);
+    const allCollGroups = allCols.reduce(
+      (accumulator, currentValue) => currentValue.collection ?  accumulator.concat(currentValue.collection) : accumulator, []);
+
+    return allCollGroups;
   }
 }

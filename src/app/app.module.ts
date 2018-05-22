@@ -84,9 +84,8 @@ import { PropertyGroupComponent } from './property-group/property-group.componen
     PropertyComponent,
     ActionComponent,
     MinimizedObjectComponent,
-    CollectionButtonComponent,
+   CollectionButtonComponent, 
     DesktopComponent,
-    ObjectTabGroupComponent,
     PropertyGroupComponent
   ],
   imports: [

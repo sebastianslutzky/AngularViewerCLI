@@ -1,0 +1,89 @@
+{
+  "_from": "x2js",
+  "_id": "x2js@3.2.1",
+  "_inBundle": false,
+  "_integrity": "sha512-+6gQGmMKbAHmapedjI/r+cPQNdFqQ0OE1VJvv3A6GPVlEJAsFq9JyNVgfwgnceMiUtpt38VOUEtEF7S3SxZkMQ==",
+  "_location": "/x2js",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "tag",
+    "registry": true,
+    "raw": "x2js",
+    "name": "x2js",
+    "escapedName": "x2js",
+    "rawSpec": "",
+    "saveSpec": null,
+    "fetchSpec": "latest"
+  },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/x2js/-/x2js-3.2.1.tgz",
+  "_shasum": "d7d9eb3ab14a31a98068b9eba1bb1b9397c96714",
+  "_spec": "x2js",
+  "_where": "/Users/sebastianslutzky/Source/github/SebastianSlutzky/AngularViewerCLI",
+  "author": {
+    "name": "Axinom"
+  },
+  "bugs": {
+    "url": "https://github.com/Axinom/x2js/issues"
+  },
+  "bundleDependencies": false,
+  "dependencies": {
+    "xmldom": "^0.1.19"
+  },
+  "deprecated": false,
+  "description": "Transforms between XML string and JavaScript object trees.",
+  "devDependencies": {
+    "eslint": "^3.4.0",
+    "eslint-config-axinom": "^1.0.3",
+    "karma": "^1.2.0",
+    "karma-chrome-launcher": "^2.0.0",
+    "karma-firefox-launcher": "^1.0.0",
+    "karma-ie-launcher": "^1.0.0",
+    "karma-qunit": "^1.2.0",
+    "qunit-cli": "^0.2.0",
+    "qunitjs": "^2.0.1"
+  },
+  "eslintConfig": {
+    "extends": "axinom",
+    "env": {
+      "qunit": true,
+      "node": true
+    },
+    "rules": {
+      "indent": [
+        2,
+        "tab",
+        {
+          "SwitchCase": 1
+        }
+      ]
+    }
+  },
+  "homepage": "https://github.com/Axinom/x2js#readme",
+  "keywords": [
+    "xml",
+    "convert",
+    "transform",
+    "mapping",
+    "map"
+  ],
+  "license": "Apache-2.0",
+  "main": "x2js.js",
+  "name": "x2js",
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Axinom/x2js.git"
+  },
+  "scripts": {
+    "test": "karma start --single-run && .\\node_modules\\.bin\\qunit-cli all_tests.js && node ./node_modules/eslint/bin/eslint.js --env qunit,node --no-eslintrc --config ./node_modules/eslint-config-axinom/index.js *.js",
+    "travistest": "./node_modules/karma/bin/karma start --single-run --browsers Firefox && ./node_modules/.bin/qunit-cli all_tests.js && node ./node_modules/eslint/bin/eslint.js --env qunit,node --no-eslintrc --config ./node_modules/eslint-config-axinom/index.js *.js"
+  },
+  "types": "x2js.d.ts",
+  "version": "3.2.1"
+}

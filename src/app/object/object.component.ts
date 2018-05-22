@@ -24,7 +24,6 @@ export class ObjectComponent implements OnInit {
     this.objectData = data.args as ObjectRepr;
     this.layout = data.layout as ObjectLayout;
     this.title = this.objectData.title;
-
    }
 
    get properties(): ObjectMember[]{

@@ -21,9 +21,6 @@
       "styles": [
         "styles.css"
       ],
-      "scripts": [
-        "../node_modules/x2js/x2js.js"
-      ],
       "environmentSource": "environments/environment.ts",
       "environments": {
         "dev": "environments/environment.ts",

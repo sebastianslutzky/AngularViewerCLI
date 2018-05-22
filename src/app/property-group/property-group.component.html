@@ -1,3 +1,12 @@
-<p>
-  property-group works!
-</p>
+<!-- Display  -->
+  <div class='group-bar' >
+    <div>{{Name}}</div>
+    <div class="filler"></div>
+    <div *ngFor="let action of ContextActions" >
+    <app-action [Action]='action'> 
+      </app-action> 
+      </div>
+  </div>
+  
+  <app-property *ngFor='let property of ContextProperties' [Property]='property'> 
+  </app-property>

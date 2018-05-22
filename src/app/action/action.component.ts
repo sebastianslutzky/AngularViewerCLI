@@ -12,6 +12,9 @@ export class ActionComponent implements OnInit {
   private _objectActionLink: ObjectMember;
   @Input()
   set Action(val: ObjectMember) {
+    if (!val) {
+      throw new Error('Action member cannot be null');
+    }
     this._objectActionLink = val;
   }
 
