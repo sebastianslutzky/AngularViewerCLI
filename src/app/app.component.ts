@@ -10,6 +10,7 @@ import {ObjectContainerComponent} from './object-container/object-container.comp
 import { MatIconRegistry } from '@angular/material';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
+import { ObjectStoreService } from './services/object-store.service';
 
 @Component({
   selector: 'app-root',
@@ -29,12 +30,13 @@ export class AppComponent  implements AfterContentInit {
     private container: ViewContainerRef,
     private iconRegistry: MatIconRegistry,
     private activatedRoute: ActivatedRoute,
-    sanitizer: DomSanitizer) {
+    sanitizer: DomSanitizer,
+    private objectStore: ObjectStoreService) {
 
       iconRegistry.addSvgIconSet(sanitizer.bypassSecurityTrustResourceUrl('./assets/mdi.svg'));
 
     invoker.actionInvoked.subscribe(data => {
-      // action results displayed without routing 
+      // action results displayed without routing
       data.CanvasSize = this.getDesktopDimensions();
       this.componentFactory.createComponent(container, ObjectContainerComponent, {'data': data});
     });
@@ -57,9 +59,7 @@ export class AppComponent  implements AfterContentInit {
 //    this.session.DesktopSize = this.getDesktopDimensions();
   }
 
-  getDesktopDimensions(){
-    console.log(this._desktop.element.nativeElement.offsetTop);
-    console.log(this._footer.element.nativeElement.offsetTop);
+  getDesktopDimensions() {
     const top = this._desktop.element.nativeElement.offsetTop;
     const bottom = this._footer.element.nativeElement.offsetTop;
     const left = this._desktop.element.nativeElement.offsetLeft;

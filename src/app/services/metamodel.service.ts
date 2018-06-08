@@ -47,21 +47,32 @@ private rootUrl: string;
     return this.loadLink(c , describedby);
   }
 
-  public getActionDescriptor(link: IResource): Observable<ActionDescription> {
+  public async getActionDescriptor(link: IResource): Promise<ActionDescription> {
      const  describedby =  MetamodelHelper.getFromRel(link, 'describedby');
-     if (this.session.containsAction(describedby)) {
-       throw new Error('a reusarlo');
+     const cached = await this.session.getDomainType(describedby);
+     if (cached) {
+       if (environment.trace.cacheHits) {
+        console.log('hit the cache: ' + describedby.href);
+
+
+       }
+      return cached;
      }
+       if (environment.trace.cacheMisses) {
+        console.log('missed the cache: ' + describedby.href);
+       }
 
      return this.getDescribedBy(ActionDescription, link).map(p => {
        // index after loading
         this.session.indexActionDescriptor(p);
         return p;
-     });
+     }).toPromise();
   }
 
   public loadReturnType<T>(c: new() => T, link: IResource): Observable<T> {
     const  resourceLink =  MetamodelHelper.getFromRel(link, 'urn:org.restfulobjects:rels/return-type');
+    this.session.getDomainType(resourceLink);
+
     return this.loadLink(c , resourceLink);
   }
   //

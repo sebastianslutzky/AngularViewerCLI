@@ -20,7 +20,6 @@ export class ObjectContainerComponent implements OnInit {
 
   ngOnInit() {
     const data: any = this.injector.get('data');
-        console.log(data);
         this.openModal(data);
         return;
 
@@ -45,11 +44,6 @@ export class ObjectContainerComponent implements OnInit {
         const windowRef =
             this.dialog.open(
               ListComponent, {data: {args: data}, width: '900px'});
-
-            windowRef.afterClosed().subscribe(result => {
-              console.log(result);
-              console.log('object closed');
-            });
       });
   }
  

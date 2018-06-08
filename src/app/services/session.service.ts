@@ -1,6 +1,9 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Output, EventEmitter } from '@angular/core';
 import { IdentityMap } from '../models/identity-map';
 import { ActionDescription, ResourceLink, IIndexable } from '../models/ro/iresource';
+import { ObjectStoreService } from './object-store.service';
+import { isArray } from 'util';
+import { attachEmbeddedView } from '@angular/core/src/view';
 
 @Injectable()
 export class SessionService {
@@ -9,17 +12,29 @@ export class SessionService {
   private registry: IdentityMap<any>;
   private objectDescriptors: IdentityMap<any>;
   private actionDescriptors: IdentityMap<ActionDescription>;
+  private _objectStore: ObjectStoreService;
+
+  @Output()
+  public onUniverseChanged: EventEmitter<void> = new EventEmitter<void>();
 
   public DesktopSize: any;
 
-  
 
-  constructor() {
+  constructor(private objectStore: ObjectStoreService) {
     this.registry = new IdentityMap();
     this.universe = new IdentityMap();
     this.objectDescriptors = new IdentityMap();
     this.actionDescriptors = new IdentityMap();
+    this._objectStore = objectStore;
+    this._objectStore.onStoreChanged.subscribe(store => {
+        if (store === 'universe') {
+          this.onUniverseChanged.emit();
+        }
+      }
+      );
   }
+
+
 
   indexResult(result: any): any {
    this.addToIdentityMap(result);
@@ -28,24 +43,27 @@ export class SessionService {
 
   indexActionDescriptor(action: ActionDescription) {
     this.actionDescriptors.index(action);
+    this._objectStore.add(action, 'domain-types', action.indexableKey);
   }
 
-  private addToUniverse(result: any) {
-    this.universe.index(result);
+  private addToUniverse(result: IIndexable) {
+    this._objectStore.upsert(result, 'universe', result.indexableKey);
   }
+
   private addToIdentityMap(result: IIndexable): any {
+    this._objectStore.upsert(result, 'registry', result.indexableKey);
     return this.registry.index(result);
   }
 
-  public containsAction(link: ResourceLink): boolean {
-    return this.actionDescriptors.contains(link.href);
+  public async getDomainType(link: ResourceLink): Promise<any> {
+    return this._objectStore.get('domain-types', link.href);
   }
 
   public containsObjectDescriptor(key) {
      return this.objectDescriptors.contains(key);
   }
 
-  public getDescriptor(key){
+  public getDescriptor(key) {
     return this.objectDescriptors.Items[key];
   }
 
@@ -53,8 +71,13 @@ export class SessionService {
     this.objectDescriptors.index(objectDescriptor, key);
   }
 
-  public getUniverseItems():Iterable<any>{
-    return this.universe.Items;
+  public  async getUniverseItems(): Promise<Array<any>> {
+    const items = await this._objectStore.getAll('universe');
+    if(isArray(items)) {
+      const array = items as Array<any>;
+      return array;
+    }
+    throw new Error('not an array');
   }
 }
 

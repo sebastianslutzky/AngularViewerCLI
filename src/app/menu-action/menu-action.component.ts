@@ -28,7 +28,9 @@ export class MenuActionComponent implements OnInit {
       this.Action = data;
       // get description
       // This should first hit the session.Action
-      this.metamodel.getActionDescriptor(this.Action).subscribe(action => {
+
+     const descr =  this.metamodel.getActionDescriptor(this.Action);
+     descr.then( action => {
         this.actionDescribedBy = action;
         const up =  MetamodelHelper.getFromRel(action, 'self') ;
         this.tooltip = up.href;

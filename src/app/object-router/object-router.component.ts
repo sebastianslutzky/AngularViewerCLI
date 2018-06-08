@@ -28,8 +28,7 @@ export class ObjectRouterComponent implements OnInit {
     private location: Location,
     private route: Router,
   private layoutService: LayoutService) {
-      console.log('at object router constructtor');
-     }
+  }
 
   IsBackNavigation: boolean;
 
@@ -37,12 +36,11 @@ export class ObjectRouterComponent implements OnInit {
     this._route.paramMap.subscribe(data => {
       // PARSE ACTION
       const destination = data.get('destination');
-        const decoded = decodeURIComponent(destination);
+      const decoded = decodeURIComponent(destination);
 
       // LOAD RESOURCE (or invoke action)
       this.metamodel.load(ObjectRepr, decoded).subscribe(data1 => {
       const result = data1 ;
-
 
       this.session.indexResult(result);
 

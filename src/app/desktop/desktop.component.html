@@ -1,5 +1,5 @@
 <mat-grid-list cols="8">
-    <mat-grid-tile *ngFor="let result of session.getUniverseItems()" >
+    <mat-grid-tile *ngFor="let result of  _desktopItems|async" >
         <app-minimized-object  [Context]='result'>
         </app-minimized-object>
     </mat-grid-tile>

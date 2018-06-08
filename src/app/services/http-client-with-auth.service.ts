@@ -31,11 +31,12 @@ export class HttpClientWithAuthService {
 
   get(url: string, isisHeader: boolean = false) {
     const headers = new Headers();
+          //  console.trace(); 
     this.createAuthorizationHeader(headers);
     if (isisHeader) {
       this.addApacheIsisAccept(headers);
     }
-    if (environment.outputHttpCalls) {
+    if (environment.trace.httpCalls) {
      console.log('url: ' + url) ;
      console.log('method: GET') ;
      console.log('headers: ' + headers) ;
@@ -47,7 +48,9 @@ export class HttpClientWithAuthService {
 
 // todo: turn this into the only method to use for loading
   load<T>(c: new() => T, url: string, useIsisHeader: boolean = false, args: string = null,
-          method: string = 'GET', format: string = 'json'): Observable<T> { switch (method) {
+          method: string = 'GET', format: string = 'json'): Observable<T> {
+          //  console.trace(); 
+            switch (method) {
       case 'GET':
            if (args != null) {
              url += '?' + args;

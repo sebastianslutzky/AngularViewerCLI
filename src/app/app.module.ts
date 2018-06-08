@@ -58,6 +58,7 @@ import { DesktopComponent } from './desktop/desktop.component';
 import { ObjectTabGroupComponent } from './object-tab-group/object-tab-group.component';
 import { LayoutService } from './services/layout.service';
 import { PropertyGroupComponent } from './property-group/property-group.component';
+import { ObjectStoreService } from './services/object-store.service';
 
 
 @NgModule({
@@ -119,7 +120,8 @@ import { PropertyGroupComponent } from './property-group/property-group.componen
     ComponentFactoryService,
     ResourceFactoryService,
     LayoutService,
-    SessionService],
+    SessionService,
+  ObjectStoreService],
   bootstrap: [AppComponent],
   entryComponents: [
     ListComponent,

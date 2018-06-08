@@ -6,6 +6,10 @@
 export const environment = {
   production: false,
   applicationName: 'ECP Contact App',
-  outputHttpCalls: false,
-  backendAddress: 'http://localhost:8080'
+  backendAddress: 'http://localhost:8080',
+  trace: {
+    httpCalls: false,
+    cacheMisses: true,
+    cacheHits: false
+  }
 };
