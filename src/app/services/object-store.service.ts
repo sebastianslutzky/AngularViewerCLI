@@ -17,13 +17,12 @@ export class ObjectStoreService {
     db.currentTarget.result.createObjectStore('registry');
   }
   constructor() {
-
-    this._db  = new IndexedDBAngular(environment.applicationName, 1.7);
-    this._dbCreation = this._db.createStore(1.7, this.createCollections);
+    this._db  = new IndexedDBAngular(environment.applicationName, 3);
+    this._dbCreation = this._db.createStore(3, this.createCollections);
    }
 
 
-   public  add(obj: any, store: string, key: string) {
+   public  async add(obj: any, store: string, key: string) {
        this.onStoreChanged.emit(store);
     this._db.add(store, obj, key).then(() => {
   }, (error) => {
@@ -56,6 +55,7 @@ export class ObjectStoreService {
    }
 
    public async containsKey(store: string, key: string): Promise<boolean> {
+     await this._dbCreation;
      const found =  await this.get(store, key);
      return found != null;
    }
