@@ -33,22 +33,21 @@ export class ActionComponent implements OnInit {
 public InvokeAction() {
   const actionLink = this._objectActionLink.links[0].href;
 
-  this.metamodel.loadLink(ObjectAction, this._objectActionLink.links[0]).subscribe(
+  this.metamodel.loadLink(ObjectAction, this._objectActionLink.links[0]).then(
     objectAction => {
       this.invoker.invokeAction(objectAction, this._actionDescriptor);
     });
 }
   ngOnInit() {
-    this.metamodel.getDetails<ObjectMember>(this._objectActionLink).subscribe(
-      actionInstance => {
+     this.metamodel.getDetails<ObjectMember>(this._objectActionLink)
+     .then(actionInstance => {
         this._actionInstance = actionInstance;
-        this.metamodel.getDescribedBy(ActionDescription, actionInstance).subscribe(
+        this.metamodel.getDescribedBy(ActionDescription, actionInstance).then(
           actionDescriptor => {
             this._actionDescriptor = actionDescriptor;
             this.Name = actionDescriptor.friendlyName;
             this.ToolTipText = this._actionDescriptor.indexableKey;
           });
-      }
-    );
+      });
   }
 }

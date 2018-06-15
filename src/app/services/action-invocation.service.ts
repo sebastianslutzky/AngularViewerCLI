@@ -48,7 +48,7 @@ export class ActionInvocationService {
          switch (invoke.method) {
              case 'GET':
                 const queryString = param ? param.asQueryString() : null;
-                this.metamodel.invokeGet(action, queryString).subscribe(data => {
+                this.metamodel.invokeGet(action, queryString).then(data => {
                     const result = data as Array<any>;
                     const arg = new ActionInvokedArg();
                     arg.ExtendedResult = result;
@@ -59,7 +59,7 @@ export class ActionInvocationService {
                 break;
             case 'POST':
                 const body = param ? param.asJsonBody() : null;
-                this.metamodel.invokePost(action, queryString).subscribe(data => {
+                this.metamodel.invokePost(action, queryString).then(data => {
                     const result = data as Array<any>;
                     const arg = new ActionInvokedArg();
                     arg.ExtendedResult = result;

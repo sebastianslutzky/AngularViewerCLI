@@ -23,19 +23,18 @@ export class CollectionButtonComponent implements OnInit {
   public onGetObjectRequired: EventEmitter<ResourceLink> = new EventEmitter<ResourceLink>();
 
   ngOnInit() {
-    this.metamodel.getDetails<ObjectMember>(this.Context).subscribe(
+    this.metamodel.getDetails<ObjectMember>(this.Context).then(
       collInstance => {
         this._collInstance = collInstance;
         this.Items = collInstance.value;
         this.Quantity = this.Items.length;
 
         // store description
-        this.metamodel.getDescribedBy(ActionDescription, collInstance).subscribe(
-          collDescriptor => {
+        this.metamodel.getDescribedBy(ActionDescription, collInstance).then(collDescriptor => {
             this._collDescriptor = collDescriptor;
             this.Name = collDescriptor.friendlyName;
-          });
-       });
+          }).catch( r => console.log(r));
+       }).catch( r1 => console.log(r1));
       }
 
       openItem(item: ResourceLink) {

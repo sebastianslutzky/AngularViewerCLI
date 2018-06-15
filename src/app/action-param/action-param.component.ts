@@ -31,12 +31,12 @@ export class ActionParamComponent implements OnInit {
      private metamodel: MetamodelService, private session: SessionService) { }
 
   ngOnInit() {
-    this.metamodel.loadLink(ParamDescription, this.Parameter.typeLink).subscribe(paramDescr => {
+    this.metamodel.loadLink(ParamDescription, this.Parameter.typeLink).then(paramDescr => {
         this.descriptor = paramDescr;
-       this.metamodel.loadReturnType(DomainType, paramDescr).subscribe(returnType => {
+       this.metamodel.loadReturnType(DomainType, paramDescr).then(returnType => {
            this.createConcreteComponent(returnType, this.Parameter);
         });
-      });
+      }).catch((x) => console.log('eapepe'));
   }
 
   createConcreteComponent(returnType: DomainType, paramDescr: ParameterInfo) {

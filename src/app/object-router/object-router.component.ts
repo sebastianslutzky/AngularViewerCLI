@@ -39,12 +39,12 @@ export class ObjectRouterComponent implements OnInit {
       const decoded = decodeURIComponent(destination);
 
       // LOAD RESOURCE (or invoke action)
-      this.metamodel.load(ObjectRepr, decoded).subscribe(data1 => {
+      this.metamodel.load(ObjectRepr, decoded).then(data1 => {
       const result = data1 ;
 
       this.session.indexResult(result);
 
-      // todo: load layout 
+      // todo: load layout
 
       this.layoutService.load(result).subscribe(objLayout => {
         this.openModal(result, objLayout);
@@ -59,7 +59,7 @@ export class ObjectRouterComponent implements OnInit {
        const windowRef =
            this.dialog.open(
              ObjectComponent, {data: {args: data, layout: layout}});
-            
+
           windowRef.updatePosition({top: this.session.DesktopSize.top +  'px', left: '8px'});
           windowRef.updateSize('100vw' , this.session.DesktopSize.height + 'px');
           windowRef.afterClosed().subscribe(result => {

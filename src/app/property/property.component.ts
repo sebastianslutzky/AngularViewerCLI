@@ -25,11 +25,11 @@ export class PropertyComponent implements OnInit {
   constructor(private metamodel: MetamodelService) { }
 
   ngOnInit() {
-    this.metamodel.getDetails<ObjectMember>(this._property).subscribe(
+    this.metamodel.getDetails<ObjectMember>(this._property).then(
       propertyInstance => {
         const extension: any = propertyInstance.extensions;
         this.isBoolean = extension['x-isis-format'] === 'boolean';
-        this.metamodel.getDescribedBy(PropertyDescription, propertyInstance).subscribe(
+        this.metamodel.getDescribedBy(PropertyDescription, propertyInstance).then(
           propertyDescriptor => {this._propertyDescriptor = propertyDescriptor;
           this.Name = this._propertyDescriptor.friendlyName;
         }

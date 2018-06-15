@@ -12,15 +12,15 @@ export class ObjectStoreService {
   public onStoreChanged: EventEmitter<string> = new EventEmitter<string>();
 
   createCollections(db: any) {
+    db.currentTarget.result.createObjectStore('menus');
     db.currentTarget.result.createObjectStore('domain-types');
     db.currentTarget.result.createObjectStore('universe');
     db.currentTarget.result.createObjectStore('registry');
   }
   constructor() {
-    this._db  = new IndexedDBAngular(environment.applicationName, 3);
-    this._dbCreation = this._db.createStore(3, this.createCollections);
+    this._db  = new IndexedDBAngular(environment.applicationName, 5);
+    this._dbCreation = this._db.createStore(5, this.createCollections);
    }
-
 
    public  async add(obj: any, store: string, key: string) {
        this.onStoreChanged.emit(store);
@@ -28,7 +28,6 @@ export class ObjectStoreService {
   }, (error) => {
       console.log(error);
       console.log('error: ' + key + '-' + store);
-      console.trace();
   });
    }
 
@@ -42,10 +41,12 @@ export class ObjectStoreService {
    }
 
    public async getAll(store: string): Promise<Array<any>> {
-     await this._dbCreation;//ensures db is created
+     await this._dbCreation; // ensures db is created
      const items = await this._db.getAll(store);
      return items;
    }
+
+
 
    public get(store: string, key: string): Promise<any> {
     const stored =  this._db.getByKey(store, key).then((found) => {
@@ -59,5 +60,9 @@ export class ObjectStoreService {
      const found =  await this.get(store, key);
      return found != null;
    }
+}
 
+export interface IStorageSpec {
+  name: string;
+  // todo: add expiration
 }

@@ -39,20 +39,19 @@ export class BannerComponent implements OnInit {
     this.PopulateMenuBars();
   }
 
-
   private SetUserName() {
     // TODO: move to ProfileService
     const meUrl = this.metamodel.buildUrl('services/isissecurity.MeService/actions/me/invoke');
-    this.metamodel.load(ActionResult, meUrl).subscribe(data => {
+    this.metamodel.load(ActionResult, meUrl).then(data => {
       this.userName =  data.result.title;
       this.tertiaryMenu.title = this.getTertiartyHeader();
-    });
+    }).catch( r => console.log (r));
   }
 
   PopulateMenuBars(): void {
-    this.getServices().subscribe(data =>
+    this.getServices().then(data =>
       this.AddSections(data.value)
-    );
+    ).catch( r => console.log(r));
   }
 
   private AddSections(services: ReprType[]) {
@@ -61,8 +60,10 @@ export class BannerComponent implements OnInit {
     }
  }
 
- private AddSectionToRightMenuBar(serviceDescr: ReprType) {
-    this.metamodel.loadLink(Resource, serviceDescr).subscribe(serviceEntity => {
+ private async AddSectionToRightMenuBar(serviceDescr: ReprType) {
+   // TODO: use an additional api where it passes it cache spec object (i.e. cache)
+   // it specifies the name for now, but it will include an expiry date too
+    const prom = this.metamodel.loadLink(Resource, serviceDescr).then(  serviceEntity => {
       const menuBar = <MenuBarComponent>this.menus[serviceEntity.extensions.menuBar];
 
       if (this.isNotEmpty(serviceEntity)) {
@@ -72,6 +73,9 @@ export class BannerComponent implements OnInit {
         }
       }
     });
+    prom.catch( r => console.log(r));
+
+    await prom;
  }
 
  isNotEmpty(serviceEntity: Resource): boolean {
@@ -87,8 +91,9 @@ export class BannerComponent implements OnInit {
     return 'Hi ' + this.userName + '!';
   }
 
-  public getServices(): Observable<ReprTypesList> {
+  public async getServices(): Promise<ReprTypesList> {
     const servicesHRef =  this.metamodel.buildUrl('services');
-    return this.metamodel.load(ReprTypesList, servicesHRef, true);
+    const loaded =  this.metamodel.load(ReprTypesList, servicesHRef, true);
+    return loaded;
    }
 }

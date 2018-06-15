@@ -3,6 +3,8 @@ import { MetamodelService} from '../services/metamodel.service';
 import {  Resource, Action, ActionDescription, ObjectAction } from '../models/ro/iresource';
 import { ActionInvocationService } from '../services/action-invocation.service';
 import { MetamodelHelper } from '../services/MetamodelHelper';
+import { IStorageSpec } from '../services/object-store.service';
+import { Observable } from 'rxjs/Observable';
 
 @Component({
   selector: 'app-menu-action',
@@ -13,9 +15,13 @@ export class MenuActionComponent implements OnInit {
   actionDescribedBy: ActionDescription;
   tooltip: string;
 
+
   @Input()
   ActionLink: Resource;
   Action: ObjectAction;
+
+  private Store: IStorageSpec = {name: 'menus'};
+
   get friendlyName(): string {
     return this.actionDescribedBy && this.actionDescribedBy.extensions.friendlyName || '';
   }
@@ -24,7 +30,7 @@ export class MenuActionComponent implements OnInit {
 
   ngOnInit() {
     // get action resource
-    this.metamodel.getDetails<ObjectAction>(this.ActionLink).subscribe(data => {
+    this.metamodel.getDetails<ObjectAction>(this.ActionLink, this.Store).then(data => {
       this.Action = data;
       // get description
       // This should first hit the session.Action

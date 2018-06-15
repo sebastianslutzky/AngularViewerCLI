@@ -10,6 +10,7 @@ import {plainToClass, classToClass, plainToClassFromExist} from 'class-transform
 import { Router, ActivatedRoute } from '@angular/router';
 import { SessionService } from './session.service';
 import { MetamodelHelper } from './MetamodelHelper';
+import { IStorageSpec } from './object-store.service';
 
 
 @Injectable()
@@ -38,11 +39,12 @@ private rootUrl: string;
 
 
   // Known rels
-  public getDetails<T>(link: IResource): Observable<T> {
-    return this.get(this.getDetailsRel(link));
+  public async getDetails<T>(link: IResource, store: IStorageSpec = null): Promise<T> {
+    const target = this.getDetailsRel(link);
+    return this.loadstored<T>(null, target.href, false, null, target.method, store);
   }
 
-  public getDescribedBy<T>(c: new() => T, link: IResource): Observable<T> {
+  public async getDescribedBy<T>(c: new() => T, link: IResource): Promise<T> {
     const  describedby =  MetamodelHelper.getFromRel(link, 'describedby');
     return this.loadLink(c , describedby);
   }
@@ -62,14 +64,14 @@ private rootUrl: string;
         console.log('missed the cache: ' + describedby.href);
        }
 
-     return this.getDescribedBy(ActionDescription, link).map(p => {
-       // index after loading
-        this.session.indexActionDescriptor(p);
-        return p;
-     }).toPromise();
+       return this.getDescribedBy(ActionDescription, link).then(p => {
+        // index after loading
+         this.session.indexActionDescriptor(p);
+         return p;
+      });
   }
 
-  public loadReturnType<T>(c: new() => T, link: IResource): Observable<T> {
+  public loadReturnType<T>(c: new() => T, link: IResource): Promise<T> {
     const  resourceLink =  MetamodelHelper.getFromRel(link, 'urn:org.restfulobjects:rels/return-type');
     this.session.getDomainType(resourceLink);
 
@@ -78,16 +80,16 @@ private rootUrl: string;
   //
 
   // tslint:disable-next-line:one-line
-  public getAction(link: IResource): Observable<Resource>{
+  public async getAction(link: IResource): Promise<Observable<Resource>> {
     const rel =  MetamodelHelper.getFromRel(link, 'urn:org.restfulobjects:rels/action');
     return this.get(rel);
   }
 
-  public get(link: ResourceLink, isisHeader: boolean = false): Observable<any> {
+  public get(link: ResourceLink, isisHeader: boolean = false): Promise<any> {
     return this.getUrl(link.href, isisHeader);
   }
 
-  public getUrl(url: string, isisHeader: boolean = false): Observable<any> {
+  public getUrl(url: string, isisHeader: boolean = false): Promise<any> {
     return this.load(null, url, isisHeader);
   }
 
@@ -99,11 +101,11 @@ private rootUrl: string;
     return MetamodelHelper.getFromRel(resource, 'self');
   }
 
-   public invokeGet(resource: IResource, queryString: string = null): Observable<any> {
+   public async invokeGet(resource: IResource, queryString: string = null): Promise<any> {
      return this.loadLink(null, this.getInvokeLink(resource), true, queryString);
    }
 
-   public invokePost(resource: IResource, body: string): Observable<any> {
+   public async invokePost(resource: IResource, body: string): Promise<any> {
      return this.loadLink(null, this.getInvokeLink(resource), false, body) ;
    }
 
@@ -132,7 +134,7 @@ private rootUrl: string;
 
 
    // Object Type
-   public getProperty(links: ResourceLink[], propertyName: string): Observable<any> {
+   public async getProperty(links: ResourceLink[], propertyName: string): Promise<Observable<any>> {
      const properties = MetamodelHelper.findFromRel(links, 'urn:org.restfulobjects:rels/property');
      const matches = properties.filter(function(item: ResourceLink){return item.href.endsWith('properties/' + propertyName); });
      if (matches.length === 0) {
@@ -152,29 +154,61 @@ private rootUrl: string;
    //////////
    // v2
    // todo: use right method based on http vern
-   load<T>(c: new() => T, url: string, useIsisHeader: boolean = false, args: string = null, method: string = 'GET'): Observable<T> {
+  async load<T>(c: new() => T, url: string, useIsisHeader: boolean = false,
+    args: string = null, method: string = 'GET'): Promise<T> {
      switch (method) {
        case 'GET':
             if (args != null) {
               url += '?' + args;
             }
 
-            return this.client.get(url, useIsisHeader)
+            const result =  this.client.get(url, useIsisHeader)
               //  .map(res => res['as_of_date'] = ) // add timestamp as field
               .map(res => {
                 const f = res.headers.get('Date') ;
                 return res;
               })
               .map(res => res.json())
-              .map(obj => this.toClass(c, obj));
+              .map(obj => this.toClass(c, obj)).toPromise();
+
+            result.catch( reason => console.log(reason));
+            return result;
+
        case 'POST':
-              return this.client.post(url, args).map(obj => this.toClass(c, obj));
+              return this.client.post(url, args).map(obj => this.toClass(c, obj)).toPromise();
        default:
         throw new Error ('method not implemented yet: ' + method);
      }
    }
 
-   loadLink<T>(c: new() => T, link: ResourceLink, useIsisHeader: boolean = false, queryString: string = null): Observable<T> {
+   async loadstored<T>(c: new() => T, url: string, useIsisHeader: boolean = false,
+        args: string = null, method: string = 'GET', store: IStorageSpec): Promise<T> {
+
+      if (store) {
+        const cached = await this.session.getFromStore(store, url);
+        if (cached) {
+          if (environment.trace.cacheHits) {
+          console.log(`Cache hit. Store: ${store.name}. Key: ${url}`);
+          }
+          return cached;
+        }
+
+        if (environment.trace.cacheMisses) {
+          console.log(`Cache miss. Store: ${store.name}. Key: ${url}`);
+        }
+    }
+
+      // load and index
+      const loaded =   this.load<T>(null, url, useIsisHeader, args, method).then(x => {
+         if (store) {this.session.indexInStore(store.name, x,  url); }
+         return x;
+      });
+
+      loaded.catch( x => console.log ('aca'));
+      return loaded;
+   }
+
+   loadLink<T>(c: new() => T, link: ResourceLink, useIsisHeader: boolean = false, queryString: string = null): Promise<T> {
     return this.load<T>(c, link.href, useIsisHeader, queryString, link.method);
    }
 

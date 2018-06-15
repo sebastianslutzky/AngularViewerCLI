@@ -55,9 +55,9 @@ export class ListComponent implements AfterViewInit,  OnInit {
 
   preLoadPropertyTypes(rawResult: ActionInvokedArg) {
     const elementTypeLink = MetamodelHelper.getFromRel(rawResult.ActionDescriptor, 'urn:org.restfulobjects:rels/element-type');
-    this.metamodel.get(elementTypeLink).subscribe(data => {
+    this.metamodel.get(elementTypeLink).then( data => {
       this.elementType = data;
-      this.displayedColumns.forEach(column => this.metamodel.getProperty(this.elementType.members, column).subscribe(
+      this.displayedColumns.forEach(column => this.metamodel.getProperty(this.elementType.members, column).then(
         columnData => this.columnTypes[column] = columnData));
     });
   }

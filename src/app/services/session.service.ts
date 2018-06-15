@@ -1,7 +1,7 @@
 import { Injectable, Output, EventEmitter } from '@angular/core';
 import { IdentityMap } from '../models/identity-map';
 import { ActionDescription, ResourceLink, IIndexable } from '../models/ro/iresource';
-import { ObjectStoreService } from './object-store.service';
+import { ObjectStoreService, IStorageSpec } from './object-store.service';
 import { isArray } from 'util';
 import { attachEmbeddedView } from '@angular/core/src/view';
 
@@ -33,13 +33,11 @@ export class SessionService {
       }
       );
   }
-
-
-
   indexResult(result: any): any {
    this.addToIdentityMap(result);
    this.addToUniverse(result);
   }
+
 
   indexActionDescriptor(action: ActionDescription) {
     this.actionDescriptors.index(action);
@@ -67,13 +65,21 @@ export class SessionService {
     return this.objectDescriptors.Items[key];
   }
 
+  public getFromStore(store: IStorageSpec, key: string) {
+    return this._objectStore.get(store.name, key);
+  }
+
+  public indexInStore(storeName: string, object: any, key: string) {
+    this._objectStore.add(object, storeName, key);
+  }
+
   public indexObjectDescriptor(objectDescriptor, key) {
     this.objectDescriptors.index(objectDescriptor, key);
   }
 
   public  async getUniverseItems(): Promise<Array<any>> {
     const items = await this._objectStore.getAll('universe');
-    if(isArray(items)) {
+    if (isArray(items)) {
       const array = items as Array<any>;
       return array;
     }

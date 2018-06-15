@@ -31,7 +31,7 @@ export class HttpClientWithAuthService {
 
   get(url: string, isisHeader: boolean = false) {
     const headers = new Headers();
-          //  console.trace(); 
+          //  console.trace();
     this.createAuthorizationHeader(headers);
     if (isisHeader) {
       this.addApacheIsisAccept(headers);
@@ -49,7 +49,7 @@ export class HttpClientWithAuthService {
 // todo: turn this into the only method to use for loading
   load<T>(c: new() => T, url: string, useIsisHeader: boolean = false, args: string = null,
           method: string = 'GET', format: string = 'json'): Observable<T> {
-          //  console.trace(); 
+          //  console.trace();
             switch (method) {
       case 'GET':
            if (args != null) {
