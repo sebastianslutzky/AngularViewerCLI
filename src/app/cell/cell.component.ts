@@ -11,30 +11,36 @@ import { CheckboxComponent } from '../checkbox/checkbox.component';
 })
 export class CellComponent implements OnInit {
   @Input()
-  value: string;
+  value: any;
 
   @Input()
   type: string;
+
+  @Input()
+  set testing(val: any){
+    console.log('testing');
+    console.log(val);
+  }
 
   constructor(private componentFactory: ComponentFactoryService, private container: ViewContainerRef, private injector: Injector) {
   }
 
   ngOnInit(): void {
-    const view = this.renderCell(this.type);
-    this.componentFactory.createComponent(this.container, view, {'value': this.value});
+    const view = this.renderCell(this.type, this.value);
+    this.componentFactory.createComponent(this.container, view.control, {'value': view.value});
   }
 
-  renderCell(propertyType: string): any {
+  renderCell(propertyType: string, value: any): any {
     switch (propertyType) {
       case 'java.lang.String': {
-        return TextComponent;
+        return {control: TextComponent, value: value};
       }
       case 'boolean': {
-        return CheckboxComponent;
+        return {control: CheckboxComponent, value: value};
       }
       default: {
         console.warn('don\'t know how to render columns of type: ' + propertyType + '. Viewing as string');
-        return TextComponent;
+        return {control: TextComponent, value: value.title};
       }
     }
   }

@@ -26,16 +26,11 @@ export class ListComponent implements AfterViewInit,  OnInit {
   dataSource: MatTableDataSource<IXActionResultListItem>;
   resource: XActionResultList;
   public columns: Array<any>;
-
   public elementType: Resource;
-
   @Input()
   public actionResult: ActionInvokedArg;
 
   private columnTypes = {};
-
-
-
 
   @ViewChild(MatSort) sort: MatSort;
 
@@ -99,6 +94,7 @@ export class ListComponent implements AfterViewInit,  OnInit {
     this.dataSource.sort = this.sort;
   }
   ngOnInit(): void {
+    // assign collection object if via injector 
     if (!this.actionResult) {
       this.actionResult = this.data.args as ActionInvokedArg;
     }

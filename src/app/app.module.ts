@@ -30,7 +30,8 @@ import { MatMenuModule,
         MatGridList,
         MatIconModule,
         MatChipsModule,
-        MatTabsModule} from '@angular/material';
+        MatTabsModule,
+        MatSlideToggleModule} from '@angular/material';
 import { ActionInvocationService } from './services/action-invocation.service';
 import { ListComponent} from './list/list.component';
 import { ComponentFactory } from '@angular/core/src/linker/component_factory';
@@ -59,7 +60,7 @@ import { ObjectTabGroupComponent } from './object-tab-group/object-tab-group.com
 import { LayoutService } from './services/layout.service';
 import { PropertyGroupComponent } from './property-group/property-group.component';
 import { ObjectStoreService } from './services/object-store.service';
-
+import { CollectionTableComponent } from './collection-table/collection-table.component';
 
 @NgModule({
   exports: [MatGridList],
@@ -85,9 +86,10 @@ import { ObjectStoreService } from './services/object-store.service';
     PropertyComponent,
     ActionComponent,
     MinimizedObjectComponent,
-   CollectionButtonComponent, 
+   CollectionButtonComponent,
     DesktopComponent,
-    PropertyGroupComponent
+    PropertyGroupComponent,
+    CollectionTableComponent
   ],
   imports: [
     HttpModule,

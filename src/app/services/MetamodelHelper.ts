@@ -7,11 +7,20 @@ export class MetamodelHelper {
   }
 
   public static getFromRel(resource: IResource, rel: string): ResourceLink {
-    const links = MetamodelHelper.findFromRel(resource.links, rel);
-    if (links.length === 0) {
+    let links: ResourceLink[];
+    if (resource.links) {
+      links = resource.links;
+    } else if ('$$ro' in resource) {
+      links = (resource as any).$$ro.links;
+    } else {
+      throw new Error('can\'t load resource. no links in it');
+    }
+
+    const relLink = MetamodelHelper.findFromRel(links, rel);
+    if (relLink.length === 0) {
         console.log(resource);
         throw new Error(('rel not found: ' + rel));
     }
-    return links[0];
+    return relLink[0];
   }
 }

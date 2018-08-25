@@ -18,8 +18,8 @@
   </mat-tab-group>
 </div>
 <div class='object-collections' >
-  <span *ngFor='let tab of layout.getCollections()'>
-     placeholder for collection
+  <span *ngFor='let collectionMember of collections'>
+     <app-collection-button [Context]='collectionMember' ></app-collection-button>
   </span> 
   <!-- todo
     * render each collection 

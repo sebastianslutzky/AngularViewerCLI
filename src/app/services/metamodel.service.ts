@@ -18,9 +18,8 @@ export class MetamodelService {
 private rootUrl: string;
 
   constructor(private client: HttpClientWithAuthService,
-    private resourceFactory: ResourceFactoryService,
+  private resourceFactory: ResourceFactoryService,
   private router: Router,
-
   private session: SessionService,
   private activator: ActivatedRoute ) {
         const apiRoot = 'restful';
@@ -39,9 +38,9 @@ private rootUrl: string;
 
 
   // Known rels
-  public async getDetails<T>(link: IResource, store: IStorageSpec = null): Promise<T> {
+  public async getDetails<T>(link: IResource, store: IStorageSpec = null, usesIsisHeaders: boolean = false): Promise<T> {
     const target = this.getDetailsRel(link);
-    return this.loadstored<T>(null, target.href, false, null, target.method, store);
+    return this.loadstored<T>(null, target.href, usesIsisHeaders, null, target.method, store);
   }
 
   public async getDescribedBy<T>(c: new() => T, link: IResource): Promise<T> {

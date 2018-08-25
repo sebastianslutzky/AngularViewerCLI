@@ -6,12 +6,25 @@
             </mat-panel-title> 
             <mat-panel-description >
               #{{Quantity}}
+              <button mat-icon-button [matMenuTriggerFor]="menu" (click)="onMenuOpened($event)">
+               <mat-icon svgIcon="{{IsTableView? 'table' : 'view-list'}}"  ></mat-icon>
+                </button>
+                <mat-menu #menu="matMenu" (menuOpened)="onMenuOpened()" >
+                  <button mat-menu-item  (click)="showAsList()">
+                    <mat-icon svgIcon="view-list"></mat-icon>
+                  </button>
+                  <button mat-menu-item  (click)="showAsTable()">
+                    <mat-icon svgIcon="table"></mat-icon>
+                  </button>
+                </mat-menu>
+
             </mat-panel-description>
           </mat-expansion-panel-header>
-    <mat-list role="list">
+    <mat-list *ngIf="!IsTableView" role="list">
       <mat-list-item *ngFor="let item of Items" role="listitem">
-        <a  (click)="openItem(item)">{{item.title}}</a></mat-list-item>
+        <a  (click)="openItem(item)">{{item.$$title}}</a></mat-list-item>
     </mat-list>
-    </mat-expansion-panel>
 
+    <app-collection-table *ngIf="IsTableView" [CollectionInstance]='_collInstance' [CollectionDescriptor]='_collDescriptor'></app-collection-table>
+    </mat-expansion-panel>
 </mat-accordion>
