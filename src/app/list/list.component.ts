@@ -94,7 +94,6 @@ export class ListComponent implements AfterViewInit,  OnInit {
     this.dataSource.sort = this.sort;
   }
   ngOnInit(): void {
-    // assign collection object if via injector 
     if (!this.actionResult) {
       this.actionResult = this.data.args as ActionInvokedArg;
     }

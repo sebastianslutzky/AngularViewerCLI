@@ -16,11 +16,6 @@ export class CellComponent implements OnInit {
   @Input()
   type: string;
 
-  @Input()
-  set testing(val: any){
-    console.log('testing');
-    console.log(val);
-  }
 
   constructor(private componentFactory: ComponentFactoryService, private container: ViewContainerRef, private injector: Injector) {
   }

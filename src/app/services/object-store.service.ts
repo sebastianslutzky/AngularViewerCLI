@@ -18,7 +18,6 @@ export class ObjectStoreService {
     db.currentTarget.result.createObjectStore('registry');
   }
   constructor() {
-    console.log('object-store.service');
     this._db  = new IndexedDBAngular(environment.applicationName, 6);
     this._dbCreation =  this._db.createStore(6, this.createCollections).catch(reason => {
         console.log('can\'t create indexed db ');
