@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, ErrorHandler } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { FooterComponent } from './footer/footer.component';
@@ -31,7 +31,8 @@ import { MatMenuModule,
         MatIconModule,
         MatChipsModule,
         MatTabsModule,
-        MatSlideToggleModule} from '@angular/material';
+        MatSlideToggleModule,
+        MatSnackBarModule} from '@angular/material';
 import { ActionInvocationService } from './services/action-invocation.service';
 import { ListComponent} from './list/list.component';
 import { ComponentFactory } from '@angular/core/src/linker/component_factory';
@@ -61,6 +62,8 @@ import { LayoutService } from './services/layout.service';
 import { PropertyGroupComponent } from './property-group/property-group.component';
 import { ObjectStoreService } from './services/object-store.service';
 import { CollectionTableComponent } from './collection-table/collection-table.component';
+import { GlobalErrorHandlerService } from './global-error-handler.service';
+import { ErrorDetailsComponent } from './error-details/error-details.component';
 
 @NgModule({
   exports: [MatGridList],
@@ -89,7 +92,8 @@ import { CollectionTableComponent } from './collection-table/collection-table.co
    CollectionButtonComponent,
     DesktopComponent,
     PropertyGroupComponent,
-    CollectionTableComponent
+    CollectionTableComponent,
+    ErrorDetailsComponent
   ],
   imports: [
     HttpModule,
@@ -114,7 +118,8 @@ import { CollectionTableComponent } from './collection-table/collection-table.co
     MatGridListModule,
     MatButtonModule,
     FormsModule,
-    MatChipsModule
+    MatChipsModule,
+     MatSnackBarModule
   ],
   providers: [HttpClientWithAuthService,
     MetamodelService,
@@ -123,7 +128,12 @@ import { CollectionTableComponent } from './collection-table/collection-table.co
     ResourceFactoryService,
     LayoutService,
     SessionService,
-  ObjectStoreService],
+  ObjectStoreService,
+    {
+      provide: ErrorHandler,
+      useClass: GlobalErrorHandlerService
+    }
+  ],
   bootstrap: [AppComponent],
   entryComponents: [
     ListComponent,
@@ -133,7 +143,8 @@ import { CollectionTableComponent } from './collection-table/collection-table.co
     DialogComponent,
     DialogContainerComponent,
     ObjectComponent,
-    ObjectContainerComponent
+    ObjectContainerComponent,
+    ErrorDetailsComponent
   ]
 })
 export class AppModule { }

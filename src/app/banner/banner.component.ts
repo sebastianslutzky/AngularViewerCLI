@@ -73,7 +73,6 @@ export class BannerComponent implements OnInit {
         }
       }
     });
-    prom.catch( r => console.log(r));
 
     await prom;
  }

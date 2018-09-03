@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, ErrorHandler } from '@angular/core';
 import { HttpClientWithAuthService } from './http-client-with-auth.service';
 import { rootRoute } from '@angular/router/src/router_module';
 import 'rxjs/add/operator/map' ;
@@ -11,6 +11,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { SessionService } from './session.service';
 import { MetamodelHelper } from './MetamodelHelper';
 import { IStorageSpec } from './object-store.service';
+import { GlobalErrorHandlerService } from '../global-error-handler.service';
 
 
 @Injectable()
@@ -21,7 +22,8 @@ private rootUrl: string;
   private resourceFactory: ResourceFactoryService,
   private router: Router,
   private session: SessionService,
-  private activator: ActivatedRoute ) {
+  private activator: ActivatedRoute,
+private errorHandler: ErrorHandler) {
         const apiRoot = 'restful';
         const protocol = 'http';
 
@@ -170,7 +172,7 @@ private rootUrl: string;
               .map(res => res.json())
               .map(obj => this.toClass(c, obj)).toPromise();
 
-            result.catch( reason => console.log(reason));
+            result.catch( reason => (this.errorHandler as GlobalErrorHandlerService).handleError(reason));
             return result;
 
        case 'POST':
