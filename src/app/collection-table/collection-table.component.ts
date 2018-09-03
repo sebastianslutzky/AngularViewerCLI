@@ -1,10 +1,12 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Inject } from '@angular/core';
 import { ActionInvokedArg } from '../services/iactioninvoked';
 import { MetamodelHelper } from '../services/MetamodelHelper';
 import { MetamodelService } from '../services/metamodel.service';
 import { Resource } from '../models/ro/iresource';
-import { MatTableDataSource } from '@angular/material';
+import { MatTableDataSource, MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { IXActionResultListItem } from '../models/ro/xaction-result-list';
+import { Router } from '@angular/router';
+import { ListComponent } from '../list/list.component';
 
 @Component({
   selector: 'app-collection-table',
@@ -22,7 +24,10 @@ export class CollectionTableComponent implements OnInit {
   private columnTypes = {};
   dataSource: MatTableDataSource<IXActionResultListItem>;
 
-  constructor(private metamodel: MetamodelService) { }
+  constructor(private metamodel: MetamodelService,
+  private router: Router,
+  @Inject(MAT_DIALOG_DATA) public data: any,
+  private dialogRef: MatDialogRef<ListComponent>) { }
 
   // pass to datasource
     // for each item, get the result
@@ -68,5 +73,13 @@ export class CollectionTableComponent implements OnInit {
    getPropertyReturnType(columnName: string): string {
     const propertyType = this.columnTypes[columnName];
     return this.metamodel.getPropertyType(columnName, propertyType);
+  }
+
+  getObjectUrl(element: IXActionResultListItem) {
+    return 'object/' + encodeURIComponent(element.$$href);
+  }
+  goTo(selectedElement) {
+    this.router.navigate([this.getObjectUrl(selectedElement)]);
+    this.dialogRef.close({data: this.data});
   }
 }
