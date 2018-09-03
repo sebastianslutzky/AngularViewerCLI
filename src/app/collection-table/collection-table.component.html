@@ -1,0 +1,20 @@
+<div *ngIf="areAllColumnsLoaded">
+  <mat-table #table  [dataSource]="dataSource"  matSort>
+
+    <!-- Position Column -->
+    <ng-container *ngFor="let column of displayedColumns" matColumnDef="{{column}}"> <!-- for each column -->
+      <mat-header-cell *matHeaderCellDef mat-sort-header> {{column}} </mat-header-cell>
+      <mat-cell *matCellDef="let element"> 
+        <a  (click)="goTo(element)" style="cursor: pointer">
+       <app-cell [value]='element[column]' [type]='getPropertyReturnType(column)'>
+        </app-cell>
+      </a>
+    <!-- //    {{renderCell(column,element[column])}} -->
+      </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+  </mat-table>
+
+</div>
