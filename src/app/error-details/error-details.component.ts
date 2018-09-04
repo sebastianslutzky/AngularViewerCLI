@@ -8,10 +8,10 @@ import { MAT_DIALOG_DATA } from '@angular/material';
 })
 export class ErrorDetailsComponent implements OnInit {
 
-  private error: Error;
+  private error: any;
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: any) {
-    this.error = data.error as Error;
+    this.error = data.error;
    }
 
   ngOnInit() {

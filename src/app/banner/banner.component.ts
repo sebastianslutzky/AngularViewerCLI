@@ -35,8 +35,11 @@ export class BannerComponent implements OnInit {
     this.menus['SECONDARY'] = this.secondaryMenu;
     this.menus['TERTIARY'] = this.tertiaryMenu;
 
-    this.SetUserName();
-    this.PopulateMenuBars();
+    this.metamodel.assertApiIsAvailable().then(() => {
+      this.SetUserName();
+       this.PopulateMenuBars();
+    }, () => {
+    });
   }
 
   private SetUserName() {

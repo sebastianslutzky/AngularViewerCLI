@@ -6,7 +6,7 @@
 export const environment = {
   production: false,
   applicationName: 'ECP Contact App',
-  backendAddress: 'http://localhost:8080',
+  resftulObjectsApiUrl: 'http://localhost:8080',
   trace: {
     httpCalls: false,
     cacheMisses: true,

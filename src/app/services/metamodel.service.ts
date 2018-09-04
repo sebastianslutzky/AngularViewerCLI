@@ -27,8 +27,16 @@ private errorHandler: ErrorHandler) {
         const apiRoot = 'restful';
         const protocol = 'http';
 
-        this.rootUrl = environment.backendAddress + '/' + apiRoot;
+        this.rootUrl = environment.resftulObjectsApiUrl + '/' + apiRoot;
    }
+  public assertApiIsAvailable(): Promise<any> {
+    const errorSvc = this.errorHandler;
+    return this.getUrl(this.rootUrl)
+       .catch(() => {
+         errorSvc.handleError('Restful Objects API unavailable. URL:  ' + this.rootUrl);
+         return Promise.reject('Restful Objects API unavailable');
+       });
+  }
 
    public getRelativePath(absolutePath: string) {
      return absolutePath.replace(this.rootUrl, '');

@@ -5,7 +5,10 @@ export class GlobalErrorHandlerService implements ErrorHandler {
   public unhandledErrorOccured: EventEmitter<Error> = new EventEmitter<Error>();
 
   handleError(error: Error): void {
-    if (error) { this.unhandledErrorOccured.emit(error); }
+    if (error) {
+      console.error(error);
+      this.unhandledErrorOccured.emit(error);
+     }
   }
 
   constructor(public injector: Injector) { }
