@@ -31,8 +31,9 @@ private errorHandler: ErrorHandler) {
    }
   public assertApiIsAvailable(): Promise<any> {
     const errorSvc = this.errorHandler;
-    return this.getUrl(this.rootUrl)
-       .catch(() => {
+    return this.getUrl(this.rootUrl + '/')
+       .catch((reason) => {
+         console.log(reason);
          errorSvc.handleError('Restful Objects API unavailable. URL:  ' + this.rootUrl);
          return Promise.reject('Restful Objects API unavailable');
        });
@@ -180,7 +181,6 @@ private errorHandler: ErrorHandler) {
               .map(res => res.json())
               .map(obj => this.toClass(c, obj)).toPromise();
 
-            result.catch( reason => (this.errorHandler as GlobalErrorHandlerService).handleError(reason));
             return result;
 
        case 'POST':
