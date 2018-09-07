@@ -1,6 +1,8 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ViewContainerRef, ComponentFactory } from '@angular/core';
 import { ObjectRepr, ObjectMember, PropertyDescription } from '../models/ro/iresource';
 import { MetamodelService } from '../services/metamodel.service';
+import { StringFieldComponent } from '../string-field/string-field.component';
+import { ComponentFactoryService } from '../services/component-factory.service';
 
 @Component({
   selector: 'app-property',
@@ -22,23 +24,37 @@ export class PropertyComponent implements OnInit {
   isBoolean: boolean;
 
 
-  constructor(private metamodel: MetamodelService) { }
+  constructor(private metamodel: MetamodelService,
+  private container: ViewContainerRef,
+  private factory: ComponentFactoryService
+  ) { }
 
   ngOnInit() {
-    this.metamodel.getDetails<ObjectMember>(this._property).then(
-      propertyInstance => {
-        const extension: any = propertyInstance.extensions;
-        if (extension) {
-        this.isBoolean = extension['x-isis-format'] === 'boolean';
-        }
+    const fieldComponentType =  this.getFieldCompomentForType(this.getPropertyType(this._property));
+    //HACK: there should always be a control rendered
+    if(fieldComponentType){
+    this.factory.createComponent(this.container, fieldComponentType, {context: this._property});
+    }
+  }
 
-        this.metamodel.getDescribedBy(PropertyDescription, propertyInstance).then(
-          propertyDescriptor => {this._propertyDescriptor = propertyDescriptor;
-          this.Name = this._propertyDescriptor.friendlyName;
-        }
-       );
-     }
-    );
+  getFieldCompomentForType(propertyType: string): any {
+    switch (propertyType) {
+      case 'string':
+      return StringFieldComponent;
+      case 'object':
+      break;
+      default:
+      throw Error('I don\'t know how to render fields of type ' + propertyType);
+    }
+  }
+
+  getPropertyType(property: ObjectMember) {
+
+    if (property.extensions) {
+      return property.extensions['x-isis-format'];
+    }
+
+    return 'object';
   }
 }
 

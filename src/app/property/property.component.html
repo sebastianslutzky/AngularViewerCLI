@@ -1,5 +1,4 @@
-        <mat-form-field *ngIf="!isBoolean; else asCheckBox" >
+         <!-- <mat-form-field  >
           <input matInput  [placeholder]='Name' [(ngModel)]="Value" readonly='true'>
-        </mat-form-field>
+        </mat-form-field> -->
 
-          <mat-checkbox #asCheckBox  *ngIf="isBoolean" [(ngModel)]='Value' disabled="true"></mat-checkbox>

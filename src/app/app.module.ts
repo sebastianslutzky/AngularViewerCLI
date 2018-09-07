@@ -9,19 +9,17 @@ import { MenuBarSectionComponent } from './menu-bar-section/menu-bar-section.com
 import { MenuActionComponent } from './menu-action/menu-action.component';
 import { HttpClientWithAuthService } from './services/http-client-with-auth.service';
 import { MetamodelService } from './services/metamodel.service';
-import { Http, HttpModule } from '@angular/http';
+import { HttpModule } from '@angular/http';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { MatMenuModule,
          MatToolbarModule,
         MatListModule,
-        MatTable,
         MatTableModule,
         MatExpansionModule,
         MatTooltipModule,
         MatCardModule,
         MatDialogModule,
         MatCheckboxModule,
-        MatFormField,
         MatFormFieldModule,
         MatInputModule,
         MatSidenavModule,
@@ -31,11 +29,9 @@ import { MatMenuModule,
         MatIconModule,
         MatChipsModule,
         MatTabsModule,
-        MatSlideToggleModule,
         MatSnackBarModule} from '@angular/material';
 import { ActionInvocationService } from './services/action-invocation.service';
 import { ListComponent} from './list/list.component';
-import { ComponentFactory } from '@angular/core/src/linker/component_factory';
 import { ComponentFactoryService } from './services/component-factory.service';
 import { CellComponent } from './cell/cell.component';
 import { CheckboxComponent } from './checkbox/checkbox.component';
@@ -57,13 +53,13 @@ import { ActionComponent } from './action/action.component';
 import { MinimizedObjectComponent } from './minimized-object/minimized-object.component';
 import { CollectionButtonComponent } from './collection-button/collection-button.component';
 import { DesktopComponent } from './desktop/desktop.component';
-import { ObjectTabGroupComponent } from './object-tab-group/object-tab-group.component';
 import { LayoutService } from './services/layout.service';
 import { PropertyGroupComponent } from './property-group/property-group.component';
 import { ObjectStoreService } from './services/object-store.service';
 import { CollectionTableComponent } from './collection-table/collection-table.component';
 import { GlobalErrorHandlerService } from './global-error-handler.service';
 import { ErrorDetailsComponent } from './error-details/error-details.component';
+import { StringFieldComponent } from './string-field/string-field.component';
 
 @NgModule({
   exports: [MatGridList],
@@ -93,7 +89,8 @@ import { ErrorDetailsComponent } from './error-details/error-details.component';
     DesktopComponent,
     PropertyGroupComponent,
     CollectionTableComponent,
-    ErrorDetailsComponent
+    ErrorDetailsComponent,
+    StringFieldComponent
   ],
   imports: [
     HttpModule,
@@ -144,7 +141,8 @@ import { ErrorDetailsComponent } from './error-details/error-details.component';
     DialogContainerComponent,
     ObjectComponent,
     ObjectContainerComponent,
-    ErrorDetailsComponent
+    ErrorDetailsComponent,
+    StringFieldComponent
   ]
 })
 export class AppModule { }

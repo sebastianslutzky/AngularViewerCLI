@@ -72,7 +72,7 @@ export class CollectionTableComponent implements OnInit {
 
    getPropertyReturnType(columnName: string): string {
     const propertyType = this.columnTypes[columnName];
-    return this.metamodel.getPropertyType(columnName, propertyType);
+    return this.metamodel.getPropertyType(propertyType);
   }
 
   getObjectUrl(element: IXActionResultListItem) {

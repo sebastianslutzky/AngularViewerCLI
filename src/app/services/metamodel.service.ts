@@ -3,7 +3,7 @@ import { HttpClientWithAuthService } from './http-client-with-auth.service';
 import { rootRoute } from '@angular/router/src/router_module';
 import 'rxjs/add/operator/map' ;
 import { Observable } from 'rxjs/Observable';
-import { Resource, ActionResult, ReprTypesList, ActionDescription, IResource, ResourceLink, ObjectAction } from '../models/ro/iresource';
+import { Resource, ActionResult, ReprTypesList, ActionDescription, IResource, ResourceLink, ObjectAction, ObjectMember } from '../models/ro/iresource';
 import { ResourceFactoryService } from './resource-factory.service';
 import { environment } from '../../environments/environment';
 import {plainToClass, classToClass, plainToClassFromExist} from 'class-transformer';
@@ -154,11 +154,17 @@ private errorHandler: ErrorHandler) {
    }
 
      // tslint:disable-next-line:one-line
-   getPropertyType(name: string, propertyDescriptor: Resource): string {
+   getPropertyType(propertyDescriptor: Resource): string {
     const typeDescr = MetamodelHelper.findFromRel(propertyDescriptor.links, 'urn:org.restfulobjects:rels/return-type');
     // HACK:
     // TODO: follow link and get type from there
     return  typeDescr[0].href.replace('http://localhost:8080/restful/domain-types/', '');
+   }
+
+   getObjectMemberType(member: ObjectMember) {
+     // get type
+     //
+
    }
 
    //////////
