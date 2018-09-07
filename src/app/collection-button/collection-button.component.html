@@ -7,14 +7,14 @@
             <mat-panel-description >
               #{{Quantity}}
               <button mat-icon-button [matMenuTriggerFor]="menu" (click)="onMenuOpened($event)">
-               <mat-icon svgIcon="{{IsTableView? 'table' : 'view-list'}}"  ></mat-icon>
+               <mat-icon>{{IsTableView? 'grid_on' : 'list'}}</mat-icon>
                 </button>
                 <mat-menu #menu="matMenu" (menuOpened)="onMenuOpened()" >
                   <button mat-menu-item  (click)="showAsList()">
-                    <mat-icon svgIcon="view-list"></mat-icon>
+                    <mat-icon>list</mat-icon>
                   </button>
                   <button mat-menu-item  (click)="showAsTable()">
-                    <mat-icon svgIcon="table"></mat-icon>
+                    <mat-icon>grid_on</mat-icon>
                   </button>
                 </mat-menu>
 

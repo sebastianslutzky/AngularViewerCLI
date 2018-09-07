@@ -1,7 +1,28 @@
 
-<h2 mat-dialog-title> 
   <!-- todo: get icon name from response-->
- <mat-icon svgIcon="asterisk"></mat-icon>{{objectData.title}}</h2> 
+  <div>
+  <div>
+    <button mat-icon-button [matMenuTriggerFor]="menu">
+      <mat-icon>more_vert</mat-icon>
+    </button>
+
+    <mat-menu #menu="matMenu">
+      <button *ngIf="showDebugMenu" mat-menu-item [matMenuTriggerFor]='debug'> <mat-icon>bug_report</mat-icon> </button>
+    </mat-menu>
+
+    <mat-menu #debug="matMenu">
+      <button mat-menu-item (click)="debugContent()"> <mat-icon>subject</mat-icon>Content</button>
+      <button mat-menu-item (click)="debugLayout()"> <mat-icon>view_quilt</mat-icon>Layout</button>
+    </mat-menu>
+  </div>
+ 
+  <div>
+  <h2 mat-dialog-title> 
+   <mat-icon>stars</mat-icon>{{objectData.title}}
+  </h2> 
+</div>
+</div>
+
  <div class="content-container">
  <div class='object-properties-and-actions'>
   <mat-tab-group>
@@ -14,7 +35,6 @@
 
       </app-property-group> 
     </mat-tab>
-    
   </mat-tab-group>
 </div>
 <div class='object-collections' >

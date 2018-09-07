@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { ObjectRepr } from '../models/ro/iresource';
 import { HttpClientWithAuthService } from './http-client-with-auth.service';
 import { Observable } from 'rxjs/Observable';
-import { MetamodelService } from './metamodel.service';
 import { MetamodelHelper } from './MetamodelHelper';
 
 @Injectable()
@@ -13,9 +12,14 @@ export class LayoutService {
    }
 
    public load(repr: ObjectRepr): Observable<ObjectLayout> {
-    const describedBy = MetamodelHelper.getFromRel(repr, 'describedby');
-    return this.http.load(ObjectLayout, describedBy.href + '/layout', false, null, 'GET', 'xml');
+    return this.http.load(ObjectLayout, this.getUrl(repr), false, null, 'GET', 'xml');
    }
+
+   public getUrl(repr: ObjectRepr): string {
+    const describedBy = MetamodelHelper.getFromRel(repr, 'describedby');
+    return describedBy.href + '/layout';
+   }
+
 }
 
 
