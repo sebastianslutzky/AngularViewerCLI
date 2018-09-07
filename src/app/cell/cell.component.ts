@@ -35,7 +35,7 @@ export class CellComponent implements OnInit {
       }
       default: {
         console.warn('don\'t know how to render columns of type: ' + propertyType + '. Viewing as string');
-        return {control: TextComponent, value: value.title};
+        return {control: TextComponent, value: value.title || value };
       }
     }
   }

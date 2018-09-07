@@ -1,10 +1,12 @@
 
   <!-- todo: get icon name from response-->
-  <div>
-  <div>
+  <div class="objectTitle">
     <button mat-icon-button [matMenuTriggerFor]="menu">
-      <mat-icon>more_vert</mat-icon>
+        <mat-icon>more_vert</mat-icon>
     </button>
+    <mat-icon>stars</mat-icon>
+    <b>{{objectData.title}}</b>
+ </div>
 
     <mat-menu #menu="matMenu">
       <button *ngIf="showDebugMenu" mat-menu-item [matMenuTriggerFor]='debug'> <mat-icon>bug_report</mat-icon> </button>
@@ -14,16 +16,7 @@
       <button mat-menu-item (click)="debugContent()"> <mat-icon>subject</mat-icon>Content</button>
       <button mat-menu-item (click)="debugLayout()"> <mat-icon>view_quilt</mat-icon>Layout</button>
     </mat-menu>
-  </div>
- 
-  <div>
-  <h2 mat-dialog-title> 
-   <mat-icon>stars</mat-icon>{{objectData.title}}
-  </h2> 
-</div>
-</div>
 
- <div class="content-container">
  <div class='object-properties-and-actions'>
   <mat-tab-group>
     <mat-tab  *ngFor='let tab of layout.getPropertyTabs()' label='{{tab._name}}'>
@@ -41,6 +34,7 @@
   <span *ngFor='let collectionMember of collections'>
      <app-collection-button [Context]='collectionMember' ></app-collection-button>
   </span> 
+ </div>
   <!-- todo
     * render each collection 
       * get collection href
@@ -68,8 +62,6 @@
 
     and pass it to CollectionComponent
   -->
-</div>
- </div>
 
 <div mat-dialog-actions>
   <button mat-button [mat-dialog-close]="DialogInput" tabindex="2">OK</button>

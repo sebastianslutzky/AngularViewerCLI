@@ -28,7 +28,10 @@ export class PropertyComponent implements OnInit {
     this.metamodel.getDetails<ObjectMember>(this._property).then(
       propertyInstance => {
         const extension: any = propertyInstance.extensions;
+        if (extension) {
         this.isBoolean = extension['x-isis-format'] === 'boolean';
+        }
+
         this.metamodel.getDescribedBy(PropertyDescription, propertyInstance).then(
           propertyDescriptor => {this._propertyDescriptor = propertyDescriptor;
           this.Name = this._propertyDescriptor.friendlyName;

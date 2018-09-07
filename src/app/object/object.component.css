@@ -6,3 +6,7 @@
 :host ::ng-deep  .content-container >  div   {
     flex: 1;
 }
+
+.objectTitle {
+    flex-direction: row
+}
