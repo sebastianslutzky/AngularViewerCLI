@@ -3,7 +3,7 @@ import { ObjectMember, PropertyDescription } from '../models/ro/iresource';
 import { MetamodelService } from '../services/metamodel.service';
 
 @Component({
-  selector: '[string-field]',
+  selector: 'app-string-field',
   templateUrl: './string-field.component.html',
   styleUrls: ['./string-field.component.css']
 })
@@ -11,10 +11,6 @@ export class StringFieldComponent implements OnInit {
 
   private _property: ObjectMember;
 
-  @Input()
-  set Property(val: ObjectMember) {
-    this._property = val;
-  }
 
   @Output()
   get Value(): string{
@@ -30,6 +26,5 @@ export class StringFieldComponent implements OnInit {
     this._property = injector.get('context');
    }
 
-  ngOnInit() {
-    console.log(this._property);
+  ngOnInit() {}
 }

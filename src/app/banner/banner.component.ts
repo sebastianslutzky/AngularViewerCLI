@@ -48,7 +48,7 @@ export class BannerComponent implements OnInit {
     this.metamodel.load(ActionResult, meUrl).then(data => {
       this.userName =  data.result.title;
       this.tertiaryMenu.title = this.getTertiartyHeader();
-    }).catch( r => console.log (r));
+    });
   }
 
   PopulateMenuBars(): void {

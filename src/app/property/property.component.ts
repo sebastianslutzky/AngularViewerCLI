@@ -3,6 +3,7 @@ import { ObjectRepr, ObjectMember, PropertyDescription } from '../models/ro/ires
 import { MetamodelService } from '../services/metamodel.service';
 import { StringFieldComponent } from '../string-field/string-field.component';
 import { ComponentFactoryService } from '../services/component-factory.service';
+import { ObjectFieldComponentComponent } from '../object-field-component/object-field-component.component';
 
 @Component({
   selector: 'app-property',
@@ -40,9 +41,9 @@ export class PropertyComponent implements OnInit {
   getFieldCompomentForType(propertyType: string): any {
     switch (propertyType) {
       case 'string':
-      return StringFieldComponent;
+        return StringFieldComponent;
       case 'object':
-      break;
+        return ObjectFieldComponentComponent;
       default:
       throw Error('I don\'t know how to render fields of type ' + propertyType);
     }

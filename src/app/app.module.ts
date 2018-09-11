@@ -60,6 +60,7 @@ import { CollectionTableComponent } from './collection-table/collection-table.co
 import { GlobalErrorHandlerService } from './global-error-handler.service';
 import { ErrorDetailsComponent } from './error-details/error-details.component';
 import { StringFieldComponent } from './string-field/string-field.component';
+import { ObjectFieldComponentComponent } from './object-field-component/object-field-component.component';
 
 @NgModule({
   exports: [MatGridList],
@@ -90,7 +91,8 @@ import { StringFieldComponent } from './string-field/string-field.component';
     PropertyGroupComponent,
     CollectionTableComponent,
     ErrorDetailsComponent,
-    StringFieldComponent
+    StringFieldComponent,
+    ObjectFieldComponentComponent
   ],
   imports: [
     HttpModule,
@@ -142,7 +144,8 @@ import { StringFieldComponent } from './string-field/string-field.component';
     ObjectComponent,
     ObjectContainerComponent,
     ErrorDetailsComponent,
-    StringFieldComponent
+    StringFieldComponent,
+    ObjectFieldComponentComponent
   ]
 })
 export class AppModule { }

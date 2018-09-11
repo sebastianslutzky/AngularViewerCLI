@@ -36,7 +36,7 @@ export class ActionParamComponent implements OnInit {
        this.metamodel.loadReturnType(DomainType, paramDescr).then(returnType => {
            this.createConcreteComponent(returnType, this.Parameter);
         });
-      }).catch((x) => console.log('eapepe'));
+      });
   }
 
   createConcreteComponent(returnType: DomainType, paramDescr: ParameterInfo) {

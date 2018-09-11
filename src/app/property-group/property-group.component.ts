@@ -51,7 +51,7 @@ export class PropertyGroupComponent implements OnInit {
     return this._actionsFromLayout.map(row => actionsMapped.get(row['_id']));
   }
 
-  getMembers(membersFromLayout: any[], memberType : string) {
+  getMembers(membersFromLayout: any[], memberType: string) {
     if(!membersFromLayout){
       return null;
     }
