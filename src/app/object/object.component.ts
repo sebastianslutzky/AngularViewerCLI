@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { ObjectLayout, LayoutService } from '../services/layout.service';
 import { environment } from '../../environments/environment';
 import { MetamodelService } from '../services/metamodel.service';
+import { LayoutComponentFactoryService } from '../layout-component-factory.service';
 
 @Component({
   selector: 'app-object',
@@ -25,7 +26,8 @@ export class ObjectComponent implements OnInit {
         private route: Router,
         private dialogRef: MatDialogRef<ObjectComponent>,
         private layoutService: LayoutService,
-      private metaModel: MetamodelService) {
+      private metaModel: MetamodelService,
+      private factory: LayoutComponentFactoryService) {
 
     this.objectData = data.args as ObjectRepr;
     this.layout = data.layout as ObjectLayout;
@@ -70,5 +72,6 @@ export class ObjectComponent implements OnInit {
   }
 
 
-  ngOnInit() {}
+  ngOnInit() {
+  }
 }

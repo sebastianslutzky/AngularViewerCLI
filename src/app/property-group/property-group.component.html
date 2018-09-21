@@ -9,6 +9,8 @@
   </div>
 
   <div class="property-list" style="cursor: pointer">
-  <app-property style="cursor: pointer" *ngFor='let property of ContextProperties' [Property]='property'> 
-  </app-property>
+    <div  *ngFor='let property of ContextProperties'>
+      <app-property  [Property]='property'> 
+      </app-property>
+    </div>
 </div>

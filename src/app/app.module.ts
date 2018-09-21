@@ -61,6 +61,11 @@ import { GlobalErrorHandlerService } from './global-error-handler.service';
 import { ErrorDetailsComponent } from './error-details/error-details.component';
 import { StringFieldComponent } from './string-field/string-field.component';
 import { ObjectFieldComponentComponent } from './object-field-component/object-field-component.component';
+import { ObjectViewRowComponent } from './object-view-row/object-view-row.component';
+import { LayoutComponentFactoryService } from './layout-component-factory.service';
+import { LayoutGridComponent } from './layout-grid/layout-grid.component';
+import { LayoutRowComponent } from './layout-row/layout-row.component';
+import { LayoutColumnComponent } from './layout-column.component';
 
 @NgModule({
   exports: [MatGridList],
@@ -92,7 +97,11 @@ import { ObjectFieldComponentComponent } from './object-field-component/object-f
     CollectionTableComponent,
     ErrorDetailsComponent,
     StringFieldComponent,
-    ObjectFieldComponentComponent
+    ObjectFieldComponentComponent,
+    ObjectViewRowComponent,
+    LayoutGridComponent,
+    LayoutRowComponent,
+    LayoutColumnComponent
   ],
   imports: [
     HttpModule,
@@ -131,7 +140,8 @@ import { ObjectFieldComponentComponent } from './object-field-component/object-f
     {
       provide: ErrorHandler,
       useClass: GlobalErrorHandlerService
-    }
+    },
+    LayoutComponentFactoryService
   ],
   bootstrap: [AppComponent],
   entryComponents: [

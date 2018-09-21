@@ -17,6 +17,44 @@
       <button mat-menu-item (click)="debugLayout()"> <mat-icon>view_quilt</mat-icon>Layout</button>
     </mat-menu>
 
+
+    <app-layout-grid *ngIf="layout.grid" [LayoutContext]='layout.grid' >
+    </app-layout-grid>
+    <!--
+
+      get layout's top element and create component for it
+
+      //
+      if not known, throw
+      else, grid:
+        GRID
+        display as div. 
+
+        for each row, create row (can be done in component)
+        for each metadataerror: throw (todo check with Dan how that is displayed atm)
+
+        ROW
+        for each element
+           if col: col
+           if clearFixVIsible or ClearFixHIdden: do nothing
+           else, throw
+
+       COL
+         TODO
+
+        
+
+
+      for each row, add a div  with fxlayout row 
+         for each col, add a dic with fx layout row xs column 
+           for each tabgroup, add a mat-tagroup
+             for each tab, add a mat-tab with name
+               for each row, div with row
+                for each col, add a div with fx layout.xs
+                 for each fieldset, add property group
+                    for each property, add property 
+
+    -->
  <div class='object-properties-and-actions'>
   <mat-tab-group>
     <mat-tab  *ngFor='let tab of layout.getPropertyTabs()' label='{{tab._name}}'>
