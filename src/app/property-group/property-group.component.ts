@@ -1,19 +1,20 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { LayoutBaseComponent } from '../layout-row/layout-row.component';
+import { MetamodelService } from '../services/metamodel.service';
+import { LayoutService } from '../services/layout.service';
 
 @Component({
   selector: 'app-property-group',
   templateUrl: './property-group.component.html',
   styleUrls: ['./property-group.component.css']
 })
-export class PropertyGroupComponent implements OnInit {
+export class PropertyGroupComponent extends LayoutBaseComponent implements OnInit {
   /**
    * todo:
    *   take the 'unreferenced properties/action' into account
    *      - first for properties, so that all datanucleus stuff is displayed in 'other' (& let Dan know about this diff with wicket viewer)
    */
 
-  @Input()
-  public Layout: any[];
 
   @Input()
   public Context: any;
@@ -26,23 +27,24 @@ export class PropertyGroupComponent implements OnInit {
   private _propertiesFromLayout: any[];
   public ContextProperties: any[];
   public ContextActions: any[];
-  constructor() {
+
+  public constructor(private layout: LayoutService, private metamodel: MetamodelService) {
+    super();
   }
 
   ngOnInit() {
-    const group =  this.TabLayout.row.col;
-    this._actionsFromLayout = group.fieldSet.action;
-    this._propertiesFromLayout = group.fieldSet.property;
-    this._catchAllProperties = group.fieldSet._unreferencedProperties && group.fieldSet._unreferencedProperties === 'true';
 
+    this._actionsFromLayout = this.LayoutContext.action;
+    this._propertiesFromLayout = this.LayoutContext.property;
+    this._catchAllProperties = this.LayoutContext._unreferencedProperties && this.LayoutContext._unreferencedProperties === 'true';
+
+    // get properties from layout
     this.ContextProperties = this.getMembers(this._propertiesFromLayout, 'property');
     this.ContextActions = this.getMembers(this._actionsFromLayout, 'action');
-
-   const test = this.getUnreferencedMembers('property');
   }
 
   getActions() {
-    if(!this._actionsFromLayout){
+    if (!this._actionsFromLayout) {
       return null;
     }
     const actionsFromContext = this.Context.filter(m => m.memberType === 'action');
@@ -52,27 +54,17 @@ export class PropertyGroupComponent implements OnInit {
   }
 
   getMembers(membersFromLayout: any[], memberType: string) {
-    if(!membersFromLayout){
+    if (!membersFromLayout) {
       return null;
     }
-    const membersFromContext = this.Context.filter(m => m.memberType === memberType);
+
+    const members = this.metamodel.getObjectMembers(this.ObjectContext);
+    const membersFromContext =  members.filter(m => m.memberType === memberType);
     const membersMapped = membersFromContext.reduce(
       (index, row) => index.set(row['id'], row), new Map);
     const filtered =  Array.from([].concat(membersFromLayout)).map(row => membersMapped.get(row['_id']));
 
     // remove nulls
     return filtered.filter(x => x) ;
-  }
-
-  getUnreferencedMembers(memberType: string) {
-    let membersFromContext = this.Context.filter(m => m.memberType === memberType);
-    this.Layout.forEach(tab => {
-      let layoutMembers: any[] =  tab.row.col.fieldSet[memberType];
-      if (!Array.isArray(layoutMembers)) {
-        layoutMembers = [layoutMembers];
-      }
-      membersFromContext = membersFromContext.filter(mc => !(layoutMembers.some(lp => lp && lp._id === mc.id)));
-    });
-    return membersFromContext;
   }
 }

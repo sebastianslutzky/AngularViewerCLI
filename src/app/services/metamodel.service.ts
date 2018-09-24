@@ -3,7 +3,7 @@ import { HttpClientWithAuthService } from './http-client-with-auth.service';
 import { rootRoute } from '@angular/router/src/router_module';
 import 'rxjs/add/operator/map' ;
 import { Observable } from 'rxjs/Observable';
-import { Resource, ActionResult, ReprTypesList, ActionDescription, IResource, ResourceLink, ObjectAction, ObjectMember } from '../models/ro/iresource';
+import { Resource, ActionResult, ReprTypesList, ActionDescription, IResource, ResourceLink, ObjectAction, ObjectMember, ObjectRepr } from '../models/ro/iresource';
 import { ResourceFactoryService } from './resource-factory.service';
 import { environment } from '../../environments/environment';
 import {plainToClass, classToClass, plainToClassFromExist} from 'class-transformer';
@@ -12,6 +12,7 @@ import { SessionService } from './session.service';
 import { MetamodelHelper } from './MetamodelHelper';
 import { IStorageSpec } from './object-store.service';
 import { GlobalErrorHandlerService } from '../global-error-handler.service';
+import { ObjectRouterComponent } from '../object-router/object-router.component';
 
 
 @Injectable()
@@ -159,6 +160,13 @@ private errorHandler: ErrorHandler) {
     // HACK:
     // TODO: follow link and get type from there
     return  typeDescr[0].href.replace('http://localhost:8080/restful/domain-types/', '');
+   }
+
+   getObjectMembers(object: ObjectRepr): ObjectMember[] {
+    return Object.keys(object.members)
+      .map((m) => {
+        return object.members[m];
+      } );
    }
 
    getObjectMemberType(member: ObjectMember) {

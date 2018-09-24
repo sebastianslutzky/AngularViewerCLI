@@ -4,9 +4,7 @@ import { Injectable } from '@angular/core';
 export class LayoutComponentFactoryService {
 
   // Chooses the right component to create based on the next layout element, and creates it
-  constructor() { 
-
-  }
+  constructor() {}
 
   /**
    * name

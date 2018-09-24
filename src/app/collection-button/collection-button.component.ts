@@ -2,13 +2,14 @@ import { Component, OnInit, Input, EventEmitter, Output, Directive, HostListener
 import { MetamodelService } from '../services/metamodel.service';
 import { ObjectMember, ActionDescription, ResourceLink } from '../models/ro/iresource';
 import { XActionResultList, IXActionResultListItem } from '../models/ro/xaction-result-list';
+import { LayoutBaseComponent } from '../layout-row/layout-row.component';
 
 @Component({
   selector: 'app-collection-button',
   templateUrl: './collection-button.component.html',
   styleUrls: ['./collection-button.component.css']
 })
-export class CollectionButtonComponent implements OnInit {
+export class CollectionButtonComponent extends LayoutBaseComponent implements OnInit {
 
   private _collInstance: XActionResultList;
   private _collDescriptor: ActionDescription;
@@ -20,12 +21,20 @@ export class CollectionButtonComponent implements OnInit {
   Quantity: number;
   @Input()
   Context: ObjectMember;
-  constructor(private metamodel: MetamodelService) { }
+  constructor(private metamodel: MetamodelService) {
+    super();
+   }
+
   @Output()
   public onGetObjectRequired: EventEmitter<ResourceLink> = new EventEmitter<ResourceLink>();
 
   ngOnInit() {
-    this.metamodel.getDetails<any>(this.Context, null, true ).then(
+    // get collection
+    const memberId = this.LayoutContext._id;
+    const collection = this.metamodel.getObjectMembers(this.ObjectContext).filter(x => x.memberType === 'collection' && x.id === memberId);
+
+    // get collection items
+    this.metamodel.getDetails<any>(collection[0], null, true ).then(
       collInstance => {
         const extendedResult = collInstance as Array<any>;
         const collResults = new XActionResultList(extendedResult , new Date());

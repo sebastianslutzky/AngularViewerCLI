@@ -1,3 +1,24 @@
-<p>
-  layout-column works!
-</p>
+
+  <mat-tab-group *ngFor="let tabGroup of TabGroups ">
+     <mat-tab  *ngFor='let tab of tabGroup.tab' label='{{tab._name}}'>
+        <app-layout-row *ngFor="let row of this.asArray(tab.row)" 
+            [LayoutContext]="row"
+            [ObjectContext]="ObjectContext"
+            >
+        </app-layout-row>
+    </mat-tab>
+    </mat-tab-group>
+
+      <app-property-group *ngFor="let fieldSet of FieldSets"
+          [Name]="fieldSet._name" 
+          [ObjectContext]="ObjectContext" 
+          [LayoutContext]="fieldSet">
+      </app-property-group> 
+
+<div class='object-collections' >
+  <span *ngFor='let collectionMember of collections'>
+     <app-collection-button 
+      [LayoutContext]='collectionMember' 
+      [ObjectContext]='ObjectContext' ></app-collection-button>
+  </span> 
+ </div>

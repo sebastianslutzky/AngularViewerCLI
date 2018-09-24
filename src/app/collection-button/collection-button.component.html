@@ -6,6 +6,7 @@
             </mat-panel-title> 
             <mat-panel-description >
               #{{Quantity}}
+
               <button mat-icon-button [matMenuTriggerFor]="menu" (click)="onMenuOpened($event)">
                <mat-icon>{{IsTableView? 'grid_on' : 'list'}}</mat-icon>
                 </button>
