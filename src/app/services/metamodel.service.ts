@@ -227,7 +227,6 @@ private errorHandler: ErrorHandler) {
          return x;
       });
 
-      loaded.catch( x => console.log ('aca'));
       return loaded;
    }
 

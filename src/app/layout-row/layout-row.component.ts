@@ -9,10 +9,6 @@ export class LayoutBaseComponent {
   @Input()
   public ObjectContext: any;
 
-  public constructor(){
-    console.log('initializing a ' + this.constructor.name );
-  }
-
 
   asArray(target: any) {
     if (!target) {
