@@ -1,16 +1,14 @@
 <!-- Display  -->
-  <div class='group-bar' >
-    <div>{{Name}}</div>
-    <div class="filler"></div>
-    <div *ngFor="let action of ContextActions" >
-    <app-action [Action]='action'> 
+<mat-card>
+    <mat-card-header class='group-bar' >
+      <mat-card-title>{{Name}}</mat-card-title>
+    <div class='actions-bar'>
+    <app-action *ngFor="let action of ContextActions" [Action]='action'> 
       </app-action> 
-      </div>
   </div>
-
+  </mat-card-header>
   <div class="property-list" style="cursor: pointer">
-    <div *ngFor='let property of ContextProperties'>
-      <app-property  [Property]='property'> 
+      <app-property *ngFor='let property of ContextProperties' [Property]='property'> 
       </app-property>
-    </div>
-</div>
+  </div>
+</mat-card>

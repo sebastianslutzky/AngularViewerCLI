@@ -4,6 +4,7 @@ import { MetamodelService } from '../services/metamodel.service';
 import { StringFieldComponent } from '../string-field/string-field.component';
 import { ComponentFactoryService } from '../services/component-factory.service';
 import { ObjectFieldComponentComponent } from '../object-field-component/object-field-component.component';
+import { BooleanFieldComponent } from '../boolean-field/boolean-field.component';
 
 @Component({
   selector: 'app-property',
@@ -32,6 +33,7 @@ export class PropertyComponent implements OnInit {
 
   ngOnInit() {
     const fieldComponentType =  this.getFieldCompomentForType(this.getPropertyType(this._property));
+    const id = this._property.id;
     //HACK: there should always be a control rendered
     if(fieldComponentType){
     this.factory.createComponent(this.container, fieldComponentType, {context: this._property});
@@ -44,6 +46,8 @@ export class PropertyComponent implements OnInit {
         return StringFieldComponent;
       case 'object':
         return ObjectFieldComponentComponent;
+      case 'boolean':
+        return BooleanFieldComponent;
       default:
       throw Error('I don\'t know how to render fields of type ' + propertyType);
     }

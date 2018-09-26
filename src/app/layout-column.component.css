@@ -1,4 +1,7 @@
 :host{
+    flex-wrap: wrap;
     display: flex;
-    flex-flow: row;
+    flex-flow: column;
+    flex-grow: 1;
+    /* border: 1px dashed orange; */
 }

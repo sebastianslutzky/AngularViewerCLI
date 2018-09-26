@@ -66,6 +66,7 @@ import { LayoutComponentFactoryService } from './layout-component-factory.servic
 import { LayoutGridComponent } from './layout-grid/layout-grid.component';
 import { LayoutRowComponent } from './layout-row/layout-row.component';
 import { LayoutColumnComponent } from './layout-column.component';
+import { BooleanFieldComponent } from './boolean-field/boolean-field.component';
 
 @NgModule({
   exports: [MatGridList],
@@ -101,7 +102,8 @@ import { LayoutColumnComponent } from './layout-column.component';
     ObjectViewRowComponent,
     LayoutGridComponent,
     LayoutRowComponent,
-    LayoutColumnComponent
+    LayoutColumnComponent,
+    BooleanFieldComponent
   ],
   imports: [
     HttpModule,
@@ -155,6 +157,7 @@ import { LayoutColumnComponent } from './layout-column.component';
     ObjectContainerComponent,
     ErrorDetailsComponent,
     StringFieldComponent,
+    BooleanFieldComponent,
     ObjectFieldComponentComponent
   ]
 })

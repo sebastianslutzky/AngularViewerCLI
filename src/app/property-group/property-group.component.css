@@ -1,15 +1,31 @@
-:host ::ng-deep .group-bar{
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-}
-
-:host ::ng-deep .filler{
+:host {
     flex-grow: 1;
+    padding: 2pt;
+    /* border: 1px dashed green; 
+    background-color: antiquewhite; */
 }
 
 .property-list{
-    flex-direction: column;
+    display: flex;
+    flex-flow: column;
+    /* border: 1px dashed red; */
+}
+.group-bar{
+    display: flex;
+    flex-direction: row;
+    /* border: 1px dashed red; */
 }
 
+.actions-bar{
+    flex-grow: 1;
+    display: flex;
+    flex-direction: row;
+    /* border: 1px dashed orange; */
+    justify-content: flex-end;
+}
 
+.object-title{
+    /* border: 1px dashed white; */
+    flex-grow: 1;
+    display: flex;
+}
