@@ -31,6 +31,8 @@ export class CollectionButtonComponent extends LayoutBaseComponent implements On
   ngOnInit() {
     // get collection
     const memberId = this.LayoutContext._id;
+    // if the collection instance can't be retrieved later, at least we display the id
+    this.Name = memberId;
     const collection = this.metamodel.getObjectMembers(this.ObjectContext).filter(x => x.memberType === 'collection' && x.id === memberId);
 
     // get collection items

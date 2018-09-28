@@ -1,13 +1,14 @@
 <mat-accordion>
     <mat-expansion-panel [expanded]='true'>
         <mat-expansion-panel-header>
+          
             <mat-panel-title>
               {{Name}}
             </mat-panel-title> 
             <mat-panel-description >
-              #{{Quantity}}
+              <div *ngIf="_collInstance">#{{Quantity}}</div>
 
-              <button mat-icon-button [matMenuTriggerFor]="menu" (click)="onMenuOpened($event)">
+              <button *ngIf="_collInstance" mat-icon-button [matMenuTriggerFor]="menu" (click)="onMenuOpened($event)">
                <mat-icon>{{IsTableView? 'grid_on' : 'list'}}</mat-icon>
                 </button>
                 <mat-menu #menu="matMenu" (menuOpened)="onMenuOpened()" >
@@ -19,6 +20,10 @@
                   </button>
                 </mat-menu>
 
+              <div>
+               <mat-icon *ngIf="!_collInstance">error</mat-icon>
+              </div>
+
             </mat-panel-description>
           </mat-expansion-panel-header>
     <mat-list *ngIf="!IsTableView" role="list">
@@ -26,6 +31,6 @@
         <a  (click)="openItem(item)">{{item.$$title}}</a></mat-list-item>
     </mat-list>
 
-     <app-collection-table *ngIf="IsTableView" [CollectionInstance]='_collInstance' [CollectionDescriptor]='_collDescriptor'></app-collection-table> 
+     <app-collection-table *ngIf="IsTableView && _collInstance" [CollectionInstance]='_collInstance' [CollectionDescriptor]='_collDescriptor'></app-collection-table> 
     </mat-expansion-panel>
   </mat-accordion>

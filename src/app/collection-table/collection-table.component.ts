@@ -1,5 +1,4 @@
 import { Component, OnInit, Input, Inject } from '@angular/core';
-import { ActionInvokedArg } from '../services/iactioninvoked';
 import { MetamodelHelper } from '../services/MetamodelHelper';
 import { MetamodelService } from '../services/metamodel.service';
 import { Resource } from '../models/ro/iresource';
