@@ -10,8 +10,10 @@ import { ParameterInfo } from '../services/iactioninvoked';
 })
 export class TextParamComponent implements OnInit {
 
+  data: ParamInput;
   get Field(): string{
     return this.Context.params[this.Key].value;
+    
   }
   set Field(value: string){
     this.Context.params[this.Key].value = value;

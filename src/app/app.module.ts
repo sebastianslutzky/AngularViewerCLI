@@ -67,6 +67,7 @@ import { LayoutGridComponent } from './layout-grid/layout-grid.component';
 import { LayoutRowComponent } from './layout-row/layout-row.component';
 import { LayoutColumnComponent } from './layout-column.component';
 import { BooleanFieldComponent } from './boolean-field/boolean-field.component';
+import { NewLinePipe } from './new-line.pipe';
 
 @NgModule({
   exports: [MatGridList],
@@ -103,7 +104,8 @@ import { BooleanFieldComponent } from './boolean-field/boolean-field.component';
     LayoutGridComponent,
     LayoutRowComponent,
     LayoutColumnComponent,
-    BooleanFieldComponent
+    BooleanFieldComponent,
+    NewLinePipe
   ],
   imports: [
     HttpModule,
@@ -159,6 +161,7 @@ import { BooleanFieldComponent } from './boolean-field/boolean-field.component';
     StringFieldComponent,
     BooleanFieldComponent,
     ObjectFieldComponentComponent
+
   ]
 })
 export class AppModule { }

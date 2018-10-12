@@ -1,5 +1,6 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, SecurityContext, Output } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-error-details',
@@ -8,13 +9,28 @@ import { MAT_DIALOG_DATA } from '@angular/material';
 })
 export class ErrorDetailsComponent implements OnInit {
 
-  private error: any;
+  private error: string;
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data: any) {
-    this.error = data.error;
+  @Output()
+  get ErrorDescription(): string{
+    return this.error;
+  }
+
+  constructor(sanitizer: DomSanitizer, @Inject(MAT_DIALOG_DATA) public data: any) {
+    const raw = data.error.message;
+    this.error = this.clean(raw);
+  }
+
+  private clean(raw: string) {
+    raw = raw.replace(/(?:\r\n\r\n|\r\r|\n\n)/g, '</p><p>');
+    return '<p>' + raw.replace(/(?:\r\n|\r|\n)/g, '<br>') + '</p>';
    }
 
+
   ngOnInit() {
+    this.error = this.data.error.message;
   }
 
 }
+
+

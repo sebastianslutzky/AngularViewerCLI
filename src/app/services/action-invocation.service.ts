@@ -12,6 +12,8 @@ export class ActionInvocationService {
   @Output()
   actionInvoked: EventEmitter<ActionInvokedArg> = new EventEmitter<ActionInvokedArg>();
   @Output()
+  validationErrorOccured: EventEmitter<string> = new EventEmitter<string>();
+  @Output()
   actionParamsNeeded: EventEmitter<ActionParametersNeededArgs> = new EventEmitter<ActionParametersNeededArgs>();
 
 
@@ -21,11 +23,10 @@ export class ActionInvocationService {
     public invokeAction(action: ObjectAction,
         actionDescriptor: ActionDescription,
         canvas: ViewContainerRef = null,
-        params: ActionParameterCollection = null): void {
+        params: ActionParameterCollection = null): Promise<any> {
          if (actionDescriptor.hasParameters) {
              if (params) {
-                this.doInvokeAction(action, actionDescriptor, params);
-                return;
+                return this.doInvokeAction(action, actionDescriptor, params);
              }
             const args = new ActionParametersNeededArgs();
             args.ActionDescriptor = actionDescriptor;
@@ -33,22 +34,21 @@ export class ActionInvocationService {
             args.Canvas = canvas;
 
             this.actionParamsNeeded.emit(args);
-            return;
+            return new  Promise<any>(null);
           }
 
-          this.doInvokeAction(action, actionDescriptor);
+          return this.doInvokeAction(action, actionDescriptor);
     }
 
-    private doInvokeAction(action: ObjectAction, actionDescriptor: ActionDescription, param: ActionParameterCollection = null) {
-        // Action invocation (will need to be a safe call, with proper error handling)
-      //  this.metamodel.routeToGet(action, queryString) ;
-       // return;
+    private doInvokeAction(action: ObjectAction,
+        actionDescriptor: ActionDescription,
+        param: ActionParameterCollection = null): Promise<any> {
 
          const invoke = this.metamodel.getInvokeLink(action);
          switch (invoke.method) {
              case 'GET':
                 const queryString = param ? param.asQueryString() : null;
-                this.metamodel.invokeGet(action, queryString).then(data => {
+                return this.metamodel.invokeGet(action, queryString).then(data => {
                     const result = data as Array<any>;
                     const arg = new ActionInvokedArg();
                     arg.ExtendedResult = result;
@@ -56,10 +56,10 @@ export class ActionInvocationService {
 
                     this.actionInvoked.emit(arg);
                 });
-                break;
             case 'POST':
+            case 'PUT':
                 const body = param ? param.asJsonBody() : null;
-                this.metamodel.invokePost(action, queryString).then(data => {
+                return this.metamodel.invokeWithBody(action, body).then(data => {
                     const result = data as Array<any>;
                     const arg = new ActionInvokedArg();
                     arg.ExtendedResult = result;
@@ -67,9 +67,6 @@ export class ActionInvocationService {
 
                     this.actionInvoked.emit(arg);
                 });
-                break;
-             default:
-                throw new Error(`${invoke.method} invocation of actions is not supported`);
         }
     }
 }

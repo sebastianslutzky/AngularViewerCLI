@@ -53,8 +53,7 @@ export class ActionParamComponent implements OnInit {
           return TextParamComponent;
         }
         default: {
-          console.warn('don\'t know how to render columns of type: ' + propertyType + '. Viewing as string');
-          return TextParamComponent;
+          throw Error('don\'t know how to render columns of type: ' + propertyType + '. Viewing as string');
         }
       }
   }

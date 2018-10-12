@@ -8,14 +8,14 @@
             <mat-panel-description >
               <div *ngIf="_collInstance">#{{Quantity}}</div>
 
-              <button *ngIf="_collInstance" mat-icon-button [matMenuTriggerFor]="menu" (click)="onMenuOpened($event)">
+              <button *ngIf="_collInstance" mat-icon-button [matMenuTriggerFor]="menu" [matTooltip]="'Change display type'"  (click)="onMenuOpened($event)">
                <mat-icon>{{IsTableView? 'grid_on' : 'list'}}</mat-icon>
                 </button>
                 <mat-menu #menu="matMenu" (menuOpened)="onMenuOpened()" >
-                  <button mat-menu-item  (click)="showAsList()">
+                  <button mat-menu-item  (click)="showAsList()" [matTooltip]="'Display as as list'">
                     <mat-icon>list</mat-icon>
                   </button>
-                  <button mat-menu-item  (click)="showAsTable()">
+                  <button mat-menu-item  (click)="showAsTable()" [matTooltip]="'Display as a table'">
                     <mat-icon>grid_on</mat-icon>
                   </button>
                 </mat-menu>

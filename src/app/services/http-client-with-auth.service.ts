@@ -26,16 +26,30 @@ export class HttpClientWithAuthService {
   }
 
   post(url: string, body: any) {
-    return this.http.post(url, body);
+    const headers = this.buildHeaders(true);
+    return this.http.post(url, body, {
+      headers: headers
+    });
   }
 
-  get(url: string, isisHeader: boolean = false) {
+  put(url: string, body: any) {
+    return this.http.put(url, body);
+  }
+
+  
+  buildHeaders(isisHeader: boolean) {
     const headers = new Headers();
           //  console.trace();
     this.createAuthorizationHeader(headers);
     if (isisHeader) {
       this.addApacheIsisAccept(headers);
     }
+
+    return headers;
+  }
+  get(url: string, isisHeader: boolean = false) {
+    const headers = this.buildHeaders(isisHeader);
+
     if (environment.trace.httpCalls) {
      console.log('url: ' + url) ;
      console.log('method: GET') ;

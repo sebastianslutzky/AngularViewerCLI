@@ -116,8 +116,8 @@ private errorHandler: ErrorHandler) {
      return this.loadLink(null, this.getInvokeLink(resource), true, queryString);
    }
 
-   public async invokePost(resource: IResource, body: string): Promise<any> {
-     return this.loadLink(null, this.getInvokeLink(resource), false, body) ;
+   public async invokeWithBody(resource: IResource, body: string): Promise<any> {
+     return this.loadLink(null, this.getInvokeLink(resource), true, body) ;
    }
 
    public getInvokeLink(resource: IResource) {
@@ -199,8 +199,10 @@ private errorHandler: ErrorHandler) {
 
        case 'POST':
               return this.client.post(url, args).map(obj => this.toClass(c, obj)).toPromise();
+       case 'PUT':
+              return this.client.put(url, args).map(obj => this.toClass(c, obj)).toPromise();
        default:
-        throw new Error ('method not implemented yet: ' + method);
+              return this.client. post(url, args).map(obj => this.toClass(c, obj)).toPromise();
      }
    }
 

@@ -33,7 +33,7 @@ export class AppComponent  implements AfterContentInit {
     sanitizer: DomSanitizer,
     private objectStore: ObjectStoreService) {
 
-      iconRegistry.addSvgIconSet(sanitizer.bypassSecurityTrustResourceUrl('./assets/mdi.svg'));
+    iconRegistry.addSvgIconSet(sanitizer.bypassSecurityTrustResourceUrl('./assets/mdi.svg'));
 
     invoker.actionInvoked.subscribe(data => {
       // action results displayed without routing
@@ -54,9 +54,8 @@ export class AppComponent  implements AfterContentInit {
       dialog.instance.onParamtersCollected.subscribe(data => {
         this.invoker.invokeAction(args.ObjectAction, args.ActionDescriptor, null, data);
       });
-    });
 
-//    this.session.DesktopSize = this.getDesktopDimensions();
+    });
   }
 
   getDesktopDimensions() {

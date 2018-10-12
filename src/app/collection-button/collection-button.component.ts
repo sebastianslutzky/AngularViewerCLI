@@ -25,8 +25,10 @@ export class CollectionButtonComponent extends LayoutBaseComponent implements On
     super();
    }
 
+
   @Output()
   public onGetObjectRequired: EventEmitter<ResourceLink> = new EventEmitter<ResourceLink>();
+
 
   ngOnInit() {
     // get collection
