@@ -1,5 +1,5 @@
 import { Component, ElementRef, ViewContainerRef, ViewChild, OnInit, AfterContentInit } from '@angular/core';
-import { ActionResult } from './models/ro/iresource';
+import { ActionResult, ActionDescription } from './models/ro/iresource';
 import { ActionInvocationService } from './services/action-invocation.service';
 import { ComponentFactoryService } from './services/component-factory.service';
 import { ListComponent } from './list/list.component';
@@ -11,6 +11,7 @@ import { MatIconRegistry } from '@angular/material';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import { ObjectStoreService } from './services/object-store.service';
+import { MetamodelService } from './services/metamodel.service';
 
 @Component({
   selector: 'app-root',
@@ -31,14 +32,20 @@ export class AppComponent  implements AfterContentInit {
     private iconRegistry: MatIconRegistry,
     private activatedRoute: ActivatedRoute,
     sanitizer: DomSanitizer,
-    private objectStore: ObjectStoreService) {
+    private objectStore: ObjectStoreService,
+    private metamodel: MetamodelService) {
 
     iconRegistry.addSvgIconSet(sanitizer.bypassSecurityTrustResourceUrl('./assets/mdi.svg'));
 
     invoker.actionInvoked.subscribe(data => {
-      // action results displayed without routing
-      data.CanvasSize = this.getDesktopDimensions();
-      this.componentFactory.createComponent(container, ObjectContainerComponent, {'data': data});
+      // action results displayed without routiin
+      const descr = data.ActionDescriptor as ActionDescription;
+      const returnType =  this.metamodel.getReturnType(descr);
+
+      if (returnType.href.endsWith('java.util.List') {
+        data.CanvasSize = this.getDesktopDimensions();
+        this.componentFactory.createComponent(container, ObjectContainerComponent, {'data': data});
+      }
     });
 
     // action params needed

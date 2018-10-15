@@ -1,10 +1,16 @@
+<div class='args-body'>
+<div>
 <h2 mat-dialog-title>{{actionName}}</h2>
-<mat-dialog-content>
-  <ol>
-   <app-action-param *ngFor="let param of parameters" [Parameter]='param'  [Context]='DialogInput' [Key]='param.typeLink.rel' >
+</div>
+<div>
+<mat-dialog-content >
+  <ol class='param-item' >
+   <app-action-param  *ngFor="let param of parameters" [Parameter]='param'  [Context]='DialogInput' [Key]='param.typeLink.rel' >
     </app-action-param> 
     </ol>
 </mat-dialog-content>
+</div>
+</div>
 <div mat-dialog-actions>
   <button mat-button (click)="go()"  tabindex="2">OK</button>
   <button mat-button mat-dialog-close tabindex="-1">Cancel</button>

@@ -6,6 +6,7 @@ import { DialogContainerComponent, ParamInput } from '../dialog-container/dialog
 import { ActionParametersNeededArgs, ParameterInfo } from '../services/iactioninvoked';
 import { ActionDescription, ObjectAction } from '../models/ro/iresource';
 import { ActionInvocationService } from '../services/action-invocation.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-dialog',
@@ -22,14 +23,15 @@ export class DialogComponent {
   constructor(
     public dialog: MatDialog,
     public injector: Injector,
-    private invoker: ActionInvocationService) {
+    private invoker: ActionInvocationService,
+    private router: Router) {
        this.args = injector.get('args');
        this.openDialog();
   }
 
   openDialog() {
     const dialogRef = this.dialog.open(DialogContainerComponent, {
-      data : {args: this.args}
+      data : {args: this.args},  width: '25em'
     });
 
     const dialog = dialogRef.componentInstance as DialogContainerComponent;
@@ -37,24 +39,32 @@ export class DialogComponent {
     dialog.onParametersCollected.subscribe(result => {
       const args = new ActionParameterCollection(result.params);
       this.invoker.invokeAction(this.args.ObjectAction,
-        this.args.ActionDescriptor,
-        null,
-        args).catch(reason => {
-          if (reason.status === 422) {
-            console.log('all good');
-            this.setValidationMessages(reason._body,dialog);
-            return new Promise<any>(null);
-          } else {
-            return  Promise.reject(reason);
-          }
-        }).then(value => console.log('it works'));
-      });
+                                this.args.ActionDescriptor,
+                                null, args).
+                                catch(reason => {
+                                  if (reason.status === 422) {
+                                    this.setValidationMessages(reason._body,dialog);
+                                    return new Promise<any>(null);
+                                  } else {
+                                    return  Promise.reject(reason);
+                                  }
+                                }).then(data => {
+                                    const responseObject = JSON.parse(data._body);
+                                    const objectLink = 'object/' + encodeURIComponent(responseObject.$$href);
+                                    dialogRef.close();
+                                    this.router.navigate([objectLink]);
+                                  }
+                                  //get $$href property
+                                  //route to object 
+                                );
+                              });
     }
 
 
-    findParamWIthId(id: string,params: ParameterInfo[]): ParameterInfo {
-      const found = params.filter(param => param.instance.id === id);
-      return found[0];
+    findParamWIthId(id: string,input: any): ParamInput {
+      const values = Object.values(input);
+      const found = values.filter((item: ParamInput) => item.id === id);
+      return found[0] as ParamInput;
     }
 
     setValidationMessages(responseBody: string,dialog: DialogContainerComponent) {
@@ -63,9 +73,8 @@ export class DialogComponent {
 
       keys.forEach(key => {
         if(response[key].hasOwnProperty('invalidReason')) {
-          const param = this.findParamWIthId(key, dialog.parameters);
-          param.instance.value = 'hola';
-          // dialog.setInvalidReason(key, response[key]['invalidReason']);
+          const param = this.findParamWIthId(key, dialog.DialogInput.params);
+          param.invalidReason = response[key].invalidReason;
         }
       });
 

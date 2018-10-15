@@ -1,0 +1,10 @@
+
+.args-body{
+    display: flex;
+    flex-direction: column;
+}
+
+.param-item{
+    align-content: left;
+    padding: 0;
+}

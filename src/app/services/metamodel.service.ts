@@ -44,6 +44,7 @@ private errorHandler: ErrorHandler) {
      return absolutePath.replace(this.rootUrl, '');
    }
 
+
   public buildUrl(endpoint: string): string {
     return this.rootUrl + '/' + endpoint ;
   }
@@ -108,6 +109,9 @@ private errorHandler: ErrorHandler) {
     return MetamodelHelper.getFromRel(resource, 'urn:org.restfulobjects:rels/details');
   }
 
+  public getReturnType(resource: IResource): ResourceLink {
+    return MetamodelHelper.getFromRel(resource, 'urn:org.restfulobjects:rels/return-type');
+  }
   getSelf(resource: IResource): ResourceLink {
     return MetamodelHelper.getFromRel(resource, 'self');
   }

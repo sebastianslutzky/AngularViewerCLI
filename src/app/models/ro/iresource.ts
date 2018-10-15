@@ -111,6 +111,11 @@ export class ActionDescription implements IIndexable, IResource {
     get indexableKey(): string{
         return MetamodelHelper.getFromRel(this, 'self').href;
     }
+
+    get returnType(): string{
+        return MetamodelHelper.getFromRel(this, 'return-type').href;
+    }
+
     memberType: string;
     links: ResourceLink[];
     parameters: ResourceLink[];

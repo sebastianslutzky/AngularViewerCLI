@@ -56,7 +56,9 @@ export class DialogContainerComponent implements OnInit {
 
  export class ParamInput {
 
-   constructor(public name: string, public value: string, private id: string) {
+  public invalidReason: string ;
+
+   constructor(public name: string, public value: string, public id: string) {
    }
 
    public toQueryString(): string {

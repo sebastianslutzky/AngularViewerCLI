@@ -11,12 +11,25 @@ import { ParameterInfo } from '../services/iactioninvoked';
 export class TextParamComponent implements OnInit {
 
   data: ParamInput;
+
+  private getInputContext(): ParamInput {
+    return this.Context.params[this.Key] as ParamInput;
+  }
   get Field(): string{
     return this.Context.params[this.Key].value;
-    
   }
   set Field(value: string){
     this.Context.params[this.Key].value = value;
+  }
+
+  get HasErrors(): boolean{
+    return true;
+    return  this.ErrorMessage >  '';
+  }
+
+  get ErrorMessage(): string{
+    const ctx = this.getInputContext();
+    return ctx.invalidReason;
   }
 
   Context: any;

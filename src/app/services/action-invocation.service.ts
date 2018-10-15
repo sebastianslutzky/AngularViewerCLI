@@ -66,6 +66,7 @@ export class ActionInvocationService {
                     arg.ActionDescriptor = actionDescriptor;
 
                     this.actionInvoked.emit(arg);
+                    return data;
                 });
         }
     }
