@@ -43,6 +43,8 @@ export class PropertyComponent implements OnInit {
   getFieldCompomentForType(propertyType: string): any {
     switch (propertyType) {
       case 'string':
+      case 'long':
+      case 'javasqltimestamp':
         return StringFieldComponent;
       case 'object':
         return ObjectFieldComponentComponent;

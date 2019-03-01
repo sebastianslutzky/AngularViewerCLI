@@ -1,5 +1,4 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { ComponentFactoryService } from '../services/component-factory.service';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { ObjectRepr, ObjectMember, ResourceLink } from '../models/ro/iresource';
 import { Router } from '@angular/router';

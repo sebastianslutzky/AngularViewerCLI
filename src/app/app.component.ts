@@ -42,7 +42,7 @@ export class AppComponent  implements AfterContentInit {
       const descr = data.ActionDescriptor as ActionDescription;
       const returnType =  this.metamodel.getReturnType(descr);
 
-      if (returnType.href.endsWith('java.util.List') {
+      if (returnType.href.endsWith('java.util.List')) {
         data.CanvasSize = this.getDesktopDimensions();
         this.componentFactory.createComponent(container, ObjectContainerComponent, {'data': data});
       }

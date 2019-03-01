@@ -12,7 +12,7 @@ export class LayoutService {
    }
 
    public load(repr: ObjectRepr): Observable<ObjectLayout> {
-    return this.http.load(ObjectLayout, this.getUrl(repr), false, null, 'GET', 'xml');
+    return this.http.load(ObjectLayout, this.getUrl(repr), false, null, 'GET');
    }
 
    public getUrl(repr: ObjectRepr): string {

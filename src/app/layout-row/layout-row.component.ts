@@ -38,7 +38,7 @@ export class LayoutRowComponent extends  LayoutBaseComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.Cols =  this.asArray(this.LayoutContext.col);
+    this.Cols =  this.asArray(this.LayoutContext.cols);
   }
 
 }

@@ -1,6 +1,6 @@
 
   <mat-tab-group *ngFor="let tabGroup of TabGroups ">
-     <mat-tab  *ngFor='let tab of tabGroup.tab' label='{{tab._name}}'>
+     <mat-tab  *ngFor='let tab of tabGroup.tab' label='{{tab.name}}'>
         <app-layout-row *ngFor="let row of this.asArray(tab.row)" 
             [LayoutContext]="row"
             [ObjectContext]="ObjectContext"
@@ -10,7 +10,7 @@
     </mat-tab-group>
 
       <app-property-group *ngFor="let fieldSet of FieldSets"
-          [Name]="fieldSet._name" 
+          [Name]="fieldSet.name" 
           [ObjectContext]="ObjectContext" 
           [LayoutContext]="fieldSet">
       </app-property-group> 

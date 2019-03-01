@@ -27,7 +27,8 @@ export class BannerComponent implements OnInit {
   userName: string;
   applicationName: string;
 
-  constructor(private metamodel: MetamodelService) { }
+  constructor(private metamodel: MetamodelService) {
+   }
 
   ngOnInit() {
     this.applicationName = environment.applicationName;

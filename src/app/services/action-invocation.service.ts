@@ -23,10 +23,11 @@ export class ActionInvocationService {
     public invokeAction(action: ObjectAction,
         actionDescriptor: ActionDescription,
         canvas: ViewContainerRef = null,
-        params: ActionParameterCollection = null): Promise<any> {
+        params: ActionParameterCollection = null,
+        extendedParameters: Array<string> = null): Promise<any> {
          if (actionDescriptor.hasParameters) {
              if (params) {
-                return this.doInvokeAction(action, actionDescriptor, params);
+                return this.doInvokeAction(action, actionDescriptor, params, extendedParameters);
              }
             const args = new ActionParametersNeededArgs();
             args.ActionDescriptor = actionDescriptor;
@@ -40,9 +41,17 @@ export class ActionInvocationService {
           return this.doInvokeAction(action, actionDescriptor);
     }
 
+    public validateAction(action: ObjectAction,
+        actionDescriptor: ActionDescription,
+        canvas: ViewContainerRef = null,
+        params: ActionParameterCollection = null): Promise<any> {
+            return this.invokeAction(action, actionDescriptor, canvas, params, ['x-ro-validate-only']);
+    }
+
     private doInvokeAction(action: ObjectAction,
         actionDescriptor: ActionDescription,
-        param: ActionParameterCollection = null): Promise<any> {
+        param: ActionParameterCollection = null,
+        extendedParameters: Array<string> = null): Promise<any> {
 
          const invoke = this.metamodel.getInvokeLink(action);
          switch (invoke.method) {

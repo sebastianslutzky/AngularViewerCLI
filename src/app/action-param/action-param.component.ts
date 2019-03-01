@@ -49,7 +49,8 @@ export class ActionParamComponent implements OnInit {
 
   renderInput(propertyType: string): any {
       switch (propertyType) {
-        case 'java.lang.String': {
+        case 'java.lang.String':
+        case 'long': {
           return TextParamComponent;
         }
         default: {

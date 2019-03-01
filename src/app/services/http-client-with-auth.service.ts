@@ -71,17 +71,8 @@ export class HttpClientWithAuthService {
            }
 
            return this.get(url, useIsisHeader)
-             .map(res => {
-               const f = res.headers.get('Date') ;
-               return res;
-             })
-              .map(res => {
-                if (format === 'xml') {
-                  this.x2js = new X2JS();
-                  const xml =  this.x2js.xml2js(res.text());
-                  return xml;
-                } else { return res.json(); }}
-             ).map(asJson => plainToClassFromExist(new c(), asJson));
+              .map(res    =>  res.json())
+              .map(asJson => plainToClassFromExist(new c(), asJson))
 
               // if we are dealing with xml, map to json
       case 'POST':

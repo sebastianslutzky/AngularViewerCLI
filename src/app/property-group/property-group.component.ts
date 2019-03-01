@@ -50,7 +50,7 @@ export class PropertyGroupComponent extends LayoutBaseComponent implements OnIni
     const actionsFromContext = this.Context.filter(m => m.memberType === 'action');
     const actionsMapped = actionsFromContext.reduce(
       (index, row) => index.set(row['id'], row), new Map);
-    return this._actionsFromLayout.map(row => actionsMapped.get(row['_id']));
+    return this._actionsFromLayout.map(row => actionsMapped.get(row['id']));
   }
 
   getMembers(membersFromLayout: any[], memberType: string) {
@@ -61,8 +61,9 @@ export class PropertyGroupComponent extends LayoutBaseComponent implements OnIni
     const members = this.metamodel.getObjectMembers(this.ObjectContext);
     const membersFromContext =  members.filter(m => m.memberType === memberType);
     const membersMapped = membersFromContext.reduce(
-      (index, row) => index.set(row['id'], row), new Map);
-    const filtered =  Array.from([].concat(membersFromLayout)).map(row => membersMapped.get(row['_id']));
+      (index, row) => {
+        return index.set(row['id'], row)}, new Map);
+    const filtered =  Array.from([].concat(membersFromLayout)).map(row => membersMapped.get(row['id']));
 
     // remove nulls
     return filtered.filter(x => x) ;
