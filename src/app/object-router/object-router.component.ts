@@ -9,6 +9,7 @@ import { MatDialog } from '@angular/material';
 import { ObjectComponent } from '../object/object.component';
 import {Location} from '@angular/common';
 import { LayoutModule } from '@angular/cdk/layout';
+import { environment } from '../../environments/environment';
 import { LayoutService, ObjectLayout } from '../services/layout.service';
 
 @Component({
@@ -42,10 +43,11 @@ export class ObjectRouterComponent implements OnInit {
       this.metamodel.load(ObjectRepr, decoded).then(data1 => {
       const result = data1 ;
 
-      this.session.indexResult(result);
+      if (environment.trace.cacheEnabled) {
+        this.session.indexResult(result);
+      }
 
       // todo: load layout
-
       this.layoutService.load(result).subscribe(objLayout => {
         this.openModal(result, objLayout);
       });

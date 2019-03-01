@@ -1,9 +1,9 @@
 import { Injectable, ErrorHandler } from '@angular/core';
 import { HttpClientWithAuthService } from './http-client-with-auth.service';
-import { rootRoute } from '@angular/router/src/router_module';
 import 'rxjs/add/operator/map' ;
 import { Observable } from 'rxjs/Observable';
-import { Resource, ActionResult, ReprTypesList, ActionDescription, IResource, ResourceLink, ObjectAction, ObjectMember, ObjectRepr } from '../models/ro/iresource';
+import { Resource, ActionResult, ReprTypesList, ActionDescription, IResource,
+  ResourceLink, ObjectAction, ObjectMember, ObjectRepr } from '../models/ro/iresource';
 import { ResourceFactoryService } from './resource-factory.service';
 import { environment } from '../../environments/environment';
 import {plainToClass, classToClass, plainToClassFromExist} from 'class-transformer';
@@ -11,9 +11,6 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { SessionService } from './session.service';
 import { MetamodelHelper } from './MetamodelHelper';
 import { IStorageSpec } from './object-store.service';
-import { GlobalErrorHandlerService } from '../global-error-handler.service';
-import { ObjectRouterComponent } from '../object-router/object-router.component';
-
 
 @Injectable()
 export class MetamodelService {
@@ -63,24 +60,27 @@ private errorHandler: ErrorHandler) {
 
   public async getActionDescriptor(link: IResource): Promise<ActionDescription> {
      const  describedby =  MetamodelHelper.getFromRel(link, 'describedby');
+     if (environment.trace.cacheEnabled) {
      const cached = await this.session.getDomainType(describedby);
      if (cached) {
        if (environment.trace.cacheHits) {
         console.log('hit the cache: ' + describedby.href);
-
-
        }
       return cached;
      }
-       if (environment.trace.cacheMisses) {
-        console.log('missed the cache: ' + describedby.href);
-       }
+    }
+      if (environment.trace.cacheMisses) {
+      console.log('missed the cache: ' + describedby.href);
+      }
 
-       return this.getDescribedBy(ActionDescription, link).then(p => {
-        // index after loading
-         this.session.indexActionDescriptor(p);
-         return p;
-      });
+      return this.getDescribedBy(ActionDescription, link).then(p => {
+      // index after loading
+      if (environment.trace.cacheEnabled) {
+        this.session.indexActionDescriptor(p);
+      }
+
+      return p;
+    });
   }
 
   public loadReturnType<T>(c: new() => T, link: IResource): Promise<T> {
@@ -215,7 +215,7 @@ private errorHandler: ErrorHandler) {
 
       if (store) {
         const cached = await this.session.getFromStore(store, url);
-        if (cached) {
+        if (cached && environment.trace.cacheEnabled) {
           if (environment.trace.cacheHits) {
           console.log(`Cache hit. Store: ${store.name}. Key: ${url}`);
           }
@@ -229,7 +229,7 @@ private errorHandler: ErrorHandler) {
 
       // load and index
       const loaded =   this.load<T>(null, url, useIsisHeader, args, method).then(x => {
-         if (store) {this.session.indexInStore(store.name, x,  url); }
+         if (store && environment.trace.cacheEnabled) {this.session.indexInStore(store.name, x,  url); }
          return x;
       });
 

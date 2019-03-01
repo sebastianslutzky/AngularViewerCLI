@@ -10,7 +10,8 @@ export const environment = {
   showDebugMenu: true,
   trace: {
     httpCalls: false,
+    cacheEnabled: false,
     cacheMisses: true,
-    cacheHits: false
+    cacheHits: false,
   }
 };
