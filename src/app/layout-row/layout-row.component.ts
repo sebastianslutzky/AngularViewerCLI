@@ -33,7 +33,7 @@ export class LayoutBaseComponent {
 export class LayoutRowComponent extends  LayoutBaseComponent implements OnInit {
   private Cols: any;
 
-  public constructor(private metamodel: MetamodelService) {
+  public constructor(protected metamodel: MetamodelService) {
     super();
   }
 

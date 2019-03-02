@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Injector, Output } from '@angular/core';
+import { Component, OnInit, Input, Injector, Output, Pipe, PipeTransform } from '@angular/core';
 import { ObjectMember, PropertyDescription } from '../models/ro/iresource';
 import { MetamodelService } from '../services/metamodel.service';
 
@@ -27,4 +27,14 @@ export class StringFieldComponent implements OnInit {
    }
 
   ngOnInit() {}
+}
+
+@Pipe({
+  name: 'StringFormatterPipe'
+})
+export class StringFormatterPipe implements PipeTransform {
+  transform(val, conditions) {
+    console.log('hello from pipe');
+    return val;
+  }
 }

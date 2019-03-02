@@ -1,3 +1,3 @@
 <mat-form-field>
-  <input matInput  [placeholder]='Name' [(ngModel)]="Value" readonly='true'>
+  <input matInput  [placeholder]='Name' [ngModel]="Value | StringFormatterPipe" readonly='true'>
 </mat-form-field>
