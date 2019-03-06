@@ -5,6 +5,7 @@ import { StringFieldComponent } from '../string-field/string-field.component';
 import { ComponentFactoryService } from '../services/component-factory.service';
 import { ObjectFieldComponentComponent } from '../object-field-component/object-field-component.component';
 import { BooleanFieldComponent } from '../boolean-field/boolean-field.component';
+import { TimeStampFieldComponent } from '../timestamp-field/timestamp-field.component';
 
 @Component({
   selector: 'app-property',
@@ -44,8 +45,9 @@ export class PropertyComponent implements OnInit {
     switch (propertyType) {
       case 'string':
       case 'long':
-      case 'javasqltimestamp':
         return StringFieldComponent;
+      case 'javasqltimestamp':
+        return  TimeStampFieldComponent;
       case 'object':
         return ObjectFieldComponentComponent;
       case 'boolean':
