@@ -1,19 +1,13 @@
-import {parseString} from 'xml2js';
 import { Injectable } from '@angular/core';
 import { Http, Headers } from '@angular/http';
 import { environment } from '../../environments/environment';
 import { Observable } from 'rxjs/Observable';
 import {plainToClass, classToClass, plainToClassFromExist} from 'class-transformer';
-declare const X2JS: any;
 // TODO: mover urls to a MetamodelClass
 @Injectable()
 export class HttpClientWithAuthService {
 
-  private x2js: any;
   constructor(private http: Http) {
-    this.x2js = new X2JS();
-    const xmlText = '<MyRoot><test>Success</test><test2><item>val1</item><item>val2</item></test2></MyRoot>';
-    const jsonObj = this.x2js.xml2js( xmlText );
    }
 
   createAuthorizationHeader(headers: Headers) {
@@ -87,18 +81,5 @@ export class HttpClientWithAuthService {
       return plain;
     }
    return plainToClassFromExist(new c(), plain);
- }
-
- promisesParser(string) {
-  return new Promise(function(resolve, reject)
-  {
-      parseString(string, function(err, result){
-           if (err) {
-               reject(err);
-           } else {
-               resolve(result);
-           }
-      });
-  });
  }
 }

@@ -27,11 +27,12 @@
     "core-js": "^2.4.1",
     "indexeddb-angular": "^0.1.8",
     "rxjs": "^5.5.2",
-    "x2js": "^3.2.1",
+    "tslib": "^1.9.0",
     "zone.js": "^0.8.14"
   },
   "devDependencies": {
-    "@angular/cli": "1.5.0",
+    "@angular-devkit/build-angular": "~0.13.0",
+    "@angular/cli": "^7.3.5",
     "@angular/compiler-cli": "^5.0.0",
     "@angular/language-service": "^5.0.0",
     "@types/jasmine": "~2.5.53",
