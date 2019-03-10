@@ -69,6 +69,7 @@ import { LayoutColumnComponent } from './layout-column.component';
 import { BooleanFieldComponent } from './boolean-field/boolean-field.component';
 import { NewLinePipe } from './new-line.pipe';
 import { TimeStampFieldComponent } from './timestamp-field/timestamp-field.component';
+import { RestfulFieldValidator } from './restful-field-validator';
 
 @NgModule({
   exports: [MatGridList],
@@ -107,7 +108,8 @@ import { TimeStampFieldComponent } from './timestamp-field/timestamp-field.compo
     LayoutColumnComponent,
     BooleanFieldComponent,
     TimeStampFieldComponent,
-    NewLinePipe
+    NewLinePipe,
+    RestfulFieldValidator
   ],
   imports: [
     HttpModule,
