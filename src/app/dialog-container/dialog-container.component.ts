@@ -48,12 +48,6 @@ export class DialogContainerComponent implements OnInit {
       map[p.typeLink.rel] =  input;
       return map;
     }, {});
-    //1 call validate with current parameters
-    
-    //2 if error returned, disable button
-    //3                    populate general error at bottom
-    //4                    populate field error on field
-    //5 do the same (1) after tabbing out of each control
   }
 
   private go() {
