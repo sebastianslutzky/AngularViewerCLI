@@ -1,21 +1,29 @@
-import { Component, OnInit, Injector, Input } from '@angular/core';
+import { Component, OnInit, Injector, Input, Output, EventEmitter, ViewChild } from '@angular/core';
 import { ParamDescription } from '../models/ro/iresource';
 import { ParamInput } from '../dialog-container/dialog-container.component';
 import { ParameterInfo } from '../services/iactioninvoked';
 import { inherits } from 'util';
+
+export interface IValidatable {
+  onBlur: EventEmitter<string>;
+}
 
 @Component({
   selector: 'app-text-param',
   templateUrl: './text-param.component.html',
   styleUrls: ['./text-param.component.css']
 })
-export class TextParamComponent implements OnInit {
+export class TextParamComponent implements OnInit , IValidatable {
 
   data: ParamInput;
   Context: any;
   Key: string;
   private description: ParamDescription;
 
+  @ViewChild('inputControl') private inputControl: any;
+  
+@Output()
+  public onBlur: EventEmitter<string> = new EventEmitter<string>();
   private getInputContext(): ParamInput {
     return this.Context.params[this.Key] as ParamInput;
   }
@@ -37,6 +45,7 @@ export class TextParamComponent implements OnInit {
 
 
   constructor(private injector: Injector) {
+
     this.description = (injector.get('args') as ParameterInfo).instance;
 
     this.Context = injector.get('ctx');
@@ -47,7 +56,12 @@ export class TextParamComponent implements OnInit {
     //paramInput.name = this.description.name.toLocaleLowerCase().replace(' ', '');
    }
 
+   private inputBlurred() {
+    this.onBlur.emit(this.Key);
+   }
+
   ngOnInit() {
+    const i = <HTMLElement>this.inputControl;
   }
 
 }

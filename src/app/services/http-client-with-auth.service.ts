@@ -19,19 +19,32 @@ export class HttpClientWithAuthService {
       headers.append('Accept', 'application/json;profile="urn:org.apache.isis/v1"');
   }
 
-  post(url: string, body: any) {
-    const headers = this.buildHeaders(true);
+
+  applyExtendedParameters(extendedParameters: Array<string>, body: string) {
+    if (!extendedParameters) {
+      return;
+    }
+
+    if (extendedParameters.includes('x-ro-validate-only')) {
+      const objectBody = JSON.parse(body);
+      objectBody['x-ro-validate-only'] = 'true';
+      body = JSON.stringify(objectBody);
+    }
+  }
+  post(url: string, body: any, extendedParameters: Array<string> = null) {
+    const headers = this.buildHeaders(true, extendedParameters);
+    this.applyExtendedParameters(extendedParameters,body);
     return this.http.post(url, body, {
       headers: headers
     });
   }
 
-  put(url: string, body: any) {
-    return this.http.put(url, body);
+  put(url: string, body: any, extendedParameters: Array<string> = null) {
+    return this.http.put(url, body, {
+      headers : this.buildHeaders(false, extendedParameters)
+    });
   }
-
-  
-  buildHeaders(isisHeader: boolean) {
+  buildHeaders(isisHeader: boolean, extendedParameters: Array<string>) {
     const headers = new Headers();
           //  console.trace();
     this.createAuthorizationHeader(headers);
@@ -41,8 +54,8 @@ export class HttpClientWithAuthService {
 
     return headers;
   }
-  get(url: string, isisHeader: boolean = false) {
-    const headers = this.buildHeaders(isisHeader);
+  get(url: string, isisHeader: boolean = false, extendedParameters: Array<string> = null) {
+    const headers = this.buildHeaders(isisHeader,extendedParameters);
 
     if (environment.trace.httpCalls) {
      console.log('url: ' + url) ;

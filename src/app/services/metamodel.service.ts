@@ -11,6 +11,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { SessionService } from './session.service';
 import { MetamodelHelper } from './MetamodelHelper';
 import { IStorageSpec } from './object-store.service';
+import { extend } from 'webdriver-js-extender';
 
 @Injectable()
 export class MetamodelService {
@@ -116,12 +117,12 @@ private errorHandler: ErrorHandler) {
     return MetamodelHelper.getFromRel(resource, 'self');
   }
 
-   public async invokeGet(resource: IResource, queryString: string = null): Promise<any> {
-     return this.loadLink(null, this.getInvokeLink(resource), true, queryString);
+   public async invokeGet(resource: IResource, queryString: string = null, extendedParameters: Array<string> = null): Promise<any> {
+     return this.loadLink(null, this.getInvokeLink(resource), true, queryString,extendedParameters);
    }
 
-   public async invokeWithBody(resource: IResource, body: string): Promise<any> {
-     return this.loadLink(null, this.getInvokeLink(resource), true, body) ;
+   public async invokeWithBody(resource: IResource, body: string, extendedParameters: Array<string>): Promise<any> {
+     return this.loadLink(null, this.getInvokeLink(resource), true, body, extendedParameters) ;
    }
 
    public getInvokeLink(resource: IResource) {
@@ -183,14 +184,14 @@ private errorHandler: ErrorHandler) {
    // v2
    // todo: use right method based on http vern
   async load<T>(c: new() => T, url: string, useIsisHeader: boolean = false,
-    args: string = null, method: string = 'GET'): Promise<T> {
+    args: string = null, method: string = 'GET', extendedParameters: Array<string> = null): Promise<T> {
      switch (method) {
        case 'GET':
             if (args != null) {
               url += '?' + args;
             }
 
-            const result =  this.client.get(url, useIsisHeader)
+            const result =  this.client.get(url, useIsisHeader, extendedParameters)
               //  .map(res => res['as_of_date'] = ) // add timestamp as field
               .map(res => {
                 const f = res.headers.get('Date') ;
@@ -202,11 +203,11 @@ private errorHandler: ErrorHandler) {
             return result;
 
        case 'POST':
-              return this.client.post(url, args).map(obj => this.toClass(c, obj)).toPromise();
+              return this.client.post(url, args, extendedParameters).map(obj => this.toClass(c, obj)).toPromise();
        case 'PUT':
-              return this.client.put(url, args).map(obj => this.toClass(c, obj)).toPromise();
+              return this.client.put(url, args, extendedParameters).map(obj => this.toClass(c, obj)).toPromise();
        default:
-              return this.client. post(url, args).map(obj => this.toClass(c, obj)).toPromise();
+              return this.client. post(url, args, extendedParameters).map(obj => this.toClass(c, obj)).toPromise();
      }
    }
 
@@ -236,8 +237,12 @@ private errorHandler: ErrorHandler) {
       return loaded;
    }
 
-   loadLink<T>(c: new() => T, link: ResourceLink, useIsisHeader: boolean = false, queryString: string = null): Promise<T> {
-    return this.load<T>(c, link.href, useIsisHeader, queryString, link.method);
+   loadLink<T>(c: new() => T, link: ResourceLink,
+   useIsisHeader: boolean = false,
+   queryString: string = null, extendedParameters: Array<string> = null): Promise<T> {
+
+    return this.load<T>(c, link.href, useIsisHeader, queryString, link.method, extendedParameters);
+
    }
 
    /////////

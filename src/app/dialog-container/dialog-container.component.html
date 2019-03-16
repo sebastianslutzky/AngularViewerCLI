@@ -4,9 +4,12 @@
 </div>
 <div>
 <mat-dialog-content >
-  <form (ngSubmit)="go()">
+  <form (ngSubmit)="validate()">
   <ol class='param-item' >
-   <app-action-param  *ngFor="let param of parameters" [Parameter]='param'  [Context]='DialogInput' [Key]='param.typeLink.rel' >
+   <app-action-param  *ngFor="let param of parameters" [Parameter]='param'  
+    [Context]='DialogInput' 
+    [Key]='param.instance.id' 
+    (onBlur)='validate()'>
     </app-action-param> 
     </ol>
 <div mat-dialog-actions>

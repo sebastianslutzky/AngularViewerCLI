@@ -1,5 +1,5 @@
-import { Component, OnInit, Input, ViewContainerRef, ViewChild } from '@angular/core';
-import { TextParamComponent } from '../text-param/text-param.component';
+import { Component, OnInit, Input, ViewContainerRef, ViewChild, EventEmitter, Output } from '@angular/core';
+import { TextParamComponent, IValidatable } from '../text-param/text-param.component';
 import { ComponentFactoryService } from '../services/component-factory.service';
 import { MetamodelService } from '../services/metamodel.service';
 import { ResourceLink, ParamDescription,  DomainType } from '../models/ro/iresource';
@@ -21,6 +21,8 @@ export class ActionParamComponent implements OnInit {
   @Input()
   Key: string;
 
+  @Output()
+  onBlur: EventEmitter<string> = new EventEmitter<string>();
   descriptor: ParamDescription;
 
  get friendlyName(): string {
@@ -41,10 +43,16 @@ export class ActionParamComponent implements OnInit {
 
   createConcreteComponent(returnType: DomainType, paramDescr: ParameterInfo) {
        const view = this.renderInput(returnType.canonicalName);
-          this.componentFactory.createComponent(this.container, view,
+       const input: any = this.componentFactory.createComponent(this.container, view,
             {'args': paramDescr,
             'ctx': this.Context,
           'key': this.Key});
+        const v = (input.instance as IValidatable);
+        v.onBlur.subscribe(x =>
+          {
+            console.log(x);
+          this.onBlur.emit(x);
+          });
   }
 
   renderInput(propertyType: string): any {

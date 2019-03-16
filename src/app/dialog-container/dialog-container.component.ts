@@ -1,10 +1,11 @@
 import { Component, OnInit, Inject, Output, EventEmitter } from '@angular/core';
-import { MatDialog, MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
+import { MatDialog, MAT_DIALOG_DATA, MatDialogRef, MatSnackBar } from '@angular/material';
 import { DialogComponent, ActionParameterCollection } from '../dialog/dialog.component';
 import { ComponentFactoryService } from '../services/component-factory.service';
 import { ActionDescription, ObjectAction } from '../models/ro/iresource';
 import { ActionParametersNeededArgs, ParameterInfo } from '../services/iactioninvoked';
 import { ActionInvocationService } from '../services/action-invocation.service';
+import { invoke } from 'q';
 
 @Component({
   selector: 'app-dialog-container',
@@ -16,9 +17,11 @@ export class DialogContainerComponent implements OnInit {
   // change the param input to the dictionary[key] as the model
 
   DialogInput: any = {};
+  private validationError: string;
 
   @Output()
   onParametersCollected: EventEmitter<ActionParameterCollection> = new EventEmitter();
+  onValidationNeeded: EventEmitter<ActionParameterCollection> = new EventEmitter();
 
   get actionName(): string{
     return this.actionDescr.extensions.friendlyName;
@@ -35,7 +38,8 @@ export class DialogContainerComponent implements OnInit {
   }
   private args: ActionParametersNeededArgs;
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data: any, 
+  constructor(@Inject(MAT_DIALOG_DATA) public data: any,
+  public validationErrorBar: MatSnackBar,
   private dialogRef: MatDialogRef<DialogContainerComponent>,
   private invoker: ActionInvocationService) {
     this.args = data.args as ActionParametersNeededArgs;
@@ -45,7 +49,7 @@ export class DialogContainerComponent implements OnInit {
     this.parameters = this.args.ParametersInfo;
     this.DialogInput.params =  this.parameters.reduce((map, p) => {
       const input = new ParamInput(p.instance.name, p.instance.default, p.instance.id);
-      map[p.typeLink.rel] =  input;
+      map[input.id] =  input;
       return map;
     }, {});
   }
@@ -54,14 +58,66 @@ export class DialogContainerComponent implements OnInit {
     this.onParametersCollected.emit(this.DialogInput);
   }
 
+  private validate() {
+     this.invokeValidation();
+  }
+
   private invokeValidation() {
       const args = new ActionParameterCollection(this.DialogInput.params);
-      this.invoker.invokeAction(this.args.ObjectAction,
+      const di = this.DialogInput;
+      this.invoker.validateAction(this.args.ObjectAction,
                                 this.args.ActionDescriptor,
-                                null, args);
+                                null, args).then( response =>
+                                  console.log(response)
+                                ).catch((reason) => {
+                                  console.log(reason);
+                                  if (reason.status === 422) {
+                                    this.setValidationMessages(reason._body);
+                                    console.log('populate error msgs');
+                                    console.log(reason);
+                                    console.log('--here--');
+                                    console.log(this.DialogInput);
+                                    //get json to object
+                                    //map to param objects
+                                    // repopulate params and checkif it refreshes
+                                  } else {
+                                    throw reason;
+                                  }
+                                }
+                               );
   }
- }
+  setValidationMessages(responseBody: string) {
+    const response = JSON.parse(responseBody);
+    const keys =  Object.keys(response);
 
+    keys.forEach(key => {
+      if (key === 'x-ro-invalidReason') {
+        this.showEntityValidationError(response[key]);
+      }else {
+        const param = this.DialogInput.params[key];
+        param.invalidReason = response[key].invalidReason;
+      }
+    });
+
+    // const types = this.ActionDescriptor.parameters;
+    // const paramType =  keys.map((key, index) =>
+    //  new ParameterInfo(this.ObjectAction.parameters[key], types[index]));
+
+    // return paramType;
+
+}
+
+showEntityValidationError(msg: string){
+  if (this.validationError === msg) {
+    return;
+  }
+
+  this.validationError = msg;
+  this.validationErrorBar.open(this.validationError, null, {
+  duration: 2000,
+  panelClass: ['red-snackbar']});
+ }
+}
 
 
  export class ParamInput {
@@ -83,9 +139,6 @@ export class DialogContainerComponent implements OnInit {
      }
      return `"${this.safeString(this.id)}": {"value" :  {${jsonValue}}}`;
    }
-
-
-
 
    private safeString(value: string): string {
      if (value) {

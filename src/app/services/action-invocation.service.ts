@@ -48,16 +48,18 @@ export class ActionInvocationService {
             return this.invokeAction(action, actionDescriptor, canvas, params, ['x-ro-validate-only']);
     }
 
+
     private doInvokeAction(action: ObjectAction,
         actionDescriptor: ActionDescription,
         param: ActionParameterCollection = null,
         extendedParameters: Array<string> = null): Promise<any> {
 
+
          const invoke = this.metamodel.getInvokeLink(action);
          switch (invoke.method) {
              case 'GET':
                 const queryString = param ? param.asQueryString() : null;
-                return this.metamodel.invokeGet(action, queryString).then(data => {
+                return this.metamodel.invokeGet(action, queryString,extendedParameters).then(data => {
                     const result = data as Array<any>;
                     const arg = new ActionInvokedArg();
                     arg.ExtendedResult = result;
@@ -68,7 +70,7 @@ export class ActionInvocationService {
             case 'POST':
             case 'PUT':
                 const body = param ? param.asJsonBody() : null;
-                return this.metamodel.invokeWithBody(action, body).then(data => {
+                return this.metamodel.invokeWithBody(action, body, extendedParameters).then(data => {
                     const result = data as Array<any>;
                     const arg = new ActionInvokedArg();
                     arg.ExtendedResult = result;

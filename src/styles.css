@@ -45,3 +45,8 @@ a:visited {
   body{
     width:"100%";
   }
+
+.red-snackbar {
+    background: #e74c3c;
+    color: #ffffff;
+  }

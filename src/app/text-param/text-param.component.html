@@ -1,6 +1,7 @@
 <ul >
 <mat-form-field >
-  <input matInput  [placeholder]='description.name' appRestfulFieldValidator [ngModelOptions]="{updateOn: 'blur'}" [(ngModel)]="Field" >
+  <input matInput  [placeholder]='description.name' 
+  #inputControl (blur)="inputBlurred()" [(ngModel)]="Field" >
 </mat-form-field>
 <mat-error *ngIf="HasErrors">
   {{ErrorMessage}}
