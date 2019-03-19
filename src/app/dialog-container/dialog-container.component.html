@@ -4,12 +4,12 @@
 </div>
 <div>
 <mat-dialog-content >
-  <form (ngSubmit)="validate()">
+  <form (ngSubmit)="go()">
   <ol class='param-item' >
    <app-action-param  *ngFor="let param of parameters" [Parameter]='param'  
     [Context]='DialogInput' 
     [Key]='param.instance.id' 
-    (onBlur)='validate()'>
+    (onBlur)='invokeValidation()'>
     </app-action-param> 
     </ol>
 <div mat-dialog-actions>

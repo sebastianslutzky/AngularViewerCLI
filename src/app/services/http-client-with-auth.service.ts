@@ -22,18 +22,18 @@ export class HttpClientWithAuthService {
 
   applyExtendedParameters(extendedParameters: Array<string>, body: string) {
     if (!extendedParameters) {
-      return;
+      return body;
     }
 
     if (extendedParameters.includes('x-ro-validate-only')) {
       const objectBody = JSON.parse(body);
       objectBody['x-ro-validate-only'] = 'true';
-      body = JSON.stringify(objectBody);
+      return JSON.stringify(objectBody);
     }
   }
   post(url: string, body: any, extendedParameters: Array<string> = null) {
     const headers = this.buildHeaders(true, extendedParameters);
-    this.applyExtendedParameters(extendedParameters,body);
+    body = this.applyExtendedParameters(extendedParameters,body);
     return this.http.post(url, body, {
       headers: headers
     });

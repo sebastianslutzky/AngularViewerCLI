@@ -36,28 +36,9 @@ export class DialogComponent {
 
     const dialog = dialogRef.componentInstance as DialogContainerComponent;
 
-    dialog.onParametersCollected.subscribe(result => {
-      const args = new ActionParameterCollection(result.params);
-      this.invoker.invokeAction(this.args.ObjectAction,
-                                this.args.ActionDescriptor,
-                                null, args).
-                                catch(reason => {
-                                  if (reason.status === 422) {
-                                    this.setValidationMessages(reason._body,dialog);
-                                    return new Promise<any>(null);
-                                  } else {
-                                    return  Promise.reject(reason);
-                                  }
-                                }).then(data => {
-                                    const responseObject = JSON.parse(data._body);
-                                    const objectLink = 'object/' + encodeURIComponent(responseObject.$$href);
+    dialog.onActionInvoked.subscribe(result => {
                                     dialogRef.close();
-                                    this.router.navigate([objectLink]);
-                                  }
-                                  //get $$href property
-                                  //route to object 
-                                );
-                              });
+                                  });
     }
 
 

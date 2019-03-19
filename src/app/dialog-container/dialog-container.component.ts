@@ -6,6 +6,7 @@ import { ActionDescription, ObjectAction } from '../models/ro/iresource';
 import { ActionParametersNeededArgs, ParameterInfo } from '../services/iactioninvoked';
 import { ActionInvocationService } from '../services/action-invocation.service';
 import { invoke } from 'q';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-dialog-container',
@@ -21,8 +22,8 @@ export class DialogContainerComponent implements OnInit {
 
   @Output()
   onParametersCollected: EventEmitter<ActionParameterCollection> = new EventEmitter();
-  onValidationNeeded: EventEmitter<ActionParameterCollection> = new EventEmitter();
-
+  @Output()
+  onActionInvoked: EventEmitter<string> = new EventEmitter();
   get actionName(): string{
     return this.actionDescr.extensions.friendlyName;
   }
@@ -41,7 +42,8 @@ export class DialogContainerComponent implements OnInit {
   constructor(@Inject(MAT_DIALOG_DATA) public data: any,
   public validationErrorBar: MatSnackBar,
   private dialogRef: MatDialogRef<DialogContainerComponent>,
-  private invoker: ActionInvocationService) {
+  private invoker: ActionInvocationService,
+  private router: Router) {
     this.args = data.args as ActionParametersNeededArgs;
    }
 
@@ -55,16 +57,31 @@ export class DialogContainerComponent implements OnInit {
   }
 
   private go() {
-    this.onParametersCollected.emit(this.DialogInput);
-  }
-
-  private validate() {
-     this.invokeValidation();
+      this.validationError = null;
+      const args = new ActionParameterCollection(this.DialogInput.params);
+      this.invoker.invokeAction(this.args.ObjectAction,
+                                this.args.ActionDescriptor,
+                                null, args).
+                                catch(reason => {
+                                  if (reason.status === 422) {
+                                    this.setValidationMessages(reason._body);
+                                    return new Promise<any>(null);
+                                  } else {
+                                    return  Promise.reject(reason);
+                                  }
+                                }).then(data => {
+                                    const responseObject = JSON.parse(data._body);
+                                    const url = encodeURIComponent(responseObject.$$href);
+                                    this.router.navigate(['object', url]);
+                                  }
+                                  //get $$href property
+                                  //route to object 
+                                );
   }
 
   private invokeValidation() {
+    console.log('validating');
       const args = new ActionParameterCollection(this.DialogInput.params);
-      const di = this.DialogInput;
       this.invoker.validateAction(this.args.ObjectAction,
                                 this.args.ActionDescriptor,
                                 null, args).then( response =>
@@ -98,13 +115,6 @@ export class DialogContainerComponent implements OnInit {
         param.invalidReason = response[key].invalidReason;
       }
     });
-
-    // const types = this.ActionDescriptor.parameters;
-    // const paramType =  keys.map((key, index) =>
-    //  new ParameterInfo(this.ObjectAction.parameters[key], types[index]));
-
-    // return paramType;
-
 }
 
 showEntityValidationError(msg: string){
