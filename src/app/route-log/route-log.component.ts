@@ -9,10 +9,12 @@ import { ActivatedRoute } from '@angular/router';
 export class RouteLogComponent implements OnInit {
 
   constructor(private route: ActivatedRoute) {
+
    }
 
   ngOnInit() {
 
+      console.log('aca');
     this.route.paramMap.subscribe(data => {
       console.log(decodeURIComponent(data.get('destination')));
     });

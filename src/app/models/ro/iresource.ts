@@ -35,12 +35,11 @@ export class Resource implements IIndexable {
   }
 }
 
-export class ActionResult {
+export class ActionResult extends Resource {
     get id(): string{
         throw new Error('not implemented');
     }
    links: ResourceLink[];
-   result: Resource;
    resulttype: string;
 }
 

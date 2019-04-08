@@ -22,6 +22,7 @@ export class PropertyGroupComponent extends LayoutBaseComponent implements OnIni
   public TabLayout: any;
   @Input()
   public Name: string;
+  public Title: string;
   private _catchAllProperties: boolean;
   private _actionsFromLayout: any[];
   private _propertiesFromLayout: any[];
@@ -41,6 +42,9 @@ export class PropertyGroupComponent extends LayoutBaseComponent implements OnIni
     // get properties from layout
     this.ContextProperties = this.getMembers(this._propertiesFromLayout, 'property');
     this.ContextActions = this.getMembers(this._actionsFromLayout, 'action');
+    if(this.Context){
+      this.Title = this.LayoutContext.name;
+    }
   }
 
   getActions() {
@@ -58,7 +62,7 @@ export class PropertyGroupComponent extends LayoutBaseComponent implements OnIni
       return null;
     }
 
-    const members = this.metamodel.getObjectMembers(this.ObjectContext);
+    const members = this.metamodel.getObjectMembers(this.Context);
     const membersFromContext =  members.filter(m => m.memberType === memberType);
     const membersMapped = membersFromContext.reduce(
       (index, row) => {

@@ -1,5 +1,5 @@
 <!-- Display  -->
-<mat-card>
+<!-- <mat-card>
     <mat-card-header class='group-bar' >
       <mat-card-title>{{Name}}</mat-card-title>
     <div class='actions-bar'>
@@ -11,4 +11,110 @@
       <app-property *ngFor='let property of ContextProperties' [Property]='property'> 
       </app-property>
   </div>
-</mat-card>
+</mat-card> -->
+<div class="fieldSets" id="id1175">
+    <fieldset class="memberGroup">
+       <div class="panel panel-default">
+          <div class="panel-heading">
+             <span class="panel-title">{{Title}}</span>
+             <div class="pull-right additionalLinks">
+                <div class="pull-right" id="associatedActionLinksPanel176">
+                   <ul class="additionalLinkList additionalLinkListInline list-unstyled list-inline" id="additionalLinkList177">
+                      <li *ngFor="let action of ContextActions" class="additionalLinkItem" title="action.id">
+                         <a href="javascript:;" class="btn btn-sm btn-default noVeil org-incode-eurocommercial-contactapp-module-contacts-dom-Contact-create" id="additionalLink15d" data-original-title="">
+                         <span class="fa fa-fw fa-plus fontAwesomeIcon"></span><span class="additionalLinkItem">{{action.id}}</span>
+                         </a><span style="display:none;" class="wicket-ajax-indicator" id="additionalLink15d--ajax-indicator"><img src="../wicket/resource/org.apache.wicket.ajax.AbstractDefaultAjaxBehavior/indicator-ver-1506099754000.gif" alt=""></span>
+                      </li>
+                   </ul>
+                </div>
+             </div>
+          </div>
+          <div class="properties panel-body">
+                     <app-property *ngFor='let property of ContextProperties' 
+                        [Property]='property'> 
+                     </app-property>
+             <div>
+               <!-- <div class="property isis-org-incode-eurocommercial-contactapp-module-contacts-dom-Contact-name" id="property178">
+                   <div class="scalarNameAndValueComponentType stringPanel" id="scalarTypeContainer179">
+                      <div class="form-group label-left" id="scalarIfRegular17a" title="">
+                         <label class="scalarName control-label">Name</label>
+                         <span class="scalarValueWrapper">
+                            <div class="scalarPlaceholder">
+                               <span class="scalarValueInput">
+                               <span class="editing">
+                               <input type="text" name="theme:entityPageContainer:entity:rows:2:rowContents:1:col:tabGroups:1:panel:tabPanel:rows:1:rowContents:1:col:fieldSets:1:memberGroup:properties:1:property:scalarTypeContainer:scalarIfRegular:scalarValueContainer:scalarValue" class="form-control input-sm scalarValue" value="Anne van Hope" id="scalarValue17b" size="25" maxlength="50" tabindex="-1" readonly="readonly" title="">
+                               </span>
+                               </span>
+                            </div>
+                            <span class="help-block">
+                            </span>
+                         </span>
+                         <div class="clearfix"></div>
+                      </div>
+                   </div>
+                </div> -->                <!-- <div class="property isis-org-incode-eurocommercial-contactapp-module-contacts-dom-Contact-name" id="property178">
+                   <div class="scalarNameAndValueComponentType stringPanel" id="scalarTypeContainer179">
+                      <div class="form-group label-left" id="scalarIfRegular17a" title="">
+                         <label class="scalarName control-label">Name</label>
+                         <span class="scalarValueWrapper">
+                            <div class="scalarPlaceholder">
+                               <span class="scalarValueInput">
+                               <span class="editing">
+                               <input type="text" name="theme:entityPageContainer:entity:rows:2:rowContents:1:col:tabGroups:1:panel:tabPanel:rows:1:rowContents:1:col:fieldSets:1:memberGroup:properties:1:property:scalarTypeContainer:scalarIfRegular:scalarValueContainer:scalarValue" class="form-control input-sm scalarValue" value="Anne van Hope" id="scalarValue17b" size="25" maxlength="50" tabindex="-1" readonly="readonly" title="">
+                               </span>
+                               </span>
+                            </div>
+                            <span class="help-block">
+                            </span>
+                         </span>
+                         <div class="clearfix"></div>
+                      </div>
+                   </div>
+                </div> -->
+             </div>
+             <div>
+                <!-- <div class="property isis-org-incode-eurocommercial-contactapp-module-contacts-dom-Contact-company" id="property17c">
+                   <div class="scalarNameAndValueComponentType stringPanel" id="scalarTypeContainer17d">
+                      <div class="form-group label-left" id="scalarIfRegular17e" title="">
+                         <label class="scalarName control-label">Company</label>
+                         <span class="scalarValueWrapper">
+                            <div class="scalarPlaceholder">
+                               <span class="scalarValueInput">
+                               <span class="editing">
+                               <input type="text" name="theme:entityPageContainer:entity:rows:2:rowContents:1:col:tabGroups:1:panel:tabPanel:rows:1:rowContents:1:col:fieldSets:1:memberGroup:properties:2:property:scalarTypeContainer:scalarIfRegular:scalarValueContainer:scalarValue" class="form-control input-sm scalarValue" value="EuroCope Amsterdam" id="scalarValue17f" size="25" maxlength="50" tabindex="-1" readonly="readonly" title="">
+                               </span>
+                               </span>
+                            </div>
+                            <span class="help-block">
+                            </span>
+                         </span>
+                         <div class="clearfix"></div>
+                      </div>
+                   </div>
+                </div> -->
+             </div>
+             <div>
+                <!-- <div class="property isis-org-incode-eurocommercial-contactapp-module-contacts-dom-Contact-email" id="property180">
+                   <div class="scalarNameAndValueComponentType stringPanel" id="scalarTypeContainer181">
+                      <div class="form-group label-left" id="scalarIfRegular182" title="">
+                         <label class="scalarName control-label">Email</label>
+                         <span class="scalarValueWrapper">
+                            <div class="scalarPlaceholder">
+                               <span class="scalarValueInput">
+                               <span class="editing">
+                               <input type="text" name="theme:entityPageContainer:entity:rows:2:rowContents:1:col:tabGroups:1:panel:tabPanel:rows:1:rowContents:1:col:fieldSets:1:memberGroup:properties:3:property:scalarTypeContainer:scalarIfRegular:scalarValueContainer:scalarValue" class="form-control input-sm scalarValue" value="annvanhope@eurocope.com" id="scalarValue183" size="25" maxlength="50" tabindex="-1" readonly="readonly" title="">
+                               </span>
+                               </span>
+                            </div>
+                            <span class="help-block">
+                            </span>
+                         </span>
+                         <div class="clearfix"></div>
+                      </div>
+                   </div>
+                </div> -->
+             </div>
+          </div>
+       </div>
+    </fieldset>
+ </div>

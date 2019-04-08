@@ -1,11 +1,22 @@
-  <mat-toolbar>  
-      <mat-toolbar-row>
-        <span [routerLink]="'.'">{{applicationName}}</span>
-      </mat-toolbar-row>
-    
-      <mat-toolbar-row>
-        <app-menu-bar #primaryMenu></app-menu-bar> 
-        <app-menu-bar #secondaryMenu></app-menu-bar> 
-        <app-menu-bar #tertiaryMenu></app-menu-bar> 
-      </mat-toolbar-row>
-    </mat-toolbar>
+<header  role="navigation">
+    <div class="container-fluid">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse.app-actions">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                 <span [routerLink]="'.'" class="navbar-brand" >{{applicationName}}</span>
+            </div>
+            <div class="navbar-collapse app-actions collapse navbar-left">
+                <app-menu-bar class="nav navbar-nav"  #primaryMenu></app-menu-bar>
+            </div>
+            <div class="navbar-collapse app-actions collapse navbar-right">
+                <app-menu-bar class="nav navbar-nav"  #secondaryMenu></app-menu-bar>
+                          <app-menu-bar class="nav navbar-nav"  #tertiaryMenu></app-menu-bar>
+            </div>
+    </div>
+    </div>
+  </header>

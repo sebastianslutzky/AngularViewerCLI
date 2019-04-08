@@ -1,15 +1,14 @@
-<div *ngIf="areAllColumnsLoaded">
+<!-- <div *ngIf="areAllColumnsLoaded">
   <mat-table #table  [dataSource]="dataSource"  matSort>
 
-    <!-- Position Column -->
-    <ng-container *ngFor="let column of displayedColumns" matColumnDef="{{column}}"> <!-- for each column -->
+     Position Column 
+    <ng-container *ngFor="let column of displayedColumns" matColumnDef="{{column}}">
       <mat-header-cell *matHeaderCellDef mat-sort-header> {{column}} </mat-header-cell>
       <mat-cell *matCellDef="let element"> 
         <a  (click)="goTo(element)" style="cursor: pointer">
        <app-cell [value]='element[column]' [type]='getPropertyReturnType(column)'>
         </app-cell>
       </a>
-    <!-- //    {{renderCell(column,element[column])}} -->
       </mat-cell>
     </ng-container>
 
@@ -17,4 +16,95 @@
     <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
   </mat-table>
 
-</div>
+</div>  -->
+
+<div class="table-responsive" *ngIf="areAllColumnsLoaded">
+    <table
+      class="contents table table-striped table-condensed table-hover table-bordered"
+      cellspacing="0"
+      id="table26e" >
+      <thead>
+        <tr class="headers">
+          <th class="title-column">
+            <div>
+              <strong></strong> <span style="float: right"></span>
+            </div>
+          </th>
+
+          <th *ngFor="let column of displayedColumns" 
+            class="wicket_orderNone isis-org-incode-eurocommercial-contactapp-module-number-dom-ContactNumber-type"
+          >
+            <a
+              href="./org.incode.eurocommercial.contactapp.module.contacts.dom.Contact:5?5-1.ILinkListener-theme-entityPageContainer-entity-rows-2-rowContents-2-col-tabGroups-1-panel-tabPanel-rows-1-rowContents-1-col-collections-1-collectionGroup-collection-collectionContents-collectionContents~2-table-topToolbars-toolbars-1-headers-2-header-orderByLink"
+              id="orderByLink240"
+            >
+              <div>
+                <strong>{{column}}</strong>
+                <span
+                  style="float: right"
+                  class="fa fa-fw fa-sort"
+                ></span>
+              </div>
+            </a>
+          </th>
+
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr class="even" *ngFor='let row of Items'>
+          <td class="title-column">
+            <div>
+              <div
+                class="entityLinkSimplePanel entityLinkComponentType"
+              >
+                <div>
+                  <div id="entityIconAndTitle26f">
+                    <span
+                      class="entityIconAndTitlePanel entityIconAndTitleComponentType"
+                    >
+                      <a
+                        href="./org.incode.eurocommercial.contactapp.module.number.dom.ContactNumber:9"
+                        class="entityUrlSource"
+                        title="{{row.$$title}}"
+                      >
+                        <img
+                          class="entityImage"
+                          src="../wicket/resource/org.incode.eurocommercial.contactapp.module.number.dom.ContactNumber/ContactNumber-ver-1552669862000.png"
+                        />
+                        <span class="entityTitle"></span>
+                      </a>
+                    </span>
+                  </div>
+
+                  <div class="clearfix"></div>
+                </div>
+              </div>
+            </div>
+          </td>
+          <td *ngFor="let column of displayedColumns"
+            class="isis-org-incode-eurocommercial-contactapp-module-number-dom-ContactNumber-type"
+          >
+          <app-cell [value]='row[column]' [type]='getPropertyReturnType(column)'>
+          </app-cell>
+
+          </td>
+          <!-- <td
+            class="isis-org-incode-eurocommercial-contactapp-module-number-dom-ContactNumber-number"
+          >
+            <div
+              id="cell272"
+              class="isis-org-incode-eurocommercial-contactapp-module-number-dom-ContactNumber-number"
+            >
+              <div
+                class="scalarNameAndValueComponentType stringPanel"
+                id="scalarTypeContainer273"
+              >
+                +31 20 222 1234
+              </div>
+            </div>
+          </td> -->
+        </tr>
+      </tbody>
+    </table>
+  </div>

@@ -38,14 +38,13 @@ export class ListComponent implements AfterViewInit,  OnInit {
             private metamodel: MetamodelService,
             private viewFactory: ComponentFactoryService,
             private sanitizer: DomSanitizer,
-             @Inject(MAT_DIALOG_DATA) public data: any,
             private dialogRef: MatDialogRef<ListComponent>,
             private router: Router) {
   }
 
   goTo(selectedElement) {
     this.router.navigate([this.getObjectUrl(selectedElement)]);
-    this.dialogRef.close({data: this.data});
+    // this.dialogRef.close({data: this.data});
   }
 
   preLoadPropertyTypes(rawResult: ActionInvokedArg) {
@@ -95,7 +94,7 @@ export class ListComponent implements AfterViewInit,  OnInit {
   }
   ngOnInit(): void {
     if (!this.actionResult) {
-      this.actionResult = this.data.args as ActionInvokedArg;
+      // this.actionResult = this.data.args as ActionInvokedArg;
     }
 
     // todo: if this class applies to all action results, move to action invocation service

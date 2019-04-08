@@ -12,6 +12,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import { ObjectStoreService } from './services/object-store.service';
 import { MetamodelService } from './services/metamodel.service';
+import { ListActionResultComponent } from './list-action-result/list-action-result.component';
 
 @Component({
   selector: 'app-root',
@@ -22,7 +23,6 @@ export class AppComponent  implements AfterContentInit {
 
   title = 'app';
   @ViewChild('banner', { read: ViewContainerRef }) private _banner: ViewContainerRef;
-  @ViewChild('desktop', { read: ViewContainerRef }) private _desktop: ViewContainerRef;
   @ViewChild('footer', { read: ViewContainerRef }) private _footer: ViewContainerRef;
 
   constructor(private invoker: ActionInvocationService,
@@ -37,22 +37,9 @@ export class AppComponent  implements AfterContentInit {
 
     iconRegistry.addSvgIconSet(sanitizer.bypassSecurityTrustResourceUrl('./assets/mdi.svg'));
 
-    invoker.actionInvoked.subscribe(data => {
-      // action results displayed without routiin
-      const descr = data.ActionDescriptor as ActionDescription;
-      const returnType =  this.metamodel.getReturnType(descr);
-
-      if (returnType.href.endsWith('java.util.List')) {
-        data.CanvasSize = this.getDesktopDimensions();
-        this.componentFactory.createComponent(container, ObjectContainerComponent, {'data': data});
-      }
-    });
 
     // action params needed
     invoker.actionParamsNeeded.subscribe(args => {
-      if (!args.Canvas) {
-        args.Canvas = this._desktop;
-      }
 
       const dialog = this.componentFactory.createComponent(
         args.Canvas,
@@ -65,16 +52,17 @@ export class AppComponent  implements AfterContentInit {
     });
   }
 
-  getDesktopDimensions() {
-    const top = this._desktop.element.nativeElement.offsetTop;
-    const bottom = this._footer.element.nativeElement.offsetTop;
-    const left = this._desktop.element.nativeElement.offsetLeft;
+  // getDesktopDimensions() {
+  //   const top = this._desktop.element.nativeElement.offsetTop;
+  //   const bottom = this._footer.element.nativeElement.offsetTop;
+  //   const left = this._desktop.element.nativeElement.offsetLeft;
 
-    return {top: top, height: bottom - top, left: left };
-  }
+  //   return {top: top, height: bottom - top, left: left };
+  // }
 
   ngAfterContentInit(): void {
-    this.session.DesktopSize = this.getDesktopDimensions();
+    // this.session.DesktopSize = this.getDesktopDimensions();
+
   }
      // move to card, or ven better, to resource
      getFriendlyName(result): string {

@@ -1,33 +1,38 @@
 
   <!-- Object Title-->
-  <div class="objectTitle">
-    <button mat-icon-button [matMenuTriggerFor]="menu">
-        <mat-icon>more_vert</mat-icon>
-    </button>
-    <!-- TODO: infer/get icon from layout -->
-    <mat-icon>stars</mat-icon>
-    <b>{{objectData.title}}</b>
- </div>
-
-    <!--  Debug menu -->
-    <mat-menu #menu="matMenu">
-      <button *ngIf="showDebugMenu" mat-menu-item [matMenuTriggerFor]='debug'> <mat-icon>bug_report</mat-icon> </button>
-    </mat-menu>
-    <mat-menu #debug="matMenu">
-      <button mat-menu-item (click)="debugContent()"> <mat-icon>subject</mat-icon>Content</button>
-      <button mat-menu-item (click)="debugLayout()"> <mat-icon>view_quilt</mat-icon>Layout</button>
-    </mat-menu>
-
     <!--  Layout Grid-->
+
+
+ <div class="row">
+  <div class="col-lg-12">
+     <div class="entityPage isis-org-incode-eurocommercial-contactapp-module-contacts-dom-Contact">
+        <div>
+           <div class="row">
+              <div class="col-md-12 col">
+                 <div class="entityHeaderPanel">
+                    <h4 class="iconAndTitle">
+                       <div class="iconAndTitleLabel entityIconTitleAndCopylink" id="entityIconTitleAndCopylink172">
+                          <span class="entityIconAndTitlePanel entityIconAndTitleComponentType">
+                          <a href="./org.incode.eurocommercial.contactapp.module.contacts.dom.Contact:5" class="entityUrlSource" title="Contact: Anne van Hope">
+                          <img class="entityImage" src="../wicket/resource/org.incode.eurocommercial.contactapp.module.contacts.dom.Contact/Contact-ver-1552669862000.png">
+                          <span class="entityTitle">{{objectData.title}}</span>
+                          </a>
+                          </span>
+                       </div>
+                       <div class="entityActions" id="entityActions173">
+                       </div>
+                       <div class="clearfix"></div>
+                    </h4>
+                 </div>
+              </div>
+           </div>
+
     <app-layout-grid 
       [LayoutContext]='layout' 
       [ObjectContext]='objectData'>
-    </app-layout-grid>
-
-
- <!-- Ok/Cancel buttons -->
-<div mat-dialog-actions>
-  <button mat-button [mat-dialog-close]="DialogInput" tabindex="2">OK</button>
-  <button mat-button mat-dialog-close tabindex="-1">Cancel</button>
+    </app-layout-grid> 
+          
+        </div>
+     </div>
+  </div>
 </div>
-

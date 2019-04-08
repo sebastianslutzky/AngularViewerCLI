@@ -1,0 +1,219 @@
+<div id="body">
+
+    <div id="wrapper" class="toggled">
+
+        <div id="sidebar-wrapper">
+
+
+            <ul class="sidebar-nav">
+                <div id="actionPromptSidebar612">
+<!--
+<li class="sidebar-brand">
+</li>
+-->
+<div class="sidebar-panel">
+<div class="row">
+<div class="col col-md-12">
+<div class="sidebar-header">
+    <h4>(no action)</h4>
+</div>
+<div class="sidebar-content">
+    <div></div>
+</div>
+</div>
+</div>
+</div>
+
+</div>
+            </ul>
+        </div>
+
+        <div id="page-content-wrapper">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-12">
+
+                        
+<div class="standaloneCollectionPage">
+<div>
+</div>
+<div>
+
+<div id="standaloneCollection617" class="isis-org-incode-eurocommercial-contactapp-module-contacts-dom-ContactMenu-listAll isis-org-incode-eurocommercial-contactapp-module-contacts-dom-Contact"></div>
+
+<div id="actionPromptModalWindow60d" class="modal" tabindex="-1" data-backdrop="static" role="dialog" aria-labelledby="header_label618" aria-hidden="true">
+<div class="modal-dialog modal-dialog-center ui-draggable" id="dialog60c">
+<div class="modal-content" style="margin-top: 346px;">
+    <div class="modal-header ui-draggable-handle">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true" id="header_close_button619">×</button>
+        <h4 class="modal-title" id="header_label618">&nbsp;</h4>
+    </div>
+    <div class="modal-body">
+        
+<div></div>
+
+    </div>
+    
+</div>
+</div>
+</div>
+
+<div class="standaloneCollectionPanel actionComponentType panel panel-default">
+    <div class="iconAndTitle panel-heading actionPanelHeaderNew">
+        <span class="actionName panel-title">{{Context.ActionDescriptor.extensions.friendlyName}}</span>
+
+        <div class="btn-group">
+            
+        </div>
+
+        <div class="pull-right btn-group selectorDropdown">
+            <span id="selectorDropdown61a">
+<div class="linksSelectorPanel">
+<div class="btn-group viewLinks" id="views61b">
+<button type="button" class="btn btn-sm btn-info">
+<span class="ViewLinkItem fa fa-fw fa-table"></span>
+<span class="ViewLinkItemTitle">Table</span>
+</button>
+<button type="button" class="btn btn-sm btn-info dropdown-toggle" data-toggle="dropdown">
+<span class="caret"></span>
+</button>
+<ul class="dropdown-menu dropdown-menu-right" role="menu">
+<li class="viewItem">
+    <a href="javascript:;" id="viewLink60e">
+        <span class="ViewLinkItem fa fa-file-excel-o"></span> <span class="ViewLinkItemTitle">Excel</span>
+    </a>
+</li><li class="viewItem">
+    
+</li>
+</ul>
+</div>
+</div>
+</span>
+        </div>
+    </div>
+
+    <div class="panel-body" id="collectionContents61c">
+<div class="linksSelectorPanel">
+
+<div class="views">
+<div class="collectionContentsLinksSelectorPanel collectionContentsComponentType link-selector-panel-invisible">
+<div class="collectionContentsAsExcel well">
+<div id="feedback61d">
+
+</div>
+<div class="clearfix"></div>
+<div class="downloadLink">
+<a href="./page?4-1.ILinkListener-theme-standaloneCollection-standaloneCollection-collectionContents-collectionContents~0-download" class="download btn btn-sm btn-primary" title="Download" download="Contacts.xlsx">Download as Excel</a>
+</div>
+</div>
+</div>
+<div class="collectionContentsLinksSelectorPanel collectionContentsComponentType">
+<div class="collectionContentsAsAjaxTablePanel collectionContentsComponentType">
+<div class="clearfix"></div>
+<div class="table-responsive">
+    <table class="contents table table-striped table-condensed table-hover table-bordered" cellspacing="0" id="table61e">
+
+
+<thead>
+
+<tr class="headers">
+
+<th class="title-column">
+<div>
+    <strong></strong> <span style="float: right"></span>
+</div>
+</th>
+
+<th class="wicket_orderNone isis-org-incode-eurocommercial-contactapp-module-contacts-dom-Contact-name"><a href="./page?4-1.ILinkListener-theme-standaloneCollection-standaloneCollection-collectionContents-collectionContents~1-table-topToolbars-toolbars-1-headers-2-header-orderByLink" id="orderByLink60f">
+<div>
+    <strong>Name</strong> <span style="float: right" class="fa fa-fw fa-sort"></span>
+</div>
+</a></th>
+
+<th class="wicket_orderNone isis-org-incode-eurocommercial-contactapp-module-contacts-dom-Contact-company"><a href="./page?4-1.ILinkListener-theme-standaloneCollection-standaloneCollection-collectionContents-collectionContents~1-table-topToolbars-toolbars-1-headers-3-header-orderByLink" id="orderByLink610">
+<div>
+    <strong>Company</strong> <span style="float: right" class="fa fa-fw fa-sort"></span>
+</div>
+</a></th>
+
+<th class="wicket_orderNone isis-org-incode-eurocommercial-contactapp-module-contacts-dom-Contact-email"><a href="./page?4-1.ILinkListener-theme-standaloneCollection-standaloneCollection-collectionContents-collectionContents~1-table-topToolbars-toolbars-1-headers-4-header-orderByLink" id="orderByLink611">
+<div>
+    <strong>Email</strong> <span style="float: right" class="fa fa-fw fa-sort"></span>
+</div>
+</a></th>
+
+</tr>
+
+</thead>
+
+<tbody>
+<tr *ngFor='let item of Context.ExtendedResult' class="even">
+<td class="title-column">
+<div>
+<div class="entityLinkSimplePanel entityLinkComponentType">
+<div>
+<div id="entityIconAndTitle61f">
+<span class="entityIconAndTitlePanel entityIconAndTitleComponentType">
+ <div (click)="goTo(item)" style="cursor: pointer" class="entityUrlSource" title="Contact: {{item.$$Title}}">
+     <img class="entityImage" src="./resource/org.incode.eurocommercial.contactapp.module.contacts.dom.Contact/Contact-ver-1552669862000.png">
+     <span class="entityTitle"></span>
+ </div>
+ 
+</span>
+</div>
+
+<div class="clearfix"></div>
+</div>
+</div>
+</div>
+</td>
+<td  class="isis-org-incode-eurocommercial-contactapp-module-contacts-dom-Contact-name">
+<div id="cell620" class="isis-org-incode-eurocommercial-contactapp-module-contacts-dom-Contact-name">
+<div class="scalarNameAndValueComponentType stringPanel" id="scalarTypeContainer621">
+{{item.$$title}}
+</div>
+</div>
+</td><td class="isis-org-incode-eurocommercial-contactapp-module-contacts-dom-Contact-company">
+<div id="cell622" class="isis-org-incode-eurocommercial-contactapp-module-contacts-dom-Contact-company">
+<div class="scalarNameAndValueComponentType stringPanel" id="scalarTypeContainer623">
+{{item.company}}
+</div>
+</div>
+</td><td class="isis-org-incode-eurocommercial-contactapp-module-contacts-dom-Contact-email">
+<div id="cell624" class="isis-org-incode-eurocommercial-contactapp-module-contacts-dom-Contact-email">
+<div class="scalarNameAndValueComponentType stringPanel" id="scalarTypeContainer625">
+  {{item.email}}
+</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+
+
+
+
+
+
+
+
+</div>
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    <div class="clearfix" style="margin-bottom: 100px"></div>
+</div>

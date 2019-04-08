@@ -48,7 +48,6 @@ export class ActionInvocationService {
             return this.invokeAction(action, actionDescriptor, canvas, params, ['x-ro-validate-only']);
     }
 
-
     private doInvokeAction(action: ObjectAction,
         actionDescriptor: ActionDescription,
         param: ActionParameterCollection = null,

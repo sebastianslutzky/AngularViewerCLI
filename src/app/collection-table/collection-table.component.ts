@@ -2,7 +2,6 @@ import { Component, OnInit, Input, Inject } from '@angular/core';
 import { MetamodelHelper } from '../services/MetamodelHelper';
 import { MetamodelService } from '../services/metamodel.service';
 import { Resource } from '../models/ro/iresource';
-import { MatTableDataSource, MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { IXActionResultListItem } from '../models/ro/xaction-result-list';
 import { Router } from '@angular/router';
 import { ListComponent } from '../list/list.component';
@@ -21,12 +20,13 @@ export class CollectionTableComponent implements OnInit {
   public elementType: Resource;
   displayedColumns: Array<string> ;
   private columnTypes = {};
-  dataSource: MatTableDataSource<IXActionResultListItem>;
+  private get Items(): any[]{
+    return this.CollectionInstance.XListItems;
+  }
 
   constructor(private metamodel: MetamodelService,
-  private router: Router,
-  @Inject(MAT_DIALOG_DATA) public data: any,
-  private dialogRef: MatDialogRef<ListComponent>) { }
+  private router: Router
+  ) { }
 
   // pass to datasource
     // for each item, get the result
@@ -41,7 +41,6 @@ export class CollectionTableComponent implements OnInit {
   // instantiate tabledatasource
 
   this.displayedColumns = this.CollectionInstance.PropertyNames;
-  this.dataSource = new MatTableDataSource(this.CollectionInstance.XListItems);
   this.preLoadPropertyTypes();
   }
 
@@ -79,6 +78,5 @@ export class CollectionTableComponent implements OnInit {
   }
   goTo(selectedElement) {
     this.router.navigate([this.getObjectUrl(selectedElement)]);
-    this.dialogRef.close({data: this.data});
   }
 }

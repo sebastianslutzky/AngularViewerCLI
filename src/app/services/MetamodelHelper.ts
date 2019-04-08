@@ -10,10 +10,10 @@ export class MetamodelHelper {
     let links: ResourceLink[];
     if (resource.links) {
       links = resource.links;
-    } else if ('$$ro' in resource) {
+    } else if ("$$ro" in resource) {
       links = (resource as any).$$ro.links;
     } else {
-      throw new Error('can\'t load resource. no links in it');
+      throw new Error("can't load resource. no links in it");
     }
 
     const relLink = MetamodelHelper.findFromRel(links, rel);

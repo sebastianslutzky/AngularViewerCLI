@@ -1,0 +1,17 @@
+<div class="tabGroups tabbable">
+  <ul class="nav nav-tabs">
+     <li *ngFor='let tab of Layout.tab;let i = index' class="tab{{i}} {{activeClassIfApplies(i)}}">
+         <a (click)="select(i)">
+        <span>{{tab.name}}</span></a></li>
+  </ul>
+
+
+  <div *ngIf="SelectedTab" class="tab-content">
+      <div class="tabPanel">
+          <app-layout-row *ngFor="let row of SelectedTab.row"
+          [LayoutContext]="row"
+          [ObjectContext]="ObjectContext"> 
+      </app-layout-row> 
+       </div>
+       </div>
+</div>

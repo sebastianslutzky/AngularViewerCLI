@@ -11,6 +11,7 @@ import {Location} from '@angular/common';
 import { LayoutModule } from '@angular/cdk/layout';
 import { environment } from '../../environments/environment';
 import { LayoutService, ObjectLayout } from '../services/layout.service';
+import { ObjectLoadedPublisherService } from '../object-loaded-publisher.service';
 
 @Component({
   selector: 'app-object-router',
@@ -28,7 +29,7 @@ export class ObjectRouterComponent implements OnInit {
     private session: SessionService,
     private location: Location,
     private route: Router,
-  private layoutService: LayoutService) {
+  private layoutService: LayoutService, private publisher: ObjectLoadedPublisherService) {
   }
 
   IsBackNavigation: boolean;
@@ -49,7 +50,12 @@ export class ObjectRouterComponent implements OnInit {
 
       // todo: load layout
       this.layoutService.load(result).subscribe(objLayout => {
-        this.openModal(result, objLayout);
+        console.log('aca tengo el result');
+        console.log(result);
+        console.log('y el layout');
+        console.log(objLayout);
+        this.publisher.Publish(result,objLayout);
+        //this.openModal(result, objLayout);
       });
     });
   });

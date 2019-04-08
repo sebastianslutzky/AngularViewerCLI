@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ValueProvider } from '@angular/core';
 import { isArray } from 'util';
 import { MetamodelService } from '../services/metamodel.service';
 
@@ -6,8 +6,15 @@ import { MetamodelService } from '../services/metamodel.service';
 export class LayoutBaseComponent {
   @Input()
   public LayoutContext: any;
+
+  private _objectContext: any;
   @Input()
-  public ObjectContext: any;
+  public set ObjectContext(value: any){
+    this._objectContext = value;
+  }
+  public get ObjectContext(): any {
+    return this._objectContext;
+  }
 
 
   asArray(target: any) {

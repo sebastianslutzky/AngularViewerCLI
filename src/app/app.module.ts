@@ -69,6 +69,13 @@ import { LayoutColumnComponent } from './layout-column.component';
 import { BooleanFieldComponent } from './boolean-field/boolean-field.component';
 import { NewLinePipe } from './new-line.pipe';
 import { TimeStampFieldComponent } from './timestamp-field/timestamp-field.component';
+import { RouteTesterComponent } from './route-tester/route-tester.component';
+import { ListActionResultComponent } from './list-action-result/list-action-result.component';
+import { ObjectLoadedPublisherService } from './object-loaded-publisher.service';
+import { BootstrapObjectComponent } from './bootstrap-object/bootstrap-object.component';
+import { TabGroupComponent } from './tab-group/tab-group.component';
+import { ObjectTabComponent } from './object-tab/object-tab.component';
+import { BookmarksComponent } from './bookmarks/bookmarks.component';
 
 @NgModule({
   exports: [MatGridList],
@@ -107,7 +114,13 @@ import { TimeStampFieldComponent } from './timestamp-field/timestamp-field.compo
     LayoutColumnComponent,
     BooleanFieldComponent,
     TimeStampFieldComponent,
-    NewLinePipe
+    NewLinePipe,
+    RouteTesterComponent,
+    ListActionResultComponent,
+    BootstrapObjectComponent,
+    TabGroupComponent,
+    ObjectTabComponent,
+    BookmarksComponent
   ],
   imports: [
     HttpModule,
@@ -142,6 +155,7 @@ import { TimeStampFieldComponent } from './timestamp-field/timestamp-field.compo
     ResourceFactoryService,
     LayoutService,
     SessionService,
+    ObjectLoadedPublisherService,
   ObjectStoreService,
     {
       provide: ErrorHandler,
@@ -163,7 +177,8 @@ import { TimeStampFieldComponent } from './timestamp-field/timestamp-field.compo
     StringFieldComponent,
     TimeStampFieldComponent,
     BooleanFieldComponent,
-    ObjectFieldComponentComponent
+    ObjectFieldComponentComponent,
+    ListActionResultComponent
 
   ]
 })

@@ -1,4 +1,8 @@
- <app-banner #banner></app-banner> 
-<app-desktop  #desktop></app-desktop>
- <router-outlet ></router-outlet> 
-<app-footer #footer></app-footer>  
+<div class="page container-fluid" >
+<app-banner #banner class="navbar navbar-default navbar-fixed-top"></app-banner>  
+</div>
+<div class="clear"></div>
+<app-bookmarks></app-bookmarks>
+<app-desktop style="background-color:red"   #desktop></app-desktop> 
+<router-outlet></router-outlet>
+ <app-footer #footer class="navbar navbar-default navbar-fixed-bottom"> </app-footer>   

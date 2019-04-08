@@ -1,13 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MetamodelService } from '../services/metamodel.service';
-import {Observable} from 'rxjs/Observable';
 import { MenuBarComponent } from '../menu-bar/menu-bar.component';
-import { forEach } from '@angular/router/src/utils/collection';
 import { Resource, ReprType, ActionResult, ReprTypesList } from '../models/ro/iresource';
-import {MatMenuModule} from '@angular/material/menu';
 import { environment } from '../../environments/environment';
-import { Element } from '@angular/compiler';
-declare var $: any;
 
 // RO Resource: Services
 // Children: menubarcomponent (x 3)
@@ -24,7 +19,6 @@ export class BannerComponent implements OnInit {
   @ViewChild('tertiaryMenu') private tertiaryMenu: MenuBarComponent;
 
   menus = {};
-  userName: string;
   applicationName: string;
 
   constructor(private metamodel: MetamodelService) {
@@ -35,7 +29,6 @@ export class BannerComponent implements OnInit {
     this.menus['PRIMARY'] = this.primaryMenu;
     this.menus['SECONDARY'] = this.secondaryMenu;
     this.menus['TERTIARY'] = this.tertiaryMenu;
-
     this.metamodel.assertApiIsAvailable().then(() => {
       this.SetUserName();
        this.PopulateMenuBars();
@@ -47,8 +40,7 @@ export class BannerComponent implements OnInit {
     // TODO: move to ProfileService
     const meUrl = this.metamodel.buildUrl('services/isissecurity.MeService/actions/me/invoke');
     this.metamodel.load(ActionResult, meUrl).then(data => {
-      this.userName =  data.result.title;
-      this.tertiaryMenu.title = this.getTertiartyHeader();
+      this.tertiaryMenu.title = data.title;
     });
   }
 
@@ -90,9 +82,6 @@ export class BannerComponent implements OnInit {
 
 // todo: use userprofile service if present
 // https://trello.com/c/i0bTNecz/25-try-to-use-userprofileservice-if-it-exist
-  getTertiartyHeader(): string {
-    return 'Hi ' + this.userName + '!';
-  }
 
   public async getServices(): Promise<ReprTypesList> {
     const servicesHRef =  this.metamodel.buildUrl('services');

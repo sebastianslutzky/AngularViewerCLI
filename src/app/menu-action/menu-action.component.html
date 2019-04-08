@@ -1,2 +1,14 @@
-<button mat-menu-item (click)="InvokeAction()" matTooltip="{{tooltip}}" [matTooltipPosition]="'left'" >
+<!-- <li>
+<button (click)="InvokeAction()" matTooltip="{{tooltip}}" [matTooltipPosition]="'left'" >
 {{this.friendlyName}}</button>
+</li> -->
+
+
+<li>
+        <a class="menuLink noVeil"  (click)="InvokeAction()">
+            <span class="fa fa-fw fa-list fontAwesomeIcon"></span><span class="menuLinkLabel">{{this.friendlyName}}</span>
+        </a>
+        <!-- <span style="display:none;" class="wicket-ajax-indicator" id="menuLink1--ajax-indicator">
+            <img src="./wicket/resource/org.apache.wicket.ajax.AbstractDefaultAjaxBehavior/indicator-ver-1506099754000.gif" alt="">
+        </span> -->
+    </li>

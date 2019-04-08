@@ -1,6 +1,11 @@
-<mat-grid-list cols="8">
+<!-- <mat-grid-list cols="8">
     <mat-grid-tile *ngFor="let result of  _desktopItems|async" >
         <app-minimized-object  [Context]='result'>
         </app-minimized-object>
     </mat-grid-tile>
-</mat-grid-list> 
+
+</mat-grid-list>  -->
+<div>
+<app-list-action-result *ngIf="IsFocusObjectAList" [Context]="_focusObject"></app-list-action-result>
+<app-object *ngIf="IsFocusObjectAnObject" [Context]="_focusObject" [Layout]="ObjectLayout"></app-object>
+</div>

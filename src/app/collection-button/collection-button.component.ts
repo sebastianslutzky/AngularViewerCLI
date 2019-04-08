@@ -16,7 +16,6 @@ export class CollectionButtonComponent extends LayoutBaseComponent implements On
   Name: string;
 
   Items: IXActionResultListItem[];
-  IsTableView = false;
 
   Quantity: number;
   @Input()
@@ -31,6 +30,8 @@ export class CollectionButtonComponent extends LayoutBaseComponent implements On
 
 
   ngOnInit() {
+    console.log(this.LayoutContext);
+    console.log(this.ObjectContext);
     // get collection
     const memberId = this.LayoutContext.id;
     // if the collection instance can't be retrieved later, at least we display the id
@@ -59,11 +60,5 @@ export class CollectionButtonComponent extends LayoutBaseComponent implements On
 
       onMenuOpened(event: Event) {
         event.stopPropagation();
-      }
-      showAsTable() {
-        this.IsTableView = true;
-      }
-      showAsList() {
-        this.IsTableView = false;
       }
 }

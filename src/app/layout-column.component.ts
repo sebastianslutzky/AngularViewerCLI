@@ -26,6 +26,9 @@ export class LayoutColumnComponent  extends LayoutBaseComponent implements OnIni
    return fieldSet.property || fieldSet.action;
   }
 
+  LayoutColumnComponent() {
+
+  }
   ngOnInit() {
      this.TabGroups = this.asArray(this.LayoutContext.tabGroup);
      this.FieldSets = this.asArray(this.LayoutContext.fieldSet);

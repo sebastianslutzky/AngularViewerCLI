@@ -1,4 +1,4 @@
-<mat-accordion>
+<!-- <mat-accordion>
     <mat-expansion-panel [expanded]='true'>
         <mat-expansion-panel-header>
           
@@ -29,8 +29,141 @@
     <mat-list *ngIf="!IsTableView" role="list">
       <mat-list-item *ngFor="let item of Items" role="listitem">
         <a  (click)="openItem(item)">{{item.$$title}}</a></mat-list-item>
-    </mat-list>
+    </mat-list> -->
 
-     <app-collection-table *ngIf="IsTableView && _collInstance" [CollectionInstance]='_collInstance' [CollectionDescriptor]='_collDescriptor'></app-collection-table> 
-    </mat-expansion-panel>
-  </mat-accordion>
+    <!-- </mat-expansion-panel>
+  </mat-accordion> -->
+
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <span class="panel-title" id="collectionName266" title="" >{{Name}}</span >
+    <div class="additionalLinksAndSelectorDropDown pull-right">
+      <div class="btn-group">
+        <div id="additionalLinks267">
+          <ul class="additionalLinkList additionalLinkListInline list-unstyled list-inline"
+            id="additionalLinkList268" >
+            <li class="additionalLinkItem" title="">
+              <a
+                href="javascript:;"
+                class="btn btn-sm btn-default noVeil org-incode-eurocommercial-contactapp-module-contacts-dom-Contact-addContactNumber"
+                id="additionalLink242"
+                data-original-title=""
+              >
+                <span class="fa fa-fw fa-plus-square fontAwesomeIcon"></span
+                ><span class="additionalLinkItem">Add</span> </a
+              ><span
+                style="display:none;"
+                class="wicket-ajax-indicator"
+                id="additionalLink242--ajax-indicator"
+                ><img
+                  src="../wicket/resource/org.apache.wicket.ajax.AbstractDefaultAjaxBehavior/indicator-ver-1506099754000.gif"
+                  alt=""
+              /></span>
+            </li>
+            <li class="additionalLinkItem" title="">
+              <a
+                href="javascript:;"
+                class="btn btn-sm btn-default noVeil org-incode-eurocommercial-contactapp-module-contacts-dom-Contact-removeContactNumber"
+                id="additionalLink243"
+                data-original-title=""
+              >
+                <span class="fa fa-fw fa-minus-square fontAwesomeIcon"></span
+                ><span class="additionalLinkItem">Remove</span> </a
+              ><span
+                style="display:none;"
+                class="wicket-ajax-indicator"
+                id="additionalLink243--ajax-indicator"
+                ><img
+                  src="../wicket/resource/org.apache.wicket.ajax.AbstractDefaultAjaxBehavior/indicator-ver-1506099754000.gif"
+                  alt=""
+              /></span>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="btn-group">
+        <span id="selectorDropdown269">
+          <div class="linksSelectorPanel">
+            <div class="btn-group viewLinks" id="views26a">
+              <button type="button" class="btn btn-sm btn-info">
+                <span class="ViewLinkItem fa fa-fw fa-table"></span>
+                <span class="ViewLinkItemTitle">Table</span>
+              </button>
+              <button
+                type="button"
+                class="btn btn-sm btn-info dropdown-toggle"
+                data-toggle="dropdown"
+                aria-expanded="true"
+              >
+                <span class="caret"></span>
+              </button>
+              <ul class="dropdown-menu dropdown-menu-right" role="menu">
+                <li class="viewItem">
+                  <a href="javascript:;" id="viewLink244">
+                    <span class="ViewLinkItem fa fa-fw fa-eye-slash"></span>
+                    <span class="ViewLinkItemTitle">Hide</span>
+                  </a>
+                </li>
+                <li class="viewItem">
+                  <a href="javascript:;" id="viewLink245">
+                    <span class="ViewLinkItem fa fa-file-excel-o"></span>
+                    <span class="ViewLinkItemTitle">Excel</span>
+                  </a>
+                </li>
+                <li class="viewItem"></li>
+              </ul>
+            </div>
+          </div>
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <div class="collection panel-body" id="collection26b">
+    <div class="collectionPanel collectionNameAndContentsComponentType">
+      <div class="collectionContents" id="collectionContents26c">
+        <div class="linksSelectorPanel">
+          <div class="views">
+            <div
+              class="collectionContentsLinksSelectorPanel collectionContentsComponentType link-selector-panel-invisible"
+            >
+              <div
+                class="collectionContentsAsUnresolvedPanel collectionContentsComponentType"
+              ></div>
+            </div>
+            <div
+              class="collectionContentsLinksSelectorPanel collectionContentsComponentType link-selector-panel-invisible"
+            >
+
+              <div class="collectionContentsAsExcel well">
+                <div id="feedback26d"></div>
+                <div class="clearfix"></div>
+                <div class="downloadLink">
+                  <a
+                    href="./org.incode.eurocommercial.contactapp.module.contacts.dom.Contact:5?5-1.ILinkListener-theme-entityPageContainer-entity-rows-2-rowContents-2-col-tabGroups-1-panel-tabPanel-rows-1-rowContents-1-col-collections-1-collectionGroup-collection-collectionContents-collectionContents~1-download"
+                    class="download btn btn-sm btn-primary"
+                    title="Download"
+                    download="ContactNumbers.xlsx"
+                    >Download as Excel</a
+                  >
+                </div>
+              </div>
+            </div>
+            <div
+              class="collectionContentsLinksSelectorPanel collectionContentsComponentType"
+            >
+              <div
+                class="collectionContentsAsAjaxTablePanel collectionContentsComponentType"
+              >
+                <div class="clearfix"></div>
+               
+                <app-collection-table *ngIf=" _collInstance && _collDescriptor" [CollectionInstance]='_collInstance' [CollectionDescriptor]='_collDescriptor'></app-collection-table> 
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <span> </span>
+    </div>
+  </div>
+</div>

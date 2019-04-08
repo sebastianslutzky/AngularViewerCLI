@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, Input } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { ObjectRepr, ObjectMember, ResourceLink } from '../models/ro/iresource';
 import { Router } from '@angular/router';
@@ -17,20 +17,26 @@ export class ObjectComponent implements OnInit {
   private objectData: ObjectRepr;
   private layout: ObjectLayout;
 
+  @Input()
+  set Layout(value: ObjectLayout){
+   this.layout = value;
+  }
+
+  @Input()
+  set Context(value: ObjectRepr){
+   this.objectData = value;
+    this.title = this.objectData.title;
+  }
+
 
 
   private title: string;
 
-  constructor( @Inject(MAT_DIALOG_DATA) public data: any,
-        private route: Router,
-        private dialogRef: MatDialogRef<ObjectComponent>,
+  constructor(
+     private route: Router,
         private layoutService: LayoutService,
       private metaModel: MetamodelService,
       private factory: LayoutComponentFactoryService) {
-
-    this.objectData = data.args as ObjectRepr;
-    this.layout = data.layout as ObjectLayout;
-    this.title = this.objectData.title;
    }
 
    get showDebugMenu(): boolean{
@@ -55,7 +61,6 @@ export class ObjectComponent implements OnInit {
 
    onCollectionItemClicked(item: ResourceLink) {
     this.route.navigate([this.getObjectUrl(item.href)]);
-    this.dialogRef.close({routed: true});
    }
   getObjectUrl(element: string) {
     return 'object/' + encodeURIComponent(element);

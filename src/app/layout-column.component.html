@@ -1,26 +1,28 @@
 
-<mat-tab-group *ngFor="let tabGroup of TabGroups">
-  <div *ngFor='let tab of tabGroup.tab' >
-    <mat-tab *ngIf="isNotEmpty(tab)"  label='{{tab.name}} '>
+<app-tab-group *ngFor="let tabGroup of TabGroups" [Layout]='tabGroup'
+          [LayoutContext]="row"
+          [ObjectContext]="ObjectContext" >
+  <!-- <div *ngFor='let tab of tabGroup.tab' > -->
+    <!-- <mat-tab *ngIf="isNotEmpty(tab)"  label='{{tab.name}} '>
       <app-layout-row *ngFor="let row of this.asArray(tab.row)" 
           [LayoutContext]="row"
           [ObjectContext]="ObjectContext" >
       </app-layout-row>
-    </mat-tab>
-  </div>
-</mat-tab-group>
+    </mat-tab> -->
+  <!-- </div> -->
+</app-tab-group> 
 
 <app-property-group *ngFor="let fieldSet of FieldSets"
     [Name]="fieldSet.name" 
-    [ObjectContext]="ObjectContext" 
+    [Context]="ObjectContext" 
     [LayoutContext]="fieldSet">
-</app-property-group>  
+</app-property-group>   
 
-<div class='object-collections' >
+ <div class='object-collections' >
   <span *ngFor='let collectionMember of collections'>
      <app-collection-button 
       [LayoutContext]='collectionMember' 
       [ObjectContext]='ObjectContext'>
     </app-collection-button>
   </span> 
-</div>
+</div> 

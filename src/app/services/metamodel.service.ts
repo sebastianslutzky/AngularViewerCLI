@@ -28,6 +28,13 @@ private errorHandler: ErrorHandler) {
 
         this.rootUrl = environment.resftulObjectsApiUrl + '/' + apiRoot;
    }
+
+   public convertToViewerResource(url: string){
+     if (!url) {
+        return url;
+      }
+     return url.replace('http://localhost:8080/restful/','/api/');
+   }
   public assertApiIsAvailable(): Promise<any> {
     const errorSvc = this.errorHandler;
     return this.getUrl(this.rootUrl + '/')
