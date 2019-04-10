@@ -29,7 +29,9 @@ import { MatMenuModule,
         MatIconModule,
         MatChipsModule,
         MatTabsModule,
-        MatSnackBarModule} from '@angular/material';
+        MatSnackBarModule,
+        MatSliderModule,
+        MatSlideToggleModule} from '@angular/material';
 import { ActionInvocationService } from './services/action-invocation.service';
 import { ListComponent} from './list/list.component';
 import { ComponentFactoryService } from './services/component-factory.service';
@@ -141,6 +143,8 @@ import { BookmarksComponent } from './bookmarks/bookmarks.component';
     MatDialogModule,
     MatInputModule,
     MatTabsModule,
+    MatSliderModule,
+    MatSlideToggleModule,
     MatSidenavModule,
     MatGridListModule,
     MatButtonModule,

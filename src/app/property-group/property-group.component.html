@@ -20,11 +20,8 @@
              <div class="pull-right additionalLinks">
                 <div class="pull-right" id="associatedActionLinksPanel176">
                    <ul class="additionalLinkList additionalLinkListInline list-unstyled list-inline" id="additionalLinkList177">
-                      <li *ngFor="let action of ContextActions" class="additionalLinkItem" title="action.id">
-                         <a href="javascript:;" class="btn btn-sm btn-default noVeil org-incode-eurocommercial-contactapp-module-contacts-dom-Contact-create" id="additionalLink15d" data-original-title="">
-                         <span class="fa fa-fw fa-plus fontAwesomeIcon"></span><span class="additionalLinkItem">{{action.id}}</span>
-                         </a><span style="display:none;" class="wicket-ajax-indicator" id="additionalLink15d--ajax-indicator"><img src="../wicket/resource/org.apache.wicket.ajax.AbstractDefaultAjaxBehavior/indicator-ver-1506099754000.gif" alt=""></span>
-                      </li>
+                        <app-action *ngFor="let action of ContextActions" [Action]='action'> 
+                           </app-action> 
                    </ul>
                 </div>
              </div>

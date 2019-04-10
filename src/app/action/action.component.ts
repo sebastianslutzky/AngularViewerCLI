@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ViewRef, ViewChild, ViewContainerRef } from '@angular/core';
 import { MetamodelService } from '../services/metamodel.service';
 import { ObjectMember, ActionDescription, ObjectAction } from '../models/ro/iresource';
 import { ActionInvocationService } from '../services/action-invocation.service';
@@ -20,6 +20,7 @@ export class ActionComponent implements OnInit {
 
   private _actionDescriptor: ActionDescription;
   private _actionInstance: ObjectMember;
+
   Name: string;
   ToolTipText: string;
   ReasonDisabled: string ;

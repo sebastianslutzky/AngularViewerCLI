@@ -7,7 +7,7 @@ import { DialogComponent } from './dialog/dialog.component';
 import { ComponentRef } from '@angular/core/src/linker/component_factory';
 import { SessionService } from './services/session.service';
 import {ObjectContainerComponent} from './object-container/object-container.component';
-import { MatIconRegistry } from '@angular/material';
+import { MatIconRegistry, MatDrawer } from '@angular/material';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import { ObjectStoreService } from './services/object-store.service';
@@ -24,6 +24,9 @@ export class AppComponent  implements AfterContentInit {
   title = 'app';
   @ViewChild('banner', { read: ViewContainerRef }) private _banner: ViewContainerRef;
   @ViewChild('footer', { read: ViewContainerRef }) private _footer: ViewContainerRef;
+  @ViewChild('drawerContainer', { read: ViewContainerRef }) private drawerContainer: ViewContainerRef;
+  @ViewChild('drawerContent', { read: ViewContainerRef }) private drawerContent: ViewContainerRef;
+  @ViewChild('drawer', { read: MatDrawer }) private drawer: MatDrawer;
 
   constructor(private invoker: ActionInvocationService,
     private componentFactory: ComponentFactoryService,
@@ -40,14 +43,14 @@ export class AppComponent  implements AfterContentInit {
 
     // action params needed
     invoker.actionParamsNeeded.subscribe(args => {
+      this.drawer.open();
+      // const dialog = this.componentFactory.createComponent(
+      //   args.Canvas,
+      //   DialogComponent, { 'args': args }) as ComponentRef<DialogComponent>;
 
-      const dialog = this.componentFactory.createComponent(
-        args.Canvas,
-        DialogComponent, { 'args': args }) as ComponentRef<DialogComponent>;
-
-      dialog.instance.onParamtersCollected.subscribe(data => {
-        this.invoker.invokeAction(args.ObjectAction, args.ActionDescriptor, null, data);
-      });
+      // dialog.instance.onParamtersCollected.subscribe(data => {
+      //   this.invoker.invokeAction(args.ObjectAction, args.ActionDescriptor, null, data);
+      // });
 
     });
   }
@@ -62,7 +65,10 @@ export class AppComponent  implements AfterContentInit {
 
   ngAfterContentInit(): void {
     // this.session.DesktopSize = this.getDesktopDimensions();
-
+    // const t = this.drawerContainer.element.nativeElement.classList;
+    // t.remove('mat-drawer-container');
+    // const t1 = this.drawerContent.element.nativeElement.classList;
+    // t1.remove('mat-drawer-content');
   }
      // move to card, or ven better, to resource
      getFriendlyName(result): string {

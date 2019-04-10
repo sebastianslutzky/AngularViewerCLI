@@ -2,7 +2,37 @@
 <app-banner #banner class="navbar navbar-default navbar-fixed-top"></app-banner>  
 </div>
 <div class="clear"></div>
-<app-bookmarks></app-bookmarks>
-<app-desktop style="background-color:red"   #desktop></app-desktop> 
+<!-- <mat-drawer-container  #drawerContainer autosize>
+        <mat-drawer #drawer mode="side" [opened]='true'>
+        </mat-drawer>
+      
+    <mat-drawer-content #drawerContent>
+            <button type="button" mat-button (click)="drawer.toggle()">
+                    Toggle sidenav
+                  </button>
+    <app-bookmarks></app-bookmarks>
+    <app-desktop   #desktop></app-desktop> 
+      
 <router-outlet></router-outlet>
- <app-footer #footer class="navbar navbar-default navbar-fixed-bottom"> </app-footer>   
+    </mat-drawer-content>
+      </mat-drawer-container> -->
+
+ <mat-drawer-container class="example-container" autosize>
+        <mat-drawer #drawer class="example-sidenav" mode="side">
+          <p>Auto-resizing sidenav</p>
+          <p *ngIf="showFiller">Lorem, ipsum dolor sit amet consectetur.</p>
+          <button (click)="showFiller = !showFiller" mat-raised-button>
+            Toggle extra text
+          </button>
+        </mat-drawer>
+        <div class="example-sidenav-content">
+          <button type="button" mat-button (click)="drawer.open()">
+            Toggle sidenav
+          </button>
+        </div>
+    <app-desktop   #desktop></app-desktop> 
+<router-outlet></router-outlet>
+ <app-footer #footer class="navbar navbar-default navbar-fixed-bottom"> </app-footer>    
+      
+
+ <app-footer #footer class="navbar navbar-default navbar-fixed-bottom"> </app-footer>    
