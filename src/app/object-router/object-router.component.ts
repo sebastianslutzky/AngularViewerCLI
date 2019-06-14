@@ -50,10 +50,6 @@ export class ObjectRouterComponent implements OnInit {
 
       // todo: load layout
       this.layoutService.load(result).subscribe(objLayout => {
-        console.log('aca tengo el result');
-        console.log(result);
-        console.log('y el layout');
-        console.log(objLayout);
         this.publisher.Publish(result,objLayout);
         //this.openModal(result, objLayout);
       });

@@ -48,7 +48,7 @@ export class DialogContainerComponent implements OnInit {
    }
 
   ngOnInit() {
-    this.parameters = this.args.ParametersInfo;
+    // this.parameters = this.args.ParametersInfo;
     this.DialogInput.params =  this.parameters.reduce((map, p) => {
       const input = new ParamInput(p.instance.name, p.instance.default, p.instance.id);
       map[input.id] =  input;
@@ -80,20 +80,12 @@ export class DialogContainerComponent implements OnInit {
   }
 
   private invokeValidation() {
-    console.log('validating');
       const args = new ActionParameterCollection(this.DialogInput.params);
       this.invoker.validateAction(this.args.ObjectAction,
                                 this.args.ActionDescriptor,
-                                null, args).then( response =>
-                                  console.log(response)
-                                ).catch((reason) => {
-                                  console.log(reason);
+                                null, args).catch((reason) => {
                                   if (reason.status === 422) {
                                     this.setValidationMessages(reason._body);
-                                    console.log('populate error msgs');
-                                    console.log(reason);
-                                    console.log('--here--');
-                                    console.log(this.DialogInput);
                                     //get json to object
                                     //map to param objects
                                     // repopulate params and checkif it refreshes
@@ -132,7 +124,20 @@ showEntityValidationError(msg: string){
 
  export class ParamInput {
 
-  public invalidReason: string ;
+  public OnErrorMessageChanged = new EventEmitter<string>();
+
+
+  private _invalidReason: string;
+  public set invalidReason(value: string){
+    if (value !== this._invalidReason) {
+      this.OnErrorMessageChanged.emit(value);
+    }
+    this._invalidReason = value;
+  }
+
+  public get invalidReason(): string {
+    return this._invalidReason;
+  }
 
    constructor(public name: string, public value: string, public id: string) {
    }

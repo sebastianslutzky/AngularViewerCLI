@@ -13,6 +13,7 @@ import { ActivatedRoute } from '@angular/router';
 import { ObjectStoreService } from './services/object-store.service';
 import { MetamodelService } from './services/metamodel.service';
 import { ListActionResultComponent } from './list-action-result/list-action-result.component';
+import { ActionParametersNeededArgs } from './services/iactioninvoked';
 
 @Component({
   selector: 'app-root',
@@ -21,7 +22,7 @@ import { ListActionResultComponent } from './list-action-result/list-action-resu
 })
 export class AppComponent  implements AfterContentInit {
 
-  title = 'app';
+  ParametersNeededArgs:  ActionParametersNeededArgs;
   @ViewChild('banner', { read: ViewContainerRef }) private _banner: ViewContainerRef;
   @ViewChild('footer', { read: ViewContainerRef }) private _footer: ViewContainerRef;
   @ViewChild('drawerContainer', { read: ViewContainerRef }) private drawerContainer: ViewContainerRef;
@@ -41,8 +42,11 @@ export class AppComponent  implements AfterContentInit {
     iconRegistry.addSvgIconSet(sanitizer.bypassSecurityTrustResourceUrl('./assets/mdi.svg'));
 
 
+    invoker.actionInvoked.subscribe(() => this.drawer.close());
     // action params needed
     invoker.actionParamsNeeded.subscribe(args => {
+      this.ParametersNeededArgs = args;
+      console.log(this.ParametersNeededArgs);
       this.drawer.open();
       // const dialog = this.componentFactory.createComponent(
       //   args.Canvas,
@@ -63,12 +67,17 @@ export class AppComponent  implements AfterContentInit {
   //   return {top: top, height: bottom - top, left: left };
   // }
 
+
+  public CloseDrawer() {
+    this.drawer.close();
+  }
+
   ngAfterContentInit(): void {
     // this.session.DesktopSize = this.getDesktopDimensions();
-    // const t = this.drawerContainer.element.nativeElement.classList;
-    // t.remove('mat-drawer-container');
-    // const t1 = this.drawerContent.element.nativeElement.classList;
-    // t1.remove('mat-drawer-content');
+    const t = this.drawerContainer.element.nativeElement.classList;
+   // t.remove('mat-drawer-container');
+    const t1 = this.drawerContent.element.nativeElement.classList;
+    //t1.remove('mat-drawer-content');
   }
      // move to card, or ven better, to resource
      getFriendlyName(result): string {
@@ -76,11 +85,6 @@ export class AppComponent  implements AfterContentInit {
       // if displayng the result of an action (lists)
       if (result.ActionDescriptor) {
         return result.ActionDescriptor.friendlyName;
-      }
-
-      // if displaying an object (it should be the only valid case)
-      if (result.title) {
-        return result.title;
       }
 
       return 'unknown';

@@ -14,7 +14,6 @@ export class RouteLogComponent implements OnInit {
 
   ngOnInit() {
 
-      console.log('aca');
     this.route.paramMap.subscribe(data => {
       console.log(decodeURIComponent(data.get('destination')));
     });

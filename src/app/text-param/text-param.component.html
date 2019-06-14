@@ -1,4 +1,4 @@
-<ul >
+<!-- <ul >
 <mat-form-field >
   <input matInput  [placeholder]='description.name' 
   #inputControl (blur)="inputBlurred()" [(ngModel)]="Field" >
@@ -7,4 +7,57 @@
   {{ErrorMessage}}
 </mat-error>
 </ul>
-<br>
+<br> -->
+<!-- bs-->
+<div
+id="scalarNameAndValue1b7"
+class="isis-org-incode-eurocommercial-contactapp-module-contacts-dom-Contact-create-string1"
+>
+<div
+  class="scalarNameAndValueComponentType stringPanel"
+  id="scalarTypeContainer1b8"
+>
+  <div
+    class="form-group label-left {{ErrorClass()}}"
+    id="scalarIfRegular1b9"
+    title=""
+  >
+    <label
+      class="scalarName control-label mandatory"
+      >{{description.name}}</label
+    >
+
+    <span class="scalarValueWrapper">
+      <div class="scalarPlaceholder">
+        <span class="scalarValueInput">
+          <span class="editing">
+            <input
+              type="text"
+              name="parameters:1:scalarNameAndValue:scalarTypeContainer:scalarIfRegular:scalarValueContainer:scalarValue"
+              class="form-control input-sm scalarValue"
+              value=""
+              id="scalarValue1ac"
+              size="25"
+              maxlength="50"
+              [(ngModel)]="Field"
+              (blur)="inputBlurred()"
+              title=""
+            />
+          </span>
+        </span>
+      </div>
+      <span class="help-block">
+          <ul class="list-unstyled">
+              <li>
+                  <div *ngIf='HasErrors' class="errorlevel alert alert-danger alert-dismissible">
+                      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                      {{ErrorMessage}}
+                  </div> 
+              </li>
+          </ul>
+         </span>
+    </span>
+    <div class="clearfix"></div>
+  </div>
+</div>
+</div>

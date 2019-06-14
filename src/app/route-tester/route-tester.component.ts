@@ -5,12 +5,9 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './route-tester.component.html',
   styleUrls: ['./route-tester.component.css']
 })
-export class RouteTesterComponent implements OnInit {
+export class RouteTesterComponent {
 
   constructor() { }
 
-  ngOnInit() {
-    console.log('acatoy');
-  }
 
 }

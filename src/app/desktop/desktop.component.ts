@@ -31,8 +31,7 @@ export class DesktopComponent implements OnInit {
    const descr = value.ActionDescriptor as ActionDescription;
    const returnType =  this.metamodel.getReturnType(descr);
    this._focusObjectType = returnType.href;
-   } else
-   {
+   } else {
      this._focusObjectType = 'unknown';
    }
   }
@@ -66,7 +65,6 @@ export class DesktopComponent implements OnInit {
     private objectLoadedPublisher: ObjectLoadedPublisherService,
     private invoker: ActionInvocationService) {
       const globalErrorHandler = this.errorHandler as GlobalErrorHandlerService;
-      globalErrorHandler.unhandledErrorOccured.subscribe(error  => this.showError(error));
       invoker.validationErrorOccured.subscribe(reason => this.showValidationError(reason));
       
 
@@ -80,12 +78,6 @@ export class DesktopComponent implements OnInit {
     })
      }
 
-     private showError(error: Error) {
-       const snackBarRef = this.snackBar.open('Error Occured', 'Details', {duration: 2000});
-        snackBarRef.onAction().subscribe(() => {
-          const detailsRef = this.errorDetailsDialog.open(ErrorDetailsComponent, {data: { error: error}});
-        });
-     }
 
      private showValidationError(validationError: string) {
        const snackBarRef = this.snackBar.open('Validation Error', validationError, {duration: 2000});

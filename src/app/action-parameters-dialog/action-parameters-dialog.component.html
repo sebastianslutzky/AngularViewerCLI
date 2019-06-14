@@ -1,0 +1,142 @@
+ <ul class="sidebar-nav">
+  <div id="actionPromptSidebar16d">
+    <div class="sidebar-panel">
+      <div class="row">
+        <div class="col col-md-12">
+          <div class="sidebar-header">
+            <h4 id="header1b5">{{ActionName}}</h4>
+          </div>
+          <div class="sidebar-content">
+            <div id="content1b6">
+              <div class="actionPanel actionComponentType">
+                <div>
+                  <div class="actionParametersForm inputForm">
+                    <form
+                    #f="ngForm"
+                      method="post"
+                      class="form-horizontal actionParametersForm isis-org-incode-eurocommercial-contactapp-module-contacts-dom-Contact-create"
+                      id="inputForm1b3"
+                      (ngSubmit)="go(f)"
+                    >
+                      <div
+                        style="width:0px;height:0px;position:absolute;left:-100px;top:-100px;overflow:hidden"
+                      >
+                        <input
+                          type="hidden"
+                          name="inputForm1b3_hf_0"
+                          id="inputForm1b3_hf_0"
+                        />
+                      </div>
+                      <div
+                        style="width:0px;height:0px;position:absolute;left:-100px;top:-100px;overflow:hidden"
+                      >
+                        <input
+                          type="text"
+                          tabindex="-1"
+                          autocomplete="off"
+                          style='background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAfBJREFUWAntVk1OwkAUZkoDKza4Utm61iP0AqyIDXahN2BjwiHYGU+gizap4QDuegWN7lyCbMSlCQjU7yO0TOlAi6GwgJc0fT/fzPfmzet0crmD7HsFBAvQbrcrw+Gw5fu+AfOYvgylJ4TwCoVCs1ardYTruqfj8fgV5OUMSVVT93VdP9dAzpVvm5wJHZFbg2LQ2pEYOlZ/oiDvwNcsFoseY4PBwMCrhaeCJyKWZU37KOJcYdi27QdhcuuBIb073BvTNL8ln4NeeR6NRi/wxZKQcGurQs5oNhqLshzVTMBewW/LMU3TTNlO0ieTiStjYhUIyi6DAp0xbEdgTt+LE0aCKQw24U4llsCs4ZRJrYopB6RwqnpA1YQ5NGFZ1YQ41Z5S8IQQdP5laEBRJcD4Vj5DEsW2gE6s6g3d/YP/g+BDnT7GNi2qCjTwGd6riBzHaaCEd3Js01vwCPIbmWBRx1nwAN/1ov+/drgFWIlfKpVukyYihtgkXNp4mABK+1GtVr+SBhJDbBIubVw+Cd/TDgKO2DPiN3YUo6y/nDCNEIsqTKH1en2tcwA9FKEItyDi3aIh8Gl1sRrVnSDzNFDJT1bAy5xpOYGn5fP5JuL95ZjMIn1ya7j5dPGfv0A5eAnpZUY3n5jXcoec5J67D9q+VuAPM47D3XaSeL4AAAAASUVORK5CYII="); background-repeat: no-repeat; background-attachment: scroll; background-size: 16px 18px; background-position: 98% 50%;'
+                        /><input
+                          type="submit"
+                          tabindex="-1"
+                          name="okButton"
+                          onclick=" var b=document.getElementById('okButton1b2'); if (b!=null&amp;&amp;b.onclick!=null&amp;&amp;typeof(b.onclick) != 'undefined') {  var r = Wicket.bind(b.onclick, b)(); if (r != false) b.click(); } else { b.click(); };  return false;"
+                        />
+                      </div>
+                      <fieldset class="inputFormTable parameters">
+                        <div *ngIf="ParamsInfo">
+                          <app-action-param *ngFor="let param of ParamsInfo" [Parameter]='param'  
+                          [Context]='ParamInputs' 
+                          [Key]='param.instance.id' 
+                          (onBlur)='validate()'>
+                          </app-action-param> 
+                          <span *ngIf="HasError">
+                              <ul class="list-unstyled">
+                                  <li>
+                                      <div class="errorlevel alert alert-danger alert-dismissible">
+                              <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                              {{ErrorMessage}}
+                          </div>
+                                  </li>
+                              </ul>
+                          </span>
+                        </div>
+                        <!-- <div *ngFor="let param of _args.ParameterInfo" class="parameter">
+                          <div
+                            id="scalarNameAndValue1b7"
+                            class="isis-org-incode-eurocommercial-contactapp-module-contacts-dom-Contact-create-string1"
+                          >
+                            <div
+                              class="scalarNameAndValueComponentType stringPanel"
+                              id="scalarTypeContainer1b8"
+                            >
+                              <div
+                                class="form-group label-left"
+                                id="scalarIfRegular1b9"
+                                title=""
+                              >
+                                <label
+                                  class="scalarName control-label mandatory"
+                                  >String 1</label
+                                >
+
+                                <span class="scalarValueWrapper">
+                                  <div class="scalarPlaceholder">
+                                    <span class="scalarValueInput">
+                                      <span class="editing">
+                                        <input
+                                          type="text"
+                                          name="parameters:1:scalarNameAndValue:scalarTypeContainer:scalarIfRegular:scalarValueContainer:scalarValue"
+                                          class="form-control input-sm scalarValue"
+                                          value=""
+                                          id="scalarValue1ac"
+                                          size="25"
+                                          maxlength="50"
+                                          title=""
+                                        />
+                                      </span>
+                                    </span>
+                                  </div>
+                                  <span class="help-block"> </span>
+                                </span>
+                                <div class="clearfix"></div>
+                              </div>
+                            </div>
+                          </div>
+                        </div> -->
+                        <span> </span>
+                        <div class="buttons">
+                          <input
+                            type="submit"
+                            value="OK"
+                            class="ok btn btn-sm btn-primary"
+                            name="okButton"
+                            id="okButton1b2"
+                          /><span
+                            style="display:none;"
+                            class="wicket-ajax-indicator"
+                            id="okButton1b2--ajax-indicator"
+                            ><img
+                              src="../wicket/resource/org.apache.wicket.ajax.AbstractDefaultAjaxBehavior/indicator-ver-1506099754000.gif"
+                              alt=""
+                          /></span>
+                          <input
+                           type="button"
+                           (click)="cancelar()"
+                            value="Cancel"
+                            class="cancel btn btn-sm btn-default"
+                            name="cancelButton"
+                            id="cancelButton1b4"
+                          />
+                        </div>
+                      </fieldset>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ul>

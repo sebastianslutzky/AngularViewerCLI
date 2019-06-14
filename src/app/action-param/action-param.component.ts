@@ -34,7 +34,7 @@ export class ActionParamComponent implements OnInit {
 
   ngOnInit() {
     this.metamodel.loadLink(ParamDescription, this.Parameter.typeLink).then(paramDescr => {
-        this.descriptor = paramDescr;
+       this.descriptor = paramDescr;
        this.metamodel.loadReturnType(DomainType, paramDescr).then(returnType => {
            this.createConcreteComponent(returnType, this.Parameter);
         });
@@ -48,9 +48,7 @@ export class ActionParamComponent implements OnInit {
             'ctx': this.Context,
           'key': this.Key});
         const v = (input.instance as IValidatable);
-        v.onBlur.subscribe(x =>
-          {
-            console.log(x);
+        v.onBlur.subscribe(x => {
           this.onBlur.emit(x);
           });
   }

@@ -20,7 +20,6 @@ $(function(){
 
     'use strict';
 
-    console.log('acatamo che')
 
     var showBookmarks = function(){
         $('#bookmarkedPagesSlidingDiv').slideDown('50');

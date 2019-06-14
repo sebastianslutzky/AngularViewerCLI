@@ -13,6 +13,9 @@ export class CollectionButtonComponent extends LayoutBaseComponent implements On
 
   private _collInstance: XActionResultList;
   private _collDescriptor: ActionDescription;
+
+  CollectionItems: Array<ObjectMember>;
+  CollectionActions: Array<any>;
   Name: string;
 
   Items: IXActionResultListItem[];
@@ -30,13 +33,21 @@ export class CollectionButtonComponent extends LayoutBaseComponent implements On
 
 
   ngOnInit() {
-    console.log(this.LayoutContext);
-    console.log(this.ObjectContext);
     // get collection
     const memberId = this.LayoutContext.id;
+
+
     // if the collection instance can't be retrieved later, at least we display the id
     this.Name = memberId;
     const collection = this.metamodel.getObjectMembers(this.ObjectContext).filter(x => x.memberType === 'collection' && x.id === memberId);
+
+    const collectionActions = [];
+    this.LayoutContext.action.forEach(actionLayout => {
+      collectionActions.push(this.metamodel.getObjectMembers(this.ObjectContext).filter(x => x.id === actionLayout.id)[0]);
+    });
+    this.CollectionActions = collectionActions;
+
+    // assign to collectionActions
 
     // get collection items
     this.metamodel.getDetails<any>(collection[0], null, true ).then(

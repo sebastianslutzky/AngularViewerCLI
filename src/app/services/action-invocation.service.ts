@@ -6,6 +6,7 @@ import { ViewRef } from '@angular/core/src/linker/view_ref';
 import { ViewContainerRef } from '@angular/core/src/linker/view_container_ref';
 import { ActionParameterCollection } from '../dialog/dialog.component';
 import { SessionService } from './session.service';
+import { promise } from 'protractor';
 
 @Injectable()
 export class ActionInvocationService {
@@ -24,15 +25,12 @@ export class ActionInvocationService {
         actionDescriptor: ActionDescription,
         canvas: ViewContainerRef = null,
         params: ActionParameterCollection = null,
-        extendedParameters: Array<string> = null): Promise<any> {
+        extendedParameters: Array<string> = []): Promise<any> {
          if (actionDescriptor.hasParameters) {
              if (params) {
                 return this.doInvokeAction(action, actionDescriptor, params, extendedParameters);
              }
-            const args = new ActionParametersNeededArgs();
-            args.ActionDescriptor = actionDescriptor;
-            args.ObjectAction = action;
-            args.Canvas = canvas;
+            const args = new ActionParametersNeededArgs(action,actionDescriptor);
 
             this.actionParamsNeeded.emit(args);
             return new  Promise<any>(null);
@@ -46,12 +44,17 @@ export class ActionInvocationService {
         canvas: ViewContainerRef = null,
         params: ActionParameterCollection = null): Promise<any> {
             return this.invokeAction(action, actionDescriptor, canvas, params, ['x-ro-validate-only']);
+            // .then(x =>
+            //     { 
+            //     console.log('right here');
+            //     console.log(x);
+            //     return x; });
     }
 
     private doInvokeAction(action: ObjectAction,
         actionDescriptor: ActionDescription,
         param: ActionParameterCollection = null,
-        extendedParameters: Array<string> = null): Promise<any> {
+        extendedParameters: Array<string> = []): Promise<any> {
 
 
          const invoke = this.metamodel.getInvokeLink(action);
@@ -75,9 +78,16 @@ export class ActionInvocationService {
                     arg.ExtendedResult = result;
                     arg.ActionDescriptor = actionDescriptor;
 
-                    this.actionInvoked.emit(arg);
+                    if (!this.isValidation(extendedParameters)){
+                        this.actionInvoked.emit(arg);
+                    }
+
                     return data;
                 });
         }
     }
+
+        private isValidation(extendedParameters: string[]): boolean {
+            return extendedParameters.some(x => x === 'x-ro-validate-only');
+        }
 }

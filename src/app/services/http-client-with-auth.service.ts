@@ -21,7 +21,7 @@ export class HttpClientWithAuthService {
 
 
   applyExtendedParameters(extendedParameters: Array<string>, body: string) {
-    if (!extendedParameters) {
+    if (!extendedParameters || extendedParameters.length === 0) {
       return body;
     }
 
@@ -33,7 +33,14 @@ export class HttpClientWithAuthService {
   }
   post(url: string, body: any, extendedParameters: Array<string> = null) {
     const headers = this.buildHeaders(true, extendedParameters);
-    body = this.applyExtendedParameters(extendedParameters,body);
+    if (environment.trace.httpCalls) {
+      console.log('url: ' + url) ;
+      console.log('method: POST') ;
+      console.log('headers: ' + headers) ;
+      console.log('body: ');
+      console.log(body);
+     }
+    body = this.applyExtendedParameters(extendedParameters, body);
     return this.http.post(url, body, {
       headers: headers
     });
@@ -69,7 +76,12 @@ export class HttpClientWithAuthService {
 
 // todo: turn this into the only method to use for loading
   load<T>(c: new() => T, url: string, useIsisHeader: boolean = false, args: string = null,
-          method: string = 'GET', format: string = 'json'): Observable<T> {
+          method: string = 'GET', format: string = 'json', body: object = null): Observable<T> {
+
+    if (environment.trace.httpCalls) {
+     console.log('url: ' + url) ;
+     console.log('method: ' + method) ;
+    }
           //  console.trace();
             switch (method) {
       case 'GET':
@@ -79,11 +91,11 @@ export class HttpClientWithAuthService {
 
            return this.get(url, useIsisHeader)
               .map(res    =>  res.json())
-              .map(asJson => plainToClassFromExist(new c(), asJson))
+              .map(asJson => plainToClassFromExist(new c(), asJson));
 
               // if we are dealing with xml, map to json
       case 'POST':
-             return this.post(url, args).map(obj => this.toClass(c, obj));
+             return this.post(url, body).map(obj => this.toClass(c, obj));
       default:
        throw new Error ('method not implemented yet: ' + method);
     }

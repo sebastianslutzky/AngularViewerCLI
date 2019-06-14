@@ -78,6 +78,8 @@ import { BootstrapObjectComponent } from './bootstrap-object/bootstrap-object.co
 import { TabGroupComponent } from './tab-group/tab-group.component';
 import { ObjectTabComponent } from './object-tab/object-tab.component';
 import { BookmarksComponent } from './bookmarks/bookmarks.component';
+import { ActionParametersDialogComponentComponent } from './action-parameters-dialog-component/action-parameters-dialog-component.component';
+import { ActionParametersDialogComponent } from './action-parameters-dialog/action-parameters-dialog.component';
 
 @NgModule({
   exports: [MatGridList],
@@ -122,7 +124,9 @@ import { BookmarksComponent } from './bookmarks/bookmarks.component';
     BootstrapObjectComponent,
     TabGroupComponent,
     ObjectTabComponent,
-    BookmarksComponent
+    BookmarksComponent,
+    ActionParametersDialogComponentComponent,
+    ActionParametersDialogComponent
   ],
   imports: [
     HttpModule,

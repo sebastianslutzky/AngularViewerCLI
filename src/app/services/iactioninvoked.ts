@@ -1,6 +1,7 @@
 import { ActionResult, Resource, ActionDescription, ObjectAction, IIndexable, ResourceLink } from '../models/ro/iresource';
 import { ViewRef } from '@angular/core/src/linker/view_ref';
 import { ViewContainerRef } from '@angular/core/src/linker/view_container_ref';
+import { Output } from '@angular/core';
 
 export class ActionInvokedArg implements IIndexable {
     get indexableKey(): string{
@@ -16,11 +17,20 @@ export class ActionInvokedArg implements IIndexable {
 }
 
 export class ActionParametersNeededArgs {
-    ObjectAction: ObjectAction;
-    ActionDescriptor: ActionDescription;
-    Canvas: ViewContainerRef;
+    // Canvas: ViewContainerRef;
 
-    get ParametersInfo(): ParameterInfo[]{
+    private _parameterInfo: ParameterInfo[];
+
+    @Output()
+    public get ParameterInfo(): ParameterInfo[]{
+        return this._parameterInfo;
+    }
+
+    public constructor(public ObjectAction: ObjectAction, public ActionDescriptor: ActionDescription) {
+        this._parameterInfo = this.retrieveParametersInfo();
+    }
+
+    retrieveParametersInfo(): ParameterInfo[] {
         const keys =  Object.keys(this.ObjectAction.parameters);
         const types = this.ActionDescriptor.parameters;
         const paramType =  keys.map((key, index) =>
