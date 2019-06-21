@@ -5,11 +5,12 @@ import { Resource, ActionResult, Action, ActionDescription, ObjectAction} from '
 import { ViewRef } from '@angular/core/src/linker/view_ref';
 import { ViewContainerRef } from '@angular/core/src/linker/view_container_ref';
 import { ActionParameterCollection } from '../dialog/dialog.component';
-import { SessionService } from './session.service';
-import { promise } from 'protractor';
 
 @Injectable()
 export class ActionInvocationService {
+  @Output()
+  collectionActionInvoked: EventEmitter<ActionInvokedArg> = new EventEmitter<ActionInvokedArg>();
+
   @Output()
   actionInvoked: EventEmitter<ActionInvokedArg> = new EventEmitter<ActionInvokedArg>();
   @Output()
@@ -67,7 +68,7 @@ export class ActionInvocationService {
                     arg.ExtendedResult = result;
                     arg.ActionDescriptor = actionDescriptor;
 
-                    this.actionInvoked.emit(arg);
+                    return this.onActionInvoked(arg);
                 });
             case 'POST':
             case 'PUT':
@@ -78,16 +79,21 @@ export class ActionInvocationService {
                     arg.ExtendedResult = result;
                     arg.ActionDescriptor = actionDescriptor;
 
-                    if (!this.isValidation(extendedParameters)){
-                        this.actionInvoked.emit(arg);
+                    if (!this.isValidation(extendedParameters)) {
+                         this.onActionInvoked(arg);
                     }
 
-                    return data;
+                    return Promise.resolve(data);
                 });
         }
     }
 
-        private isValidation(extendedParameters: string[]): boolean {
-            return extendedParameters.some(x => x === 'x-ro-validate-only');
-        }
+    private onActionInvoked(args: ActionInvokedArg) : Promise<any> {
+         this.actionInvoked.emit(args);
+         return Promise.resolve<string>('dfs');
+    }
+
+    private isValidation(extendedParameters: string[]): boolean {
+        return extendedParameters.some(x => x === 'x-ro-validate-only');
+    }
 }

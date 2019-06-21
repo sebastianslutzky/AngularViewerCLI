@@ -1,7 +1,8 @@
-import { Component, OnInit, Input, ViewRef, ViewChild, ViewContainerRef } from '@angular/core';
+import { Component, OnInit, Input, ViewRef, ViewChild, ViewContainerRef, Output, EventEmitter } from '@angular/core';
 import { MetamodelService } from '../services/metamodel.service';
 import { ObjectMember, ActionDescription, ObjectAction } from '../models/ro/iresource';
 import { ActionInvocationService } from '../services/action-invocation.service';
+import { ActionInvokedArg } from '../services/iactioninvoked';
 
 @Component({
   selector: 'app-action',
@@ -10,6 +11,9 @@ import { ActionInvocationService } from '../services/action-invocation.service';
 })
 export class ActionComponent implements OnInit {
   private _objectActionLink: ObjectMember;
+
+  @Output()
+  public Invoked: EventEmitter<void> = new EventEmitter<void>();
   @Input()
   set Action(val: ObjectMember) {
     if (!val) {
@@ -18,9 +22,10 @@ export class ActionComponent implements OnInit {
     this._objectActionLink = val;
   }
 
-  private _actionDescriptor: ActionDescription;
-  private _actionInstance: ObjectMember;
+  @Input()
+  public IsForCollection: boolean;
 
+  private _actionDescriptor: ActionDescription;
   Name: string;
   ToolTipText: string;
   ReasonDisabled: string ;
@@ -29,6 +34,10 @@ export class ActionComponent implements OnInit {
   constructor(private metamodel: MetamodelService, private invoker: ActionInvocationService) {
     this.isDisabled = false;
     this.ReasonDisabled = '';
+    this.invoker.actionInvoked.subscribe((args: ActionInvokedArg) => {
+      if(args.ActionDescriptor.id === this._actionDescriptor.id){
+        this.Invoked.emit();
+      }});
    }
 
 public InvokeAction() {
@@ -36,13 +45,13 @@ public InvokeAction() {
 
   this.metamodel.loadLink(ObjectAction, this._objectActionLink.links[0]).then(
     objectAction => {
+      this._actionDescriptor['IsForCollection'] = this.IsForCollection;
       this.invoker.invokeAction(objectAction, this._actionDescriptor);
     });
 }
   ngOnInit() {
      this.metamodel.getDetails<ObjectMember>(this._objectActionLink)
      .then(actionInstance => {
-        this._actionInstance = actionInstance;
         this.metamodel.getDescribedBy(ActionDescription, actionInstance).then(
           actionDescriptor => {
             this._actionDescriptor = actionDescriptor;

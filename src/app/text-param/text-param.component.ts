@@ -52,7 +52,6 @@ export class TextParamComponent implements OnInit , IValidatable {
 
     this.Context = injector.get('ctx');
     this.Key = injector.get('key');
-    this.getInputContext().OnErrorMessageChanged.subscribe(x => console.log('I know you changed to ' + x));
 
     // TODO: Fix this mess (pass friendly name as an input to this component)
     //const paramInput = this.Context.params[this.Key] as ParamInput;

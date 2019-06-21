@@ -120,6 +120,8 @@ export class ActionDescription implements IIndexable, IResource {
     parameters: ResourceLink[];
     extensions: IResourceExtensions;
 
+    isForCollection: boolean;
+
     get friendlyName(): string{
         return this.extensions.friendlyName;
     }
@@ -152,9 +154,10 @@ export class PropertyDescription implements IIndexable, IResource {
 
 // instance of an action
 export class ObjectAction {
-   id: string;
+    id: string;
     memberType: string;
     links: ResourceLink[];
+
     extensions: IResourceExtensions;
     parameters: any;
 }

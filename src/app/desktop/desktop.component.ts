@@ -69,7 +69,10 @@ export class DesktopComponent implements OnInit {
       
 
     invoker.actionInvoked.subscribe(data => {
-      this.FocusObject = data;
+      if (data.ActionDescriptor.IsForCollection) {
+        return;
+      }
+       this.FocusObject = data;
     });
 
     objectLoadedPublisher.objectLoaded.subscribe(args => {

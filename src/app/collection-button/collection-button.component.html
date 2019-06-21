@@ -43,45 +43,8 @@
           <ul class="additionalLinkList additionalLinkListInline list-unstyled list-inline"
             id="additionalLinkList268" >
 
-            <app-action *ngFor="let action of CollectionActions" [Action]='action'> 
+            <app-action *ngFor="let action of CollectionActions" [Action]='action' [IsForCollection]='true' (Invoked)='onActionInvoked()'> 
             </app-action>
-
-            <!-- <li class="additionalLinkItem" title="">
-              <a
-                href="javascript:;"
-                class="btn btn-sm btn-default noVeil org-incode-eurocommercial-contactapp-module-contacts-dom-Contact-addContactNumber"
-                id="additionalLink242"
-                data-original-title=""
-              >
-                <span class="fa fa-fw fa-plus-square fontAwesomeIcon"></span>
-                <span class="additionalLinkItem">Add</span> </a >
-                <span
-                style="display:none;"
-                class="wicket-ajax-indicator"
-                id="additionalLink242--ajax-indicator"
-                ><img
-                  src="../wicket/resource/org.apache.wicket.ajax.AbstractDefaultAjaxBehavior/indicator-ver-1506099754000.gif"
-                  alt=""
-              /></span>
-            </li>
-            <li class="additionalLinkItem" title="">
-              <a
-                href="javascript:;"
-                class="btn btn-sm btn-default noVeil org-incode-eurocommercial-contactapp-module-contacts-dom-Contact-removeContactNumber"
-                id="additionalLink243"
-                data-original-title=""
-              >
-                <span class="fa fa-fw fa-minus-square fontAwesomeIcon"></span
-                ><span class="additionalLinkItem">Remove</span> </a
-              ><span
-                style="display:none;"
-                class="wicket-ajax-indicator"
-                id="additionalLink243--ajax-indicator"
-                ><img
-                  src="../wicket/resource/org.apache.wicket.ajax.AbstractDefaultAjaxBehavior/indicator-ver-1506099754000.gif"
-                  alt=""
-              /></span>
-            </li> -->
           </ul>
         </div>
       </div>

@@ -47,7 +47,6 @@ public validate(){
 
 
 private invokeMethod(validate: boolean) {
-  console.log("at invoke method --");
     const params = [];
     if (validate) {params.push('x-ro-validate-only'); }
 
@@ -135,11 +134,11 @@ private clearEntityValidationError() {
           return  Promise.resolve();
         }
       }).then(data => {
-        if (!data) { return; }
-          const responseObject = JSON.parse(data._body);
-          const url = encodeURIComponent(responseObject.$$href);
-          this.router.navigate(['object', url]);
-        //get $$href property
+         if (!data) { return; }
+           const responseObject = JSON.parse(data._body);
+           const url = encodeURIComponent(responseObject.$$href);
+           this.router.navigate(['object', url]);
+       //get $$href property
         //route to object 
       });
   }
