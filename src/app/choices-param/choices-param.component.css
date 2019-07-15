@@ -1,0 +1,11 @@
+
+   ul{
+       padding-left: 0;
+       display: flex;
+       flex-direction: column;
+     /* border: 5px dashed orange;  */
+    }
+
+    mat-for-field{
+        flex-grow: 1;
+    }

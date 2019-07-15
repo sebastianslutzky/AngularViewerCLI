@@ -1,0 +1,73 @@
+<!-- bs-->
+<div
+id="scalarNameAndValue1b7"
+class="isis-org-incode-eurocommercial-contactapp-module-contacts-dom-Contact-create-string1"
+>
+<div
+  class="scalarNameAndValueComponentType stringPanel"
+  id="scalarTypeContainer1b8"
+>
+  <div
+    class="form-group label-left {{ErrorClass()}}"
+    id="scalarIfRegular1b9"
+    title=""
+  >
+    <label
+      class="scalarName control-label mandatory"
+      >{{description.name}}</label
+    >
+
+    <span class="scalarValueWrapper">
+      <div class="scalarPlaceholder">
+        <span class="scalarValueInput">
+          <!-- <span class="editing">
+            <input
+              type="text"
+              name="parameters:1:scalarNameAndValue:scalarTypeContainer:scalarIfRegular:scalarValueContainer:scalarValue"
+              class="form-control input-sm scalarValue"
+              value=""
+              id="scalarValue1ac"
+              size="25"
+              maxlength="50"
+              [(ngModel)]="Field"
+              (blur)="inputBlurred()"
+              title=""
+            />
+          </span> -->
+          <span class="editing">
+           
+              <span class="autoCompletePlaceholder">
+                  <span id="entityLink1f1">
+                    <select class="autoComplete form-control select2-remote select2-hidden-accessible" 
+                    style="width: 100%" 
+                    [(ngModel)]="Field"
+                    name="parameters:1:scalarNameAndValue:scalarTypeContainer:scalarIfRegular:entityLink:autoComplete" i
+                    d="autoComplete1e8" tabindex="-1" aria-hidden="true">
+                    <option *ngFor="let choice of Choices" [ngValue]="choice" >{{choice.title}}</option>
+                  </select>
+                  <span class="select2 select2-container select2-container--default select2-container--below select2-container--focus" dir="ltr" style="width: 100%;">
+                    <span class="selection">
+                      <span class="select2-selection select2-selection--single" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="0" aria-labelledby="select2-autoComplete1e8-container">
+                    <span class="select2-selection__arrow" role="presentation"><b role="presentation"></b></span></span></span><span class="dropdown-wrapper" aria-hidden="true"></span></span>
+</span>
+                  
+              </span> 
+        </span>
+            
+        </span>
+      </div>
+      <span class="help-block">
+          <ul class="list-unstyled">
+              <li>
+                  <div *ngIf='HasErrors' class="errorlevel alert alert-danger alert-dismissible">
+                      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                      {{ErrorMessage}}
+                  </div> 
+              </li>
+          </ul>
+         </span>
+    </span>
+    <div class="clearfix"></div>
+  </div>
+</div>
+</div>

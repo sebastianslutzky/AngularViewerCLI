@@ -50,7 +50,7 @@ export class DialogContainerComponent implements OnInit {
   ngOnInit() {
     // this.parameters = this.args.ParametersInfo;
     this.DialogInput.params =  this.parameters.reduce((map, p) => {
-      const input = new ParamInput(p.instance.name, p.instance.default, p.instance.id);
+      const input = new ParamInput(p.instance.name, p.instance.default, p.instance.id,p.instance.choices);
       map[input.id] =  input;
       return map;
     }, {});
@@ -139,7 +139,10 @@ showEntityValidationError(msg: string){
     return this._invalidReason;
   }
 
-   constructor(public name: string, public value: string, public id: string) {
+   constructor(public name: string,
+    public value: string,
+    public id: string,
+    public choices: Array<any>) {
    }
 
    public toQueryString(): string {

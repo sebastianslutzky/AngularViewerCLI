@@ -30,7 +30,7 @@ export class ActionParametersDialogComponent implements OnInit {
     this.ParamsInfo = value.ParameterInfo;
     this.ActionName = this.args.ActionDescriptor.friendlyName;
     this.ParamInputs =  value.ParameterInfo.reduce((map, p) => {
-      const input = new ParamInput(p.instance.name, p.instance.default, p.instance.id);
+      const input = new ParamInput(p.instance.name, p.instance.default, p.instance.id, p.instance.choices);
       map[input.id] =  input;
       return map;
     }, {});

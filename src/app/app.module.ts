@@ -44,6 +44,7 @@ import { DialogComponent } from './dialog/dialog.component';
 import { DialogContainerComponent } from './dialog-container/dialog-container.component';
 import { ActionParamComponent } from './action-param/action-param.component';
 import { TextParamComponent } from './text-param/text-param.component';
+import { ChoicesParamComponent } from './choices-param/choices-param.component';
 import { ObjectComponent } from './object/object.component';
 import { ObjectContainerComponent } from './object-container/object-container.component';
 import { SessionService } from './services/session.service';
@@ -98,6 +99,7 @@ import { ActionParametersDialogComponent } from './action-parameters-dialog/acti
     DialogContainerComponent,
     ActionParamComponent,
     TextParamComponent,
+    ChoicesParamComponent,
     ObjectComponent,
     ObjectContainerComponent,
     ObjectRouterComponent,
@@ -176,6 +178,7 @@ import { ActionParametersDialogComponent } from './action-parameters-dialog/acti
     ListComponent,
     TextComponent,
     TextParamComponent,
+    ChoicesParamComponent,
     CheckboxComponent,
     DialogComponent,
     DialogContainerComponent,

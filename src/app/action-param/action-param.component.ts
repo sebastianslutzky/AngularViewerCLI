@@ -6,6 +6,7 @@ import { ResourceLink, ParamDescription,  DomainType } from '../models/ro/iresou
 import { ParameterInfo } from '../services/iactioninvoked';
 import { SessionService } from '../services/session.service';
 import { ActionParameterCollection } from '../dialog/dialog.component';
+import { ChoicesParamComponent } from '../choices-param/choices-param.component';
 
 @Component({
   selector: 'app-action-param',
@@ -42,7 +43,7 @@ export class ActionParamComponent implements OnInit {
   }
 
   createConcreteComponent(returnType: DomainType, paramDescr: ParameterInfo) {
-       const view = this.renderInput(returnType.canonicalName);
+       const view = this.renderInput(returnType.canonicalName, paramDescr);
        const input: any = this.componentFactory.createComponent(this.container, view,
             {'args': paramDescr,
             'ctx': this.Context,
@@ -53,7 +54,11 @@ export class ActionParamComponent implements OnInit {
           });
   }
 
-  renderInput(propertyType: string): any {
+  renderInput(propertyType: string, paramDescr: ParameterInfo): any {
+    const hasChoices = paramDescr.instance.choices;
+    if (hasChoices) {
+      return ChoicesParamComponent;
+    }
       switch (propertyType) {
         case 'java.lang.String':
         case 'long': {
