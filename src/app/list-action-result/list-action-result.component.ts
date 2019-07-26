@@ -24,11 +24,11 @@ export class ListActionResultComponent implements OnInit {
   }
 
   getObjectUrl(element: IXActionResultListItem) {
-    return 'object/' + encodeURIComponent(element.$$href);
+    return this.metamodel.convertFromResourceUrl(element.$$href);
   }
 
   translateObjectUrl(url: string){
-    return this.metamodel.convertToViewerResource(url);
+    return this.metamodel.convertFromResourceUrl(url);
   }
 
 }

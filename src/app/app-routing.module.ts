@@ -4,17 +4,21 @@ import { ObjectContainerComponent } from './object-container/object-container.co
 import { ObjectRouterComponent } from './object-router/object-router.component';
 import { RouteLogComponent } from './route-log/route-log.component';
 import { RouteTesterComponent } from './route-tester/route-tester.component';
+import { ObjectAction } from './models/ro/iresource';
+import { ErrorDetailsComponent } from './error-details/error-details.component';
+import { ObjectComponent } from './object/object.component';
 
 const routes: Routes = [
   // {path: 'menu/:destination', component: ObjectRouterComponent}
   {
-    path: 'object/:destination',
-    component: ObjectRouterComponent
+    path:   ':first/:restOfPath',
+        component: ObjectComponent
   }
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes,
+    {enableTracing: true})],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

@@ -67,7 +67,7 @@ export class ListComponent implements AfterViewInit,  OnInit {
   }
 
   getObjectUrl(element: IXActionResultListItem) {
-    return 'object/' + encodeURIComponent(element.$$href);
+    return 'object/' + this.metamodel.convertFromResourceUrl(encodeURIComponent(element.$$href));
   }
 
   renderCell(columName: string, value: string): string {

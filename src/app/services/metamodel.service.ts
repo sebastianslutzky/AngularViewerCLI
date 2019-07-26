@@ -26,14 +26,17 @@ private errorHandler: ErrorHandler) {
         const apiRoot = 'restful';
         const protocol = 'http';
 
-        this.rootUrl = environment.resftulObjectsApiUrl + '/' + apiRoot;
+        this.rootUrl = environment.backend.url + '/' + apiRoot;
    }
 
-   public convertToViewerResource(url: string){
-     if (!url) {
-        return url;
-      }
-     return url.replace('http://localhost:8080/restful/','/api/');
+   public convertFromResourceUrl(url: string) {
+     // http://localhost:4200/site/rest of url
+
+    const converted = 
+      environment.backend.alias +
+      url.replace(environment.backend.url , '');
+
+    return converted;
    }
   public assertApiIsAvailable(): Promise<any> {
     const errorSvc = this.errorHandler;
