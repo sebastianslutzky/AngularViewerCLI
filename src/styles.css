@@ -3,6 +3,10 @@ body {
   padding-top: 60px;
 }
 
+.link{
+  cursor: pointer;
+}
+
 .table .form-control:disabled {
   background-color: transparent;
   border: none;

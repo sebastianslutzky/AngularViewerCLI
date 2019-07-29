@@ -51,7 +51,6 @@ private invokeMethod(validate: boolean) {
     if (validate) {params.push('x-ro-validate-only'); }
 
     const args = new ActionParameterCollection(this.ParamInputs);
-  console.log(args);
     return this.invoker.invokeAction(this.args.ObjectAction,
       this.args.ActionDescriptor,
         null,

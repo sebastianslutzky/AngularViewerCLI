@@ -1,6 +1,6 @@
 <div class="tabGroups tabbable">
   <ul class="nav nav-tabs">
-     <li *ngFor='let tab of Layout.tab;let i = index' class="tab{{i}} {{activeClassIfApplies(i)}}">
+     <li *ngFor='let tab of Layout.tab;let i = index' class="tab{{i}} {{activeClassIfApplies(i)}} link">
          <a (click)="select(i)">
         <span>{{tab.name}}</span></a></li>
   </ul>
