@@ -15,7 +15,6 @@
 <div class="row">
 <div class="col col-md-12">
 <div class="sidebar-header">
-    <h4>(no action)</h4>
 </div>
 <div class="sidebar-content">
     <div></div>
@@ -154,10 +153,12 @@
 <div>
 <div id="entityIconAndTitle61f">
 <span class="entityIconAndTitlePanel entityIconAndTitleComponentType">
- <div (click)="goTo(item)" style="cursor: pointer" class="entityUrlSource" title="Contact: {{item.$$Title}}">
+    <a [routerLink]="[getObjectUrl(item)]" >
+ <div style="cursor: pointer" class="entityUrlSource" title="Contact: {{item.$$Title}}">
      <img class="entityImage" src="./resource/org.incode.eurocommercial.contactapp.module.contacts.dom.Contact/Contact-ver-1552669862000.png">
      <span class="entityTitle"></span>
  </div>
+ </a>
  
 </span>
 </div>

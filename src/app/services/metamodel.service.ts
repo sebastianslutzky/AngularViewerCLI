@@ -32,11 +32,11 @@ private errorHandler: ErrorHandler) {
    public convertFromResourceUrl(url: string) {
      // http://localhost:4200/site/rest of url
 
-    const converted = 
-      environment.backend.alias +
-      url.replace(environment.backend.url , '');
+    // const converted = 
+    //   environment.backend.alias +
+    //   url.replace(environment.backend.url , '');
 
-    return converted;
+    return url;
    }
   public assertApiIsAvailable(): Promise<any> {
     const errorSvc = this.errorHandler;

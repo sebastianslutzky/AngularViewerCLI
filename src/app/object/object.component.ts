@@ -38,7 +38,6 @@ export class ObjectComponent implements OnInit {
       private metaModel: MetamodelService,
       private factory: LayoutComponentFactoryService) {
 
-        console.log('aca aca aca aca');
    }
 
    get showDebugMenu(): boolean{

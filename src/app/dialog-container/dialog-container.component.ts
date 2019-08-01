@@ -146,7 +146,7 @@ showEntityValidationError(msg: string){
    }
 
    public toQueryString(): string {
-     return `${this.name}=${this.value}` ;
+     return `${this.id}=${this.value}` ;
    }
 
    public toJson(): string {

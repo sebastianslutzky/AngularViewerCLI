@@ -24,7 +24,7 @@ export class ListActionResultComponent implements OnInit {
   }
 
   getObjectUrl(element: IXActionResultListItem) {
-    return this.metamodel.convertFromResourceUrl(element.$$href);
+    return  'object/' + encodeURIComponent(this.metamodel.convertFromResourceUrl(element.$$href));
   }
 
   translateObjectUrl(url: string){
