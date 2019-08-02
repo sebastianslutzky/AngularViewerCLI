@@ -104,38 +104,29 @@
 <div class="collectionContentsLinksSelectorPanel collectionContentsComponentType">
 <div class="collectionContentsAsAjaxTablePanel collectionContentsComponentType">
 <div class="clearfix"></div>
-<div class="table-responsive">
-    <table class="contents table table-striped table-condensed table-hover table-bordered" cellspacing="0" id="table61e">
+<div *ngIf="!HasResults">
+    No results
+</div>
+<div class="table-responsive" *ngIf="HasResults">
 
-
+<table class="contents table table-striped table-condensed table-hover table-bordered" cellspacing="0" id="table61e">
 <thead>
 
 <tr class="headers">
 
 <th class="title-column">
-<div>
-    <strong></strong> <span style="float: right"></span>
-</div>
+    <div>
+        <strong></strong> <span style="float: right"></span>
+    </div>
 </th>
 
-<th class="wicket_orderNone isis-org-incode-eurocommercial-contactapp-module-contacts-dom-Contact-name"><a href="./page?4-1.ILinkListener-theme-standaloneCollection-standaloneCollection-collectionContents-collectionContents~1-table-topToolbars-toolbars-1-headers-2-header-orderByLink" id="orderByLink60f">
-<div>
-    <strong>Name</strong> <span style="float: right" class="fa fa-fw fa-sort"></span>
-</div>
-</a></th>
-
-<th class="wicket_orderNone isis-org-incode-eurocommercial-contactapp-module-contacts-dom-Contact-company"><a href="./page?4-1.ILinkListener-theme-standaloneCollection-standaloneCollection-collectionContents-collectionContents~1-table-topToolbars-toolbars-1-headers-3-header-orderByLink" id="orderByLink610">
-<div>
-    <strong>Company</strong> <span style="float: right" class="fa fa-fw fa-sort"></span>
-</div>
-</a></th>
-
-<th class="wicket_orderNone isis-org-incode-eurocommercial-contactapp-module-contacts-dom-Contact-email"><a href="./page?4-1.ILinkListener-theme-standaloneCollection-standaloneCollection-collectionContents-collectionContents~1-table-topToolbars-toolbars-1-headers-4-header-orderByLink" id="orderByLink611">
-<div>
-    <strong>Email</strong> <span style="float: right" class="fa fa-fw fa-sort"></span>
-</div>
-</a></th>
-
+<th *ngFor="let column of Columns()" class="wicket_orderNone isis-org-incode-eurocommercial-contactapp-module-contacts-dom-Contact-name">
+    <a href="./page?4-1.ILinkListener-theme-standaloneCollection-standaloneCollection-collectionContents-collectionContents~1-table-topToolbars-toolbars-1-headers-2-header-orderByLink" id="orderByLink60f">
+        <div>
+            <strong>{{column}}</strong> <span style="float: right" class="fa fa-fw fa-sort"></span>
+        </div>
+    </a>
+</th>
 </tr>
 
 </thead>
@@ -143,42 +134,32 @@
 <tbody>
 <tr *ngFor='let item of Context.ExtendedResult' class="even">
 <td class="title-column">
-<div>
-<div class="entityLinkSimplePanel entityLinkComponentType">
-<div>
-<div id="entityIconAndTitle61f">
-<span class="entityIconAndTitlePanel entityIconAndTitleComponentType">
- <div (click)="goTo(item)" style="cursor: pointer" class="entityUrlSource" title="Contact: {{item.$$Title}}">
-     <img class="entityImage" src="./resource/org.incode.eurocommercial.contactapp.module.contacts.dom.Contact/Contact-ver-1552669862000.png">
-     <span class="entityTitle"></span>
- </div>
- 
-</span>
-</div>
+    <div>
+    <div class="entityLinkSimplePanel entityLinkComponentType">
+    <div>
+    <div id="entityIconAndTitle61f">
+        <span class="entityIconAndTitlePanel entityIconAndTitleComponentType">
+            <a [routerLink]="[getObjectUrl(item)]">
+                <div  style="cursor: pointer" class="entityUrlSource" title="Contact: {{item.$$Title}}">
+                    <img class="entityImage" src="./resource/org.incode.eurocommercial.contactapp.module.contacts.dom.Contact/Contact-ver-1552669862000.png">
+                    <span class="entityTitle"></span>
+                </div>
+            </a>
+        </span>
+    </div>
 
-<div class="clearfix"></div>
-</div>
-</div>
-</div>
+    <div class="clearfix"></div>
+    </div>
+    </div>
+    </div>
 </td>
-<td  class="isis-org-incode-eurocommercial-contactapp-module-contacts-dom-Contact-name">
-<div id="cell620" class="isis-org-incode-eurocommercial-contactapp-module-contacts-dom-Contact-name">
-<div class="scalarNameAndValueComponentType stringPanel" id="scalarTypeContainer621">
-{{item.$$title}}
-</div>
-</div>
-</td><td class="isis-org-incode-eurocommercial-contactapp-module-contacts-dom-Contact-company">
-<div id="cell622" class="isis-org-incode-eurocommercial-contactapp-module-contacts-dom-Contact-company">
-<div class="scalarNameAndValueComponentType stringPanel" id="scalarTypeContainer623">
-{{item.company}}
-</div>
-</div>
-</td><td class="isis-org-incode-eurocommercial-contactapp-module-contacts-dom-Contact-email">
-<div id="cell624" class="isis-org-incode-eurocommercial-contactapp-module-contacts-dom-Contact-email">
-<div class="scalarNameAndValueComponentType stringPanel" id="scalarTypeContainer625">
-  {{item.email}}
-</div>
-</div>
+
+<td *ngFor="let column of Columns()"  class="isis-org-incode-eurocommercial-contactapp-module-contacts-dom-Contact-name">
+    <div id="cell620" class="isis-org-incode-eurocommercial-contactapp-module-contacts-dom-Contact-name">
+        <div class="scalarNameAndValueComponentType stringPanel" id="scalarTypeContainer621">
+        {{item[column]}}
+        </div>
+    </div>
 </td>
 </tr>
 </tbody>

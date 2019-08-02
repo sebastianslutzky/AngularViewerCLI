@@ -11,11 +11,23 @@ import { Router } from '@angular/router';
 export class ListActionResultComponent implements OnInit {
   @Input()
   Context: any;
+
+  HasResults: boolean;
+
+  public Columns(): string[]  {
+    if (this.HasResults) {
+      const sampleRow = this.Context.ExtendedResult[0];
+      return Object.keys(sampleRow).filter(x => !x.startsWith('$$'));
+    }
+    return null;
+  }
   constructor(private metamodel: MetamodelService, private router: Router ) {
    }
 
   ngOnInit() {
-    console.log(this.Context);
+    this.HasResults = this.Context
+    && this.Context.ExtendedResult
+    && this.Context.ExtendedResult.length > 0;
   }
 
 

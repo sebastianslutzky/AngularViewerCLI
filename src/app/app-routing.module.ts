@@ -10,6 +10,10 @@ const routes: Routes = [
   {
     path: 'object/:destination',
     component: ObjectRouterComponent
+  },
+  {
+    path: 'invoke/:destination',
+    component: ObjectRouterComponent
   }
 ];
 

@@ -1,18 +1,27 @@
 import { Component, OnInit, Input, ValueProvider } from '@angular/core';
 import { isArray } from 'util';
 import { MetamodelService } from '../services/metamodel.service';
+import { ObjectLayout } from '../services/layout.service';
+import { ObjectRepr } from '../models/ro/iresource';
 
 
 export class LayoutBaseComponent {
-  @Input()
-  public LayoutContext: any;
 
-  private _objectContext: any;
+  private _layoutContext: ObjectLayout;
   @Input()
-  public set ObjectContext(value: any){
+  public set LayoutContext(value: any){
+    this._layoutContext = value;
+  }
+  public get LayoutContext(): any {
+    return this._layoutContext;
+  }
+
+  private _objectContext: ObjectRepr;
+  @Input()
+  public set ObjectContext(value: ObjectRepr){
     this._objectContext = value;
   }
-  public get ObjectContext(): any {
+  public get ObjectContext(): ObjectRepr {
     return this._objectContext;
   }
 

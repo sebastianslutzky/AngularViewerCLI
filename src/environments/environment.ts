@@ -9,7 +9,7 @@ export const environment = {
   resftulObjectsApiUrl: 'http://localhost:8080',
   showDebugMenu: true,
   trace: {
-    httpCalls: false,
+    httpCalls: true,
     cacheEnabled: false,
     cacheMisses: false,
     cacheHits: false,

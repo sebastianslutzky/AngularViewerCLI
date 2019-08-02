@@ -42,6 +42,8 @@ export class DesktopComponent implements OnInit {
 
   // TODO: change the condition and check some value common to lists and objects
   private get IsFocusObjectAList(){
+    //hack
+    // return false;
     if (!this._focusObjectType || this._focusObjectType === 'unknown') {
       return false;
     }
@@ -52,7 +54,6 @@ export class DesktopComponent implements OnInit {
     if (this.IsFocusObjectAList || !this.FocusObject) {
       return false;
     }
-
     return this.FocusObject.constructor.name === 'ObjectRepr';
   }
     
